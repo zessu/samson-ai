@@ -19,6 +19,7 @@ import { Route as SettingsImport } from './routes/settings'
 import { Route as GoalsImport } from './routes/goals'
 import { Route as GenderSelectImport } from './routes/gender-select'
 import { Route as FitnessSelectImport } from './routes/fitness-select'
+import { Route as DayTimeImport } from './routes/day-time'
 import { Route as CardioEquipmentImport } from './routes/cardio-equipment'
 import { Route as AgeSelectImport } from './routes/age-select'
 import { Route as IndexImport } from './routes/index'
@@ -73,6 +74,12 @@ const FitnessSelectRoute = FitnessSelectImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DayTimeRoute = DayTimeImport.update({
+  id: '/day-time',
+  path: '/day-time',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CardioEquipmentRoute = CardioEquipmentImport.update({
   id: '/cardio-equipment',
   path: '/cardio-equipment',
@@ -114,6 +121,13 @@ declare module '@tanstack/react-router' {
       path: '/cardio-equipment'
       fullPath: '/cardio-equipment'
       preLoaderRoute: typeof CardioEquipmentImport
+      parentRoute: typeof rootRoute
+    }
+    '/day-time': {
+      id: '/day-time'
+      path: '/day-time'
+      fullPath: '/day-time'
+      preLoaderRoute: typeof DayTimeImport
       parentRoute: typeof rootRoute
     }
     '/fitness-select': {
@@ -181,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/age-select': typeof AgeSelectRoute
   '/cardio-equipment': typeof CardioEquipmentRoute
+  '/day-time': typeof DayTimeRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
@@ -195,6 +210,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/age-select': typeof AgeSelectRoute
   '/cardio-equipment': typeof CardioEquipmentRoute
+  '/day-time': typeof DayTimeRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
@@ -210,6 +226,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/age-select': typeof AgeSelectRoute
   '/cardio-equipment': typeof CardioEquipmentRoute
+  '/day-time': typeof DayTimeRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
@@ -226,6 +243,7 @@ export interface FileRouteTypes {
     | '/'
     | '/age-select'
     | '/cardio-equipment'
+    | '/day-time'
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
@@ -239,6 +257,7 @@ export interface FileRouteTypes {
     | '/'
     | '/age-select'
     | '/cardio-equipment'
+    | '/day-time'
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
@@ -252,6 +271,7 @@ export interface FileRouteTypes {
     | '/'
     | '/age-select'
     | '/cardio-equipment'
+    | '/day-time'
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
@@ -267,6 +287,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgeSelectRoute: typeof AgeSelectRoute
   CardioEquipmentRoute: typeof CardioEquipmentRoute
+  DayTimeRoute: typeof DayTimeRoute
   FitnessSelectRoute: typeof FitnessSelectRoute
   GenderSelectRoute: typeof GenderSelectRoute
   GoalsRoute: typeof GoalsRoute
@@ -281,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgeSelectRoute: AgeSelectRoute,
   CardioEquipmentRoute: CardioEquipmentRoute,
+  DayTimeRoute: DayTimeRoute,
   FitnessSelectRoute: FitnessSelectRoute,
   GenderSelectRoute: GenderSelectRoute,
   GoalsRoute: GoalsRoute,
@@ -304,6 +326,7 @@ export const routeTree = rootRoute
         "/",
         "/age-select",
         "/cardio-equipment",
+        "/day-time",
         "/fitness-select",
         "/gender-select",
         "/goals",
@@ -322,6 +345,9 @@ export const routeTree = rootRoute
     },
     "/cardio-equipment": {
       "filePath": "cardio-equipment.tsx"
+    },
+    "/day-time": {
+      "filePath": "day-time.tsx"
     },
     "/fitness-select": {
       "filePath": "fitness-select.tsx"
