@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as WorkoutImport } from './routes/workout'
 import { Route as WeightSelectImport } from './routes/weight-select'
+import { Route as TimeSelectorImport } from './routes/time-selector'
 import { Route as StrengthEquipmentImport } from './routes/strength-equipment'
 import { Route as SignupImport } from './routes/signup'
 import { Route as SettingsImport } from './routes/settings'
@@ -35,6 +36,12 @@ const WorkoutRoute = WorkoutImport.update({
 const WeightSelectRoute = WeightSelectImport.update({
   id: '/weight-select',
   path: '/weight-select',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TimeSelectorRoute = TimeSelectorImport.update({
+  id: '/time-selector',
+  path: '/time-selector',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -172,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StrengthEquipmentImport
       parentRoute: typeof rootRoute
     }
+    '/time-selector': {
+      id: '/time-selector'
+      path: '/time-selector'
+      fullPath: '/time-selector'
+      preLoaderRoute: typeof TimeSelectorImport
+      parentRoute: typeof rootRoute
+    }
     '/weight-select': {
       id: '/weight-select'
       path: '/weight-select'
@@ -202,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
+  '/time-selector': typeof TimeSelectorRoute
   '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
@@ -217,6 +232,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
+  '/time-selector': typeof TimeSelectorRoute
   '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
@@ -233,6 +249,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
+  '/time-selector': typeof TimeSelectorRoute
   '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
@@ -250,6 +267,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/strength-equipment'
+    | '/time-selector'
     | '/weight-select'
     | '/workout'
   fileRoutesByTo: FileRoutesByTo
@@ -264,6 +282,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/strength-equipment'
+    | '/time-selector'
     | '/weight-select'
     | '/workout'
   id:
@@ -278,6 +297,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/strength-equipment'
+    | '/time-selector'
     | '/weight-select'
     | '/workout'
   fileRoutesById: FileRoutesById
@@ -294,6 +314,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   StrengthEquipmentRoute: typeof StrengthEquipmentRoute
+  TimeSelectorRoute: typeof TimeSelectorRoute
   WeightSelectRoute: typeof WeightSelectRoute
   WorkoutRoute: typeof WorkoutRoute
 }
@@ -309,6 +330,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   StrengthEquipmentRoute: StrengthEquipmentRoute,
+  TimeSelectorRoute: TimeSelectorRoute,
   WeightSelectRoute: WeightSelectRoute,
   WorkoutRoute: WorkoutRoute,
 }
@@ -333,6 +355,7 @@ export const routeTree = rootRoute
         "/settings",
         "/signup",
         "/strength-equipment",
+        "/time-selector",
         "/weight-select",
         "/workout"
       ]
@@ -366,6 +389,9 @@ export const routeTree = rootRoute
     },
     "/strength-equipment": {
       "filePath": "strength-equipment.tsx"
+    },
+    "/time-selector": {
+      "filePath": "time-selector.tsx"
     },
     "/weight-select": {
       "filePath": "weight-select.tsx"
