@@ -17,6 +17,7 @@ import { Route as TimeSelectorImport } from './routes/time-selector'
 import { Route as StrengthEquipmentImport } from './routes/strength-equipment'
 import { Route as SignupImport } from './routes/signup'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as NotificationsImport } from './routes/notifications'
 import { Route as GoalsImport } from './routes/goals'
 import { Route as GenderSelectImport } from './routes/gender-select'
 import { Route as FitnessSelectImport } from './routes/fitness-select'
@@ -60,6 +61,12 @@ const SignupRoute = SignupImport.update({
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NotificationsRoute = NotificationsImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -158,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GoalsImport
       parentRoute: typeof rootRoute
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsImport
+      parentRoute: typeof rootRoute
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -213,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
+  '/notifications': typeof NotificationsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
@@ -229,6 +244,7 @@ export interface FileRoutesByTo {
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
+  '/notifications': typeof NotificationsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
@@ -246,6 +262,7 @@ export interface FileRoutesById {
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
   '/goals': typeof GoalsRoute
+  '/notifications': typeof NotificationsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/strength-equipment': typeof StrengthEquipmentRoute
@@ -264,6 +281,7 @@ export interface FileRouteTypes {
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
+    | '/notifications'
     | '/settings'
     | '/signup'
     | '/strength-equipment'
@@ -279,6 +297,7 @@ export interface FileRouteTypes {
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
+    | '/notifications'
     | '/settings'
     | '/signup'
     | '/strength-equipment'
@@ -294,6 +313,7 @@ export interface FileRouteTypes {
     | '/fitness-select'
     | '/gender-select'
     | '/goals'
+    | '/notifications'
     | '/settings'
     | '/signup'
     | '/strength-equipment'
@@ -311,6 +331,7 @@ export interface RootRouteChildren {
   FitnessSelectRoute: typeof FitnessSelectRoute
   GenderSelectRoute: typeof GenderSelectRoute
   GoalsRoute: typeof GoalsRoute
+  NotificationsRoute: typeof NotificationsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   StrengthEquipmentRoute: typeof StrengthEquipmentRoute
@@ -327,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   FitnessSelectRoute: FitnessSelectRoute,
   GenderSelectRoute: GenderSelectRoute,
   GoalsRoute: GoalsRoute,
+  NotificationsRoute: NotificationsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   StrengthEquipmentRoute: StrengthEquipmentRoute,
@@ -352,6 +374,7 @@ export const routeTree = rootRoute
         "/fitness-select",
         "/gender-select",
         "/goals",
+        "/notifications",
         "/settings",
         "/signup",
         "/strength-equipment",
@@ -380,6 +403,9 @@ export const routeTree = rootRoute
     },
     "/goals": {
       "filePath": "goals.tsx"
+    },
+    "/notifications": {
+      "filePath": "notifications.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"
