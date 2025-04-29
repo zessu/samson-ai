@@ -15,6 +15,7 @@ import { Route as WorkoutImport } from './routes/workout'
 import { Route as WeightSelectImport } from './routes/weight-select'
 import { Route as SignupImport } from './routes/signup'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as GoalsImport } from './routes/goals'
 import { Route as GenderSelectImport } from './routes/gender-select'
 import { Route as FitnessSelectImport } from './routes/fitness-select'
 import { Route as AgeSelectImport } from './routes/age-select'
@@ -43,6 +44,12 @@ const SignupRoute = SignupImport.update({
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GoalsRoute = GoalsImport.update({
+  id: '/goals',
+  path: '/goals',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GenderSelectImport
       parentRoute: typeof rootRoute
     }
+    '/goals': {
+      id: '/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof GoalsImport
+      parentRoute: typeof rootRoute
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -140,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/age-select': typeof AgeSelectRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
+  '/goals': typeof GoalsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/weight-select': typeof WeightSelectRoute
@@ -151,6 +166,7 @@ export interface FileRoutesByTo {
   '/age-select': typeof AgeSelectRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
+  '/goals': typeof GoalsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/weight-select': typeof WeightSelectRoute
@@ -163,6 +179,7 @@ export interface FileRoutesById {
   '/age-select': typeof AgeSelectRoute
   '/fitness-select': typeof FitnessSelectRoute
   '/gender-select': typeof GenderSelectRoute
+  '/goals': typeof GoalsRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/weight-select': typeof WeightSelectRoute
@@ -176,6 +193,7 @@ export interface FileRouteTypes {
     | '/age-select'
     | '/fitness-select'
     | '/gender-select'
+    | '/goals'
     | '/settings'
     | '/signup'
     | '/weight-select'
@@ -186,6 +204,7 @@ export interface FileRouteTypes {
     | '/age-select'
     | '/fitness-select'
     | '/gender-select'
+    | '/goals'
     | '/settings'
     | '/signup'
     | '/weight-select'
@@ -196,6 +215,7 @@ export interface FileRouteTypes {
     | '/age-select'
     | '/fitness-select'
     | '/gender-select'
+    | '/goals'
     | '/settings'
     | '/signup'
     | '/weight-select'
@@ -208,6 +228,7 @@ export interface RootRouteChildren {
   AgeSelectRoute: typeof AgeSelectRoute
   FitnessSelectRoute: typeof FitnessSelectRoute
   GenderSelectRoute: typeof GenderSelectRoute
+  GoalsRoute: typeof GoalsRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   WeightSelectRoute: typeof WeightSelectRoute
@@ -219,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AgeSelectRoute: AgeSelectRoute,
   FitnessSelectRoute: FitnessSelectRoute,
   GenderSelectRoute: GenderSelectRoute,
+  GoalsRoute: GoalsRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   WeightSelectRoute: WeightSelectRoute,
@@ -239,6 +261,7 @@ export const routeTree = rootRoute
         "/age-select",
         "/fitness-select",
         "/gender-select",
+        "/goals",
         "/settings",
         "/signup",
         "/weight-select",
@@ -256,6 +279,9 @@ export const routeTree = rootRoute
     },
     "/gender-select": {
       "filePath": "gender-select.tsx"
+    },
+    "/goals": {
+      "filePath": "goals.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"

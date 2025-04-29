@@ -10,7 +10,7 @@ function RouteComponent() {
     <div>
       <p className="mb-2">What's your fitness level ?</p>
       <select defaultValue="Pick a color" className="select mb-4">
-        <option disabled={true}>What's your experience level</option>
+        <option disabled={true}>What's your experience level ?</option>
         <option>Beginner</option>
         <option>Intermeddiate</option>
         <option>Advanced</option>
