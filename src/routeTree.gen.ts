@@ -13,8 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as WorkoutImport } from './routes/workout'
 import { Route as SignupImport } from './routes/signup'
+import { Route as SetupImport } from './routes/setup'
 import { Route as SettingsImport } from './routes/settings'
-import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -31,15 +31,15 @@ const SignupRoute = SignupImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SettingsRoute = SettingsImport.update({
-  id: '/settings',
-  path: '/settings',
+const SetupRoute = SetupImport.update({
+  id: '/setup',
+  path: '/setup',
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
+const SettingsRoute = SettingsImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,18 +60,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
     '/settings': {
       id: '/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsImport
+      parentRoute: typeof rootRoute
+    }
+    '/setup': {
+      id: '/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof SetupImport
       parentRoute: typeof rootRoute
     }
     '/signup': {
@@ -95,16 +95,16 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
   '/workout': typeof WorkoutRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
   '/workout': typeof WorkoutRoute
 }
@@ -112,33 +112,33 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
   '/workout': typeof WorkoutRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/settings' | '/signup' | '/workout'
+  fullPaths: '/' | '/settings' | '/setup' | '/signup' | '/workout'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/settings' | '/signup' | '/workout'
-  id: '__root__' | '/' | '/login' | '/settings' | '/signup' | '/workout'
+  to: '/' | '/settings' | '/setup' | '/signup' | '/workout'
+  id: '__root__' | '/' | '/settings' | '/setup' | '/signup' | '/workout'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
   SettingsRoute: typeof SettingsRoute
+  SetupRoute: typeof SetupRoute
   SignupRoute: typeof SignupRoute
   WorkoutRoute: typeof WorkoutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
   SettingsRoute: SettingsRoute,
+  SetupRoute: SetupRoute,
   SignupRoute: SignupRoute,
   WorkoutRoute: WorkoutRoute,
 }
@@ -154,8 +154,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/login",
         "/settings",
+        "/setup",
         "/signup",
         "/workout"
       ]
@@ -163,11 +163,11 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/login": {
-      "filePath": "login.tsx"
-    },
     "/settings": {
       "filePath": "settings.tsx"
+    },
+    "/setup": {
+      "filePath": "setup.tsx"
     },
     "/signup": {
       "filePath": "signup.tsx"
