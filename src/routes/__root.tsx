@@ -5,7 +5,7 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <div className="p-2 flex gap-2">
-        <Link to="/setup" className="[&.active]:font-bold">
+        <Link to="/gender-select" className="[&.active]:font-bold">
           Setup
         </Link>{" "}
         <Link to="/signup" className="[&.active]:font-bold">
@@ -13,7 +13,9 @@ export const Route = createRootRoute({
         </Link>
       </div>
       <hr />
-      <Outlet />
+      <div className="flex flex-row h-screen justify-center items-center">
+        <Outlet />
+      </div>
       <TanStackRouterDevtools />
     </>
   ),

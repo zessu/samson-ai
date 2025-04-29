@@ -12,9 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WorkoutImport } from './routes/workout'
+import { Route as WeightSelectImport } from './routes/weight-select'
 import { Route as SignupImport } from './routes/signup'
-import { Route as SetupImport } from './routes/setup'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as GenderSelectImport } from './routes/gender-select'
+import { Route as AgeSelectImport } from './routes/age-select'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -25,21 +27,33 @@ const WorkoutRoute = WorkoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const WeightSelectRoute = WeightSelectImport.update({
+  id: '/weight-select',
+  path: '/weight-select',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SignupRoute = SignupImport.update({
   id: '/signup',
   path: '/signup',
   getParentRoute: () => rootRoute,
 } as any)
 
-const SetupRoute = SetupImport.update({
-  id: '/setup',
-  path: '/setup',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GenderSelectRoute = GenderSelectImport.update({
+  id: '/gender-select',
+  path: '/gender-select',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AgeSelectRoute = AgeSelectImport.update({
+  id: '/age-select',
+  path: '/age-select',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/age-select': {
+      id: '/age-select'
+      path: '/age-select'
+      fullPath: '/age-select'
+      preLoaderRoute: typeof AgeSelectImport
+      parentRoute: typeof rootRoute
+    }
+    '/gender-select': {
+      id: '/gender-select'
+      path: '/gender-select'
+      fullPath: '/gender-select'
+      preLoaderRoute: typeof GenderSelectImport
+      parentRoute: typeof rootRoute
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -67,18 +95,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsImport
       parentRoute: typeof rootRoute
     }
-    '/setup': {
-      id: '/setup'
-      path: '/setup'
-      fullPath: '/setup'
-      preLoaderRoute: typeof SetupImport
-      parentRoute: typeof rootRoute
-    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/weight-select': {
+      id: '/weight-select'
+      path: '/weight-select'
+      fullPath: '/weight-select'
+      preLoaderRoute: typeof WeightSelectImport
       parentRoute: typeof rootRoute
     }
     '/workout': {
@@ -95,51 +123,83 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/age-select': typeof AgeSelectRoute
+  '/gender-select': typeof GenderSelectRoute
   '/settings': typeof SettingsRoute
-  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
+  '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/age-select': typeof AgeSelectRoute
+  '/gender-select': typeof GenderSelectRoute
   '/settings': typeof SettingsRoute
-  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
+  '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/age-select': typeof AgeSelectRoute
+  '/gender-select': typeof GenderSelectRoute
   '/settings': typeof SettingsRoute
-  '/setup': typeof SetupRoute
   '/signup': typeof SignupRoute
+  '/weight-select': typeof WeightSelectRoute
   '/workout': typeof WorkoutRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/settings' | '/setup' | '/signup' | '/workout'
+  fullPaths:
+    | '/'
+    | '/age-select'
+    | '/gender-select'
+    | '/settings'
+    | '/signup'
+    | '/weight-select'
+    | '/workout'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/settings' | '/setup' | '/signup' | '/workout'
-  id: '__root__' | '/' | '/settings' | '/setup' | '/signup' | '/workout'
+  to:
+    | '/'
+    | '/age-select'
+    | '/gender-select'
+    | '/settings'
+    | '/signup'
+    | '/weight-select'
+    | '/workout'
+  id:
+    | '__root__'
+    | '/'
+    | '/age-select'
+    | '/gender-select'
+    | '/settings'
+    | '/signup'
+    | '/weight-select'
+    | '/workout'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgeSelectRoute: typeof AgeSelectRoute
+  GenderSelectRoute: typeof GenderSelectRoute
   SettingsRoute: typeof SettingsRoute
-  SetupRoute: typeof SetupRoute
   SignupRoute: typeof SignupRoute
+  WeightSelectRoute: typeof WeightSelectRoute
   WorkoutRoute: typeof WorkoutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgeSelectRoute: AgeSelectRoute,
+  GenderSelectRoute: GenderSelectRoute,
   SettingsRoute: SettingsRoute,
-  SetupRoute: SetupRoute,
   SignupRoute: SignupRoute,
+  WeightSelectRoute: WeightSelectRoute,
   WorkoutRoute: WorkoutRoute,
 }
 
@@ -154,23 +214,31 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/age-select",
+        "/gender-select",
         "/settings",
-        "/setup",
         "/signup",
+        "/weight-select",
         "/workout"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/age-select": {
+      "filePath": "age-select.tsx"
+    },
+    "/gender-select": {
+      "filePath": "gender-select.tsx"
+    },
     "/settings": {
       "filePath": "settings.tsx"
     },
-    "/setup": {
-      "filePath": "setup.tsx"
-    },
     "/signup": {
       "filePath": "signup.tsx"
+    },
+    "/weight-select": {
+      "filePath": "weight-select.tsx"
     },
     "/workout": {
       "filePath": "workout.tsx"
