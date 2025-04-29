@@ -12,7 +12,6 @@ export const Route = createRootRoute({
           Sign up
         </Link>
       </div>
-      <hr />
       <div className="flex flex-row h-screen justify-center items-center">
         <Outlet />
       </div>
