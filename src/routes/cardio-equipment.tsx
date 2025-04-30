@@ -1,12 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/cardio-equipment')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-
-  const goToNextPage = () => { }
+  const navigate = useNavigate();
+  const goToNextPage = () => {
+    navigate({ to: "/strength-equipment" });
+  }
 
   return (
     <div>

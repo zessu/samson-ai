@@ -1,11 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/weight-select')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const goToNextPage = () => { }
+  const navigate = useNavigate();
+  const goToNextPage = () => {
+    navigate({ to: "/fitness-select" });
+  }
   return (
     <div>
       <div className="w-64">

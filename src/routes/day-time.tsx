@@ -1,11 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/day-time')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const goToNextPage = () => { }
+  const navigate = useNavigate();
+  const goToNextPage = () => {
+    navigate({ to: "/time-selector" });
+  }
 
   return (
     <div>

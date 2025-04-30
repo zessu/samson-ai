@@ -1,11 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/time-selector')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const goToNextPage = () => { }
+  const navigate = useNavigate();
+  const goToNextPage = () => {
+    navigate({ to: "/notifications" })
+  }
   return (
     <div>
       <p className="mb-2">What time do you want to work out?</p>
