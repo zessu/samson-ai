@@ -6,6 +6,7 @@ export const Route = createFileRoute('/goals')({
 
 function RouteComponent() {
   const navigate = useNavigate();
+
   const goToNextPage = () => {
     navigate({ to: "/cardio-equipment" });
   }

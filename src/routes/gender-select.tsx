@@ -9,7 +9,10 @@ function RouteComponent() {
   const goToNextPage = () => {
     navigate({ to: "/age-select" });
   };
-
+  // write to local controls
+  // validate on button click
+  // write state to zustand
+  // at the end submit everything in zustand to the backend server
   return (
     <div>
       <div className="text-xl flex flex-col">
