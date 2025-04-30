@@ -11,7 +11,7 @@ function RouteComponent() {
   }
   return (
     <div className="text-xl flex flex-col">
-      <h3 className="font-bold text-lg mb-2">What's the best way to send you your workouts?</h3>
+      <h3 className="font-bold text-lg mb-2">What's the best way to reach you with your daily workouts?</h3>
       <div className="mb-10 flex flex-col">
         <span className="mb-4">
           <input type="checkbox" defaultChecked className="checkbox" value="email" />
@@ -20,16 +20,16 @@ function RouteComponent() {
 
         <span className="mb-4">
           <input type="checkbox" disabled className="checkbox" value="app" />
-          <span className="ml-2">In App (WIP)</span>
+          <span className="ml-2">In App (Work In Progress)</span>
         </span>
 
         <span className="mb-4">
           <input type="checkbox" disabled className="checkbox" value="sms" />
-          <span className="ml-2">Via SMS (WIP)</span>
+          <span className="ml-2">Via SMS (Work In Progress)</span>
         </span>
 
       </div>
-      <button className="btn btn-primary" onClick={finish}>
+      <button className="btn btn-accent" onClick={finish}>
         Start My Journey
       </button>
     </div>
