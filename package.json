@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@tailwindcss/postcss": "^4.0.12",
     "@tailwindcss/vite": "^4.0.12",
     "@tanstack/react-router": "^1.114.3",
     "@tanstack/router-devtools": "^1.114.3",
+    "better-auth": "^1.2.7",
     "daisyui": "^5.0.0",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
