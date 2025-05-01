@@ -1,15 +1,27 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { onBoardingSchema, useStore } from "../state/onboarding";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export const Route = createFileRoute("/age-select")({
   component: RouteComponent,
 });
 
+const ageSchema = onBoardingSchema.pick({ age: true });
+type ageInputType = z.infer<typeof ageSchema>;
+
 function RouteComponent() {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<{ age: number }>();
-  const onSubmit: SubmitHandler<{ age: number }> = (data) => {
-    console.log(data);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ageInputType>({
+    resolver: zodResolver(ageSchema),
+  });
+  const onSubmit: SubmitHandler<ageInputType> = (data) => {
+    useStore.setState(data);
     goToNextPage();
   };
   const goToNextPage = () => {
@@ -28,10 +40,20 @@ function RouteComponent() {
             min="10"
             max="100"
             title="Select correct age"
-            {...register("age", { required: true, min: 10, max: 100 })}
+            {...register("age", {
+              required: true,
+              min: 10,
+              max: 100,
+              valueAsNumber: true,
+            })}
           />
-          <p className="validator-hint mb-4">That does not seem right!</p>
+          <p className="validator-hint mb-2">That does not seem right!</p>
         </div>
+        {errors.age && (
+          <p role="alert" className="mb-2">
+            {errors.age.message}
+          </p>
+        )}
         <button className="btn btn-primary" type="submit">
           Continue
         </button>

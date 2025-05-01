@@ -1,15 +1,26 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { useStore, onBoardingSchema } from "../state/onboarding";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 export const Route = createFileRoute("/weight-select")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<{ weight: number }>();
+  const weightSchema = onBoardingSchema.pick({ weight: true });
+  type weightSchema = z.infer<typeof weightSchema>;
 
-  const onSubmit: SubmitHandler<{ weight: number }> = (data) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<weightSchema>({
+    resolver: zodResolver(weightSchema),
+  });
+
+  const onSubmit: SubmitHandler<weightSchema> = (data) => {
     console.log(data);
     goToNextPage();
   };
@@ -33,10 +44,16 @@ function RouteComponent() {
               required: true,
               min: 40,
               max: 150,
+              valueAsNumber: true,
             })}
           />
-          <p className="validator-hint mb-4">That does not seem right!</p>
+          <p className="validator-hint mb-2">That does not seem right!</p>
         </div>
+        {errors.weight && (
+          <p role="alert" className="mb-2">
+            {errors.weight.message}
+          </p>
+        )}
         <button className="btn btn-primary" type="submit">
           Continue
         </button>

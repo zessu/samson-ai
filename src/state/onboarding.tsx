@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 import { z } from "zod";
 
 export const onBoardingSchema = z.object({
@@ -26,15 +27,17 @@ export const onBoardingSchema = z.object({
 
 export type onBoardingState = z.infer<typeof onBoardingSchema>;
 
-export const useStore = create<onBoardingState>((set) => ({
-  gender: "Male",
-  age: 0,
-  weight: 0,
-  fitnessLevel: "beginner",
-  goals: [],
-  equipment: [],
-  weekdays: [],
-  time: "",
-  duration: 0,
-  notifications: "Email",
-}));
+export const useStore = create<onBoardingState>()(
+  devtools((set) => ({
+    gender: "",
+    age: 0,
+    weight: 0,
+    fitnessLevel: "",
+    goals: [],
+    equipment: [],
+    weekdays: [],
+    time: "",
+    duration: 0,
+    notifications: "",
+  }))
+);
