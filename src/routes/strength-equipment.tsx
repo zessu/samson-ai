@@ -1,29 +1,26 @@
-import {
-  createFileRoute,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useStore } from "../state/onboarding";
 
 export const Route = createFileRoute("/strength-equipment")({
   component: RouteComponent,
 });
 
 type StrengthEquipmentInputs = {
-  dumbbells: string;
-  barbells: string;
-  kettlebells: string;
-  weightPlates: string;
-  pullUpBar: string;
-  longBar: string;
-  heavyBar: string;
-  deadliftBar: string;
-  legPressMachine: string;
-  latPulldownMachine: string;
-  chestPressMachine: string;
-  shoulderPressMachine: string;
-  seatedRowMachine: string;
-  weightBelt: string;
+  dumbbells: string | boolean;
+  barbells: string | boolean;
+  kettlebells: string | boolean;
+  weightPlates: string | boolean;
+  pullUpBar: string | boolean;
+  longBar: string | boolean;
+  heavyBar: string | boolean;
+  deadliftBar: string | boolean;
+  legPressMachine: string | boolean;
+  latPulldownMachine: string | boolean;
+  chestPressMachine: string | boolean;
+  shoulderPressMachine: string | boolean;
+  seatedRowMachine: string | boolean;
+  weightBelt: string | boolean;
 };
 
 function RouteComponent() {
@@ -31,7 +28,12 @@ function RouteComponent() {
   const { handleSubmit, register } = useForm<StrengthEquipmentInputs>();
 
   const onSubmit: SubmitHandler<StrengthEquipmentInputs> = (data) => {
-    console.log(data);
+    const equipment = Object.values(data).filter((val) => {
+      return val !== false;
+    }) as string[];
+    useStore.setState((state) => ({
+      equipment: [...state.equipment, ...equipment],
+    }));
     goToNextPage();
   };
 
