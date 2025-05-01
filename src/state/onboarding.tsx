@@ -22,7 +22,11 @@ export const onBoardingSchema = z.object({
   ),
   time: z.string(),
   duration: z.number(),
-  notifications: z.enum(["Email"]),
+  notifications: z.object({
+    email: z.boolean(),
+    sms: z.boolean(),
+    app: z.boolean(),
+  }),
 });
 
 export type onBoardingState = z.infer<typeof onBoardingSchema>;

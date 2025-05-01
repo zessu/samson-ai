@@ -1,11 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useStore, onBoardingSchema } from "../state/onboarding";
 
 export const Route = createFileRoute("/notifications")({
   component: RouteComponent,
 });
 
-type NotificationInputs = {
+type notificationInputs = {
   email: boolean;
   app: boolean;
   sms: boolean;
@@ -13,7 +14,7 @@ type NotificationInputs = {
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { handleSubmit, register } = useForm<NotificationInputs>({
+  const { handleSubmit, register } = useForm<notificationInputs>({
     defaultValues: {
       email: true,
       app: false,
@@ -21,8 +22,8 @@ function RouteComponent() {
     },
   });
 
-  const finish: SubmitHandler<NotificationInputs> = (data) => {
-    console.log("Notification Preferences:", data);
+  const finish: SubmitHandler<notificationInputs> = (data) => {
+    useStore.setState({ notifications: data });
     navigate({ to: "/" });
   };
 
