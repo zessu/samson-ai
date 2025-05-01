@@ -1,22 +1,23 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useStore } from "../state/onboarding";
 
 export const Route = createFileRoute("/goals")({
   component: RouteComponent,
 });
 
 type goalInputs = {
-  weight: string;
-  muscle: string;
-  tone: string;
-  cardio: string;
-  endurance: string;
-  flexibility: string;
-  posture: string;
-  stress: string;
-  maintain: string;
-  sport: string;
-  rehabilitate: string;
+  weight: string | boolean;
+  muscle: string | boolean;
+  tone: string | boolean;
+  cardio: string | boolean;
+  endurance: string | boolean;
+  flexibility: string | boolean;
+  posture: string | boolean;
+  stress: string | boolean;
+  maintain: string | boolean;
+  sport: string | boolean;
+  rehabilitate: string | boolean;
 };
 
 function RouteComponent() {
@@ -24,7 +25,11 @@ function RouteComponent() {
   const { register, handleSubmit } = useForm<goalInputs>();
 
   const onSubmit: SubmitHandler<goalInputs> = (data) => {
-    console.log(data);
+    const selectedGoals = Object.values(data).filter(
+      (value) => value !== false
+    ) as string[];
+
+    useStore.setState({ goals: selectedGoals });
     goToNextPage();
   };
 
