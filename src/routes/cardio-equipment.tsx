@@ -1,23 +1,24 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useStore } from "../state/onboarding";
 
 export const Route = createFileRoute("/cardio-equipment")({
   component: RouteComponent,
 });
 
 type cardioEquipmentInputs = {
-  treadmill: string;
-  runningTrack: string;
-  ellipticalTrainer: string;
-  stationaryBike: string;
-  rowingMachine: string;
-  resistanceBands: string;
-  exerciseMats: string;
-  stabilityBalls: string;
-  foamRollers: string;
-  skippingRopes: string;
-  boxingBagAndGloves: string;
-  medicineBalls: string;
+  treadmill: string | boolean;
+  runningTrack: string | boolean;
+  ellipticalTrainer: string | boolean;
+  stationaryBike: string | boolean;
+  rowingMachine: string | boolean;
+  resistanceBands: string | boolean;
+  exerciseMats: string | boolean;
+  stabilityBalls: string | boolean;
+  foamRollers: string | boolean;
+  skippingRopes: string | boolean;
+  boxingBagAndGloves: string | boolean;
+  medicineBalls: string | boolean;
 };
 
 function RouteComponent() {
@@ -25,7 +26,10 @@ function RouteComponent() {
   const { handleSubmit, register } = useForm<cardioEquipmentInputs>();
 
   const onSubmit: SubmitHandler<cardioEquipmentInputs> = (data) => {
-    console.log(data);
+    const equipmentList = Object.values(data).filter((value) => {
+      return value !== false;
+    }) as string[];
+    useStore.setState({ equipment: equipmentList });
     goToNextPage();
   };
 
