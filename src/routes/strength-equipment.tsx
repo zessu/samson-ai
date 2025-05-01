@@ -28,9 +28,9 @@ function RouteComponent() {
   const { handleSubmit, register } = useForm<StrengthEquipmentInputs>();
 
   const onSubmit: SubmitHandler<StrengthEquipmentInputs> = (data) => {
-    const equipment = Object.values(data).filter((val) => {
-      return val !== false;
-    }) as string[];
+    const equipment = Object.values(data).filter(
+      (val): val is string => val !== false
+    );
     useStore.setState((state) => ({
       equipment: [...state.equipment, ...equipment],
     }));
