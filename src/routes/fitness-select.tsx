@@ -32,9 +32,9 @@ function RouteComponent() {
           {...(register("level"), { required: true })}
         >
           <option disabled={true}>What's your experience level ?</option>
-          <option>Beginner</option>
-          <option>Intermeddiate</option>
-          <option>Advanced</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermeddiate</option>
+          <option value="advanced">Advanced</option>
         </select>
         <button className="btn btn-primary" type="submit">
           Continue
