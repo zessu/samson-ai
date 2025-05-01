@@ -1,18 +1,40 @@
-import { create } from 'zustand'
+import { create } from "zustand";
+import { z } from "zod";
 
-const Gender = {
-  Male: "Male",
-  Female: "Female"
-} as const;
+export const onBoardingSchema = z.object({
+  gender: z.enum(["Male", "Female"]),
+  age: z.number(),
+  weight: z.number(),
+  fitnessLevel: z.enum(["beginner", "intermediate", "advanced"]),
+  goals: z.array(z.string()),
+  equipment: z.array(z.string()),
+  weekdays: z.array(
+    z.enum([
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ])
+  ),
+  time: z.string(),
+  duration: z.number(),
+  notifications: z.enum(["Email"]),
+});
 
-type onBoardingState = {
-  gender: "Male" | "Female"
-}
+export type onBoardingState = z.infer<typeof onBoardingSchema>;
 
-
-export const useStore = create((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-  updateBears: (newBears) => set({ bears: newBears }),
-}))
+export const useStore = create<onBoardingState>((set) => ({
+  gender: "Male",
+  age: 0,
+  weight: 0,
+  fitnessLevel: "beginner",
+  goals: [],
+  equipment: [],
+  weekdays: [],
+  time: "",
+  duration: 0,
+  notifications: "Email",
+}));
