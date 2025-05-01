@@ -1,9 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useStore, onBoardingSchema } from "../state/onboarding";
+import { z } from "zod";
 
-type inputValues = {
-  gender: "Male" | "Female";
-};
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const genderSchema = onBoardingSchema.pick({ gender: true });
+type GenderFormValues = z.infer<typeof genderSchema>;
 
 export const Route = createFileRoute("/gender-select")({
   component: RouteComponent,
@@ -11,11 +14,17 @@ export const Route = createFileRoute("/gender-select")({
 
 function RouteComponent() {
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<GenderFormValues>({
+    resolver: zodResolver(genderSchema),
+  });
 
-  const { register, handleSubmit } = useForm<inputValues>();
-  const onSubmit: SubmitHandler<inputValues> = (data) => {
-    console.log(data);
-    goToNextPage();
+  const onSubmit: SubmitHandler<GenderFormValues> = (data) => {
+    try {
+      useStore.setState(data);
+      goToNextPage();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const goToNextPage = () => {
