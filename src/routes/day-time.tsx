@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useStore } from "../state/onboarding";
@@ -5,6 +7,18 @@ import { useStore } from "../state/onboarding";
 export const Route = createFileRoute("/day-time")({
   component: RouteComponent,
 });
+
+const dayTimeSchema = z.object({
+  Monday: z.union([z.literal("Monday"), z.boolean()]),
+  Tuesday: z.union([z.literal("Tuesday"), z.boolean()]),
+  Wednesday: z.union([z.literal("Wednesday"), z.boolean()]),
+  Thursday: z.union([z.literal("Thursday"), z.boolean()]),
+  Friday: z.union([z.literal("Friday"), z.boolean()]),
+  Saturday: z.union([z.literal("Saturday"), z.boolean()]),
+  Sunday: z.union([z.literal("Sunday"), z.boolean()]),
+});
+
+type daysOfWeekInput = z.infer<typeof dayTimeSchema>;
 
 type Weekday =
   | "Monday"
@@ -15,11 +29,11 @@ type Weekday =
   | "Saturday"
   | "Sunday";
 
-type daysOfWeekInput = Record<Weekday, Weekday | boolean>;
-
 function RouteComponent() {
   const navigate = useNavigate();
-  const { handleSubmit, register } = useForm<daysOfWeekInput>();
+  const { handleSubmit, register } = useForm<daysOfWeekInput>({
+    resolver: zodResolver(dayTimeSchema),
+  });
 
   const goToNextPage = () => {
     navigate({ to: "/time-selector" });
