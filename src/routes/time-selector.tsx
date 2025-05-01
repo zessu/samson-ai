@@ -1,14 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { onBoardingSchema, useStore } from "../state/onboarding";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const Route = createFileRoute("/time-selector")({
   component: RouteComponent,
 });
 
-type TimeSelectorInputs = {
-  workoutTime: string;
-  workoutDuration: number;
-};
+const workOutSchema = onBoardingSchema.pick({ time: true, duration: true });
+type timeSelectorInputs = z.infer<typeof workOutSchema>;
 
 function RouteComponent() {
   const navigate = useNavigate();
@@ -16,15 +17,15 @@ function RouteComponent() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<TimeSelectorInputs>();
+  } = useForm<timeSelectorInputs>({ resolver: zodResolver(workOutSchema) });
 
-  const goToNextPage = (data: TimeSelectorInputs) => {
-    console.log(data); // You can process the time and duration here
+  const goToNextPage = () => {
     navigate({ to: "/notifications" });
   };
 
-  const onSubmit: SubmitHandler<TimeSelectorInputs> = (data) => {
-    goToNextPage(data);
+  const onSubmit: SubmitHandler<timeSelectorInputs> = (data) => {
+    useStore.setState(data);
+    goToNextPage();
   };
 
   return (
@@ -34,13 +35,13 @@ function RouteComponent() {
         <input
           type="time"
           className="input mb-4"
-          {...register("workoutTime", {
+          {...register("time", {
             required: "Please select a workout time",
           })}
         />
-        {errors.workoutTime && (
+        {errors.time && (
           <span className="text-red-500 text-sm block mb-2">
-            {errors.workoutTime.message}
+            {errors.time.message}
           </span>
         )}
 
@@ -49,13 +50,13 @@ function RouteComponent() {
         </p>
         <input
           type="number"
-          className={`input ${errors.workoutDuration ? "border-red-500" : ""} mb-2`}
+          className={`input mb-2`}
           required
           placeholder="How long do you want to work out for?"
           min={15}
           max={120}
           title="Duration might not be reasonable."
-          {...register("workoutDuration", {
+          {...register("duration", {
             required: "Please enter the workout duration",
             min: {
               value: 15,
@@ -68,9 +69,9 @@ function RouteComponent() {
             valueAsNumber: true,
           })}
         />
-        {errors.workoutDuration && (
+        {errors.duration && (
           <span className="text-red-500 text-sm block mb-2">
-            {errors.workoutDuration.message}
+            {errors.duration.message}
           </span>
         )}
         <p className="validator-hint mb-4">Between 15 and 120 mins</p>
