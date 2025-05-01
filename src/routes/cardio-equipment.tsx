@@ -27,7 +27,7 @@ function RouteComponent() {
 
   const onSubmit: SubmitHandler<cardioEquipmentInputs> = (data) => {
     const equipment = Object.values(data).filter((value) => {
-      return value !== false;
+      value !== false;
     }) as string[];
     useStore.setState((state) => ({
       equipment: [...state.equipment, ...equipment],

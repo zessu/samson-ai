@@ -1,19 +1,21 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useStore } from "../state/onboarding";
 
 export const Route = createFileRoute("/day-time")({
   component: RouteComponent,
 });
 
-type daysOfWeekInput = {
-  monday?: "Monday";
-  tuesday?: "Tuesday";
-  wednesday?: "Wednesday";
-  thursday?: "Thursday";
-  friday?: "Friday";
-  saturday?: "Saturday";
-  sunday?: "Sunday";
-};
+type Weekday =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+
+type daysOfWeekInput = Record<Weekday, Weekday | boolean>;
 
 function RouteComponent() {
   const navigate = useNavigate();
@@ -24,7 +26,10 @@ function RouteComponent() {
   };
 
   const onSubmit: SubmitHandler<daysOfWeekInput> = (data) => {
-    console.log(data);
+    const weekdays = Object.values(data).filter(
+      (value): value is Weekday => value !== false
+    );
+    useStore.setState({ weekdays });
     goToNextPage();
   };
 
@@ -37,7 +42,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("monday")}
+            {...register("Monday")}
             value="Monday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -47,7 +52,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("tuesday")}
+            {...register("Tuesday")}
             value="Tuesday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -56,7 +61,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("wednesday")}
+            {...register("Wednesday")}
             value="Wednesday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -66,7 +71,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("thursday")}
+            {...register("Thursday")}
             value="Thursday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -76,7 +81,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("friday")}
+            {...register("Friday")}
             value="Friday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -86,7 +91,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-2">
           <input
             type="checkbox"
-            {...register("saturday")}
+            {...register("Saturday")}
             value="Saturday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
@@ -96,7 +101,7 @@ function RouteComponent() {
         <div className="flex items-center gap-2 mb-4">
           <input
             type="checkbox"
-            {...register("sunday")}
+            {...register("Sunday")}
             value="Sunday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
