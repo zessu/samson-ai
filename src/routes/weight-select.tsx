@@ -21,7 +21,7 @@ function RouteComponent() {
   });
 
   const onSubmit: SubmitHandler<weightSchema> = (data) => {
-    console.log(data);
+    useStore.setState(data);
     goToNextPage();
   };
 
