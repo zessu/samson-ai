@@ -1,8 +1,6 @@
-<div style="text-align:center; width: 100px; height: 100px">
-
-![samson](./samson.png)
-
-</div>
+<p align="center">
+  <img src="./samson.png" width="200" alt="samson" />
+</p>
 
 # SAMSONAI
 
