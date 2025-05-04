@@ -1,4 +1,4 @@
-<div style="text-align:center; width: 200px; height: 200px">
+<div style="text-align:center; width: 100px; height: 100px">
 
 ![samson](./samson.png)
 
