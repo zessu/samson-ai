@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./samson.png" width="200" alt="samson" />
+  <img src="./samson.png" width="400" alt="samson" />
 </p>
 
 # SAMSONAI
