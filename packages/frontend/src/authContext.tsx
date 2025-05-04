@@ -1,13 +1,13 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { signIn, signOut, getSession } from "./lib/auth";
+import authClient from "./lib/auth";
 
-type User = {
-  email: string;
-};
+type signIn = ReturnType<typeof signIn.social>;
+type signOut = ReturnType<typeof signOut>;
 
 type UserContext = {
-  user: User;
-  signIn: () => void;
-  signOut: () => void;
+  signIn: signIn;
+  signOut: signOut;
 };
 
 export const AuthContext = createContext<UserContext | undefined>(undefined);
@@ -15,13 +15,20 @@ export const AuthContext = createContext<UserContext | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const user = {
-    user: { email: "" },
-    signIn: async () => {},
-    signOut: async () => {},
+  const signIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: import.meta.env.VITE_APP_URL,
+    });
   };
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+  const signOut = async () => await authClient.signOut();
+
+  return (
+    <AuthContext.Provider value={{ signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
