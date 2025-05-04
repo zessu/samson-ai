@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { onBoardingSchema, useStore } from "../state/onboarding";
 import { zodResolver } from "@hookform/resolvers/zod";
