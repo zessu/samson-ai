@@ -1,15 +1,9 @@
-# workouts
+<div style="text-align:center; width: 200px; height: 200px">
 
-To install dependencies:
+![samson](./samson.png)
 
-```bash
-bun install
-```
+</div>
 
-To run:
+# SAMSONAI
 
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.2.10. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+**Get personalised workout recommendations directly in your inbox**
