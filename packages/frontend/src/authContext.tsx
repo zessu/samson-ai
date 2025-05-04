@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { signIn, signOut, getSession } from "./lib/auth";
+import { signIn, signOut, useSession } from "./lib/auth";
 import authClient from "./lib/auth";
 
 type signIn = ReturnType<typeof signIn.social>;
