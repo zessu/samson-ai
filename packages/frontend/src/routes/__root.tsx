@@ -5,7 +5,7 @@ import { getSession } from "../lib/auth";
 export const Route = createRootRoute({
   beforeLoad: async () => {
     const { data: session } = await getSession();
-    if (!session) return redirect({ to: "/signup" });
+    // if (!session) return redirect({ to: "/signup" });
   },
   component: () => (
     <>

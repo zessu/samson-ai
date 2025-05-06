@@ -1,6 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useStore } from "../state/onboarding";
+import {
+  useStore,
+  onBoardingState,
+  onBoardingSchema,
+} from "../state/onboarding";
 
 export const Route = createFileRoute("/notifications")({
   component: RouteComponent,
@@ -22,9 +26,24 @@ function RouteComponent() {
     },
   });
 
-  const finish: SubmitHandler<notificationInputs> = (data) => {
+  const submitForm = async (data: onBoardingState) => {
+    return await fetch(`${import.meta.env.VITE_API_URL}/createProfile`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  };
+
+  const finish: SubmitHandler<notificationInputs> = async (data) => {
     useStore.setState({ notifications: data });
-    navigate({ to: "/" });
+    const userSettings = useStore.getState();
+    try {
+      const validated = onBoardingSchema.parse(userSettings);
+      const res = await submitForm(validated);
+      if (res) navigate({ to: "/" });
+      throw new Error("There was a problem processing the user request");
+    } catch (error) {
+      throw new Error("There was a problem parsing the provided data");
+    }
   };
 
   return (
