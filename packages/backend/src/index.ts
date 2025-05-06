@@ -1,13 +1,24 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
+
 import { auth } from "../auth";
 
 const app = new Hono();
+
+app.use(
+  "*",
+  cors({
+    origin: process.env.LOCALDOMAIN as string,
+    credentials: true,
+  })
+);
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.post("/generate", (c) => {
+app.post("/createProfile", async (c) => {
+  const userData = await c.req.json();
   return c.text("generated your workout routine");
 });
 

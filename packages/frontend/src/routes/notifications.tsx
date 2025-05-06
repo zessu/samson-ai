@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   useStore,
-  onBoardingState,
+  type onBoardingState,
   onBoardingSchema,
 } from "../state/onboarding";
 
@@ -37,12 +37,12 @@ function RouteComponent() {
     useStore.setState({ notifications: data });
     const userSettings = useStore.getState();
     try {
-      const validated = onBoardingSchema.parse(userSettings);
+      const validated = await onBoardingSchema.parse(userSettings);
       const res = await submitForm(validated);
-      if (res) navigate({ to: "/" });
-      throw new Error("There was a problem processing the user request");
+      console.log(res);
+      if (res.ok) navigate({ to: "/" });
     } catch (error) {
-      throw new Error("There was a problem parsing the provided data");
+      console.log(error);
     }
   };
 
