@@ -3,8 +3,17 @@ import {
   text,
   timestamp,
   boolean,
-  integer,
+  pgEnum,
+  smallint,
 } from "drizzle-orm/pg-core";
+
+const fitnessLevelEnum = pgEnum("fitness_level", [
+  "beginner",
+  "intermediate",
+  "advanced",
+]);
+const genderEnum = pgEnum("gender", ["male", "female"]);
+const notificationEnum = pgEnum("notifications", ["sms", "email", "app"]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -12,6 +21,15 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
+  gender: genderEnum(),
+  fitnessLevel: fitnessLevelEnum(),
+  age: smallint("age"),
+  weight: smallint("weight"),
+  goals: text("goals"),
+  equipment: text("equipment"),
+  workoutTime: timestamp("workout_time", { withTimezone: true }),
+  workoutDuration: smallint("workout_duration"),
+  notifications: notificationEnum(),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
 });

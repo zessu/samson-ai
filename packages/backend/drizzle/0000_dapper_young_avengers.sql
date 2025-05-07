@@ -1,3 +1,7 @@
+CREATE TYPE gender AS ENUM ('male', 'female');
+CREATE TYPE fitness_level AS ENUM ('beginner', 'intermediate', 'advanced');
+CREATE TYPE notifications AS ENUM ('sms', 'email', 'app');
+
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY NOT NULL,
 	"account_id" text NOT NULL,
@@ -32,6 +36,15 @@ CREATE TABLE "user" (
 	"email" text NOT NULL,
 	"email_verified" boolean NOT NULL,
 	"image" text,
+	"gender" "gender",
+	"fitnessLevel" "fitness_level",
+	"age" smallint,
+	"weight" smallint,
+	"goals" text,
+	"equipment" text,
+	"workout_time" timestamp with time zone,
+	"workout_duration" smallint,
+	"notifications" "notifications",
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	CONSTRAINT "user_email_unique" UNIQUE("email")
