@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { useStore } from "../../state/onboarding";
 
 export const Route = createFileRoute("/_onboarding/strength-equipment")({
