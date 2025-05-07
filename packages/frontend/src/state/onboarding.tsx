@@ -21,6 +21,7 @@ export const onBoardingSchema = z.object({
     ])
   ),
   time: z.string(),
+  offset: z.string(),
   duration: z.number(),
   notifications: z.object({
     email: z.boolean(),

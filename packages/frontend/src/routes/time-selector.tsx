@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { onBoardingSchema, useStore } from "../state/onboarding";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +26,10 @@ function RouteComponent() {
   };
 
   const onSubmit: SubmitHandler<timeSelectorInputs> = (data) => {
+    dayjs.extend(utc);
+    const utcOffset = dayjs().format("Z");
     useStore.setState(data);
+    useStore.setState(() => ({ offset: utcOffset }));
     goToNextPage();
   };
 
