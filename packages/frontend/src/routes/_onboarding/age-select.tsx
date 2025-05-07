@@ -1,57 +1,57 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useStore, onBoardingSchema } from "../state/onboarding";
+import { onBoardingSchema, useStore } from "../../state/onboarding";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-export const Route = createFileRoute("/weight-select")({
+
+export const Route = createFileRoute("/_onboarding/age-select")({
   component: RouteComponent,
 });
 
+const ageSchema = onBoardingSchema.pick({ age: true });
+type ageInputType = z.infer<typeof ageSchema>;
+
 function RouteComponent() {
   const navigate = useNavigate();
-  const weightSchema = onBoardingSchema.pick({ weight: true });
-  type weightSchema = z.infer<typeof weightSchema>;
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<weightSchema>({
-    resolver: zodResolver(weightSchema),
+  } = useForm<ageInputType>({
+    resolver: zodResolver(ageSchema),
   });
-
-  const onSubmit: SubmitHandler<weightSchema> = (data) => {
+  const onSubmit: SubmitHandler<ageInputType> = (data) => {
     useStore.setState(data);
     goToNextPage();
   };
-
   const goToNextPage = () => {
-    navigate({ to: "/fitness-select" });
+    navigate({ to: "/weight-select" });
   };
+
   return (
-    <div>
+    <div className="w-64">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-64">
+        <div>
           <input
             type="number"
             className="input validator"
             required
-            placeholder="How many KGs do you weigh?"
-            min="40"
-            max="150"
+            placeholder="How old are you ?"
+            min="10"
+            max="100"
             title="Select correct age"
-            {...register("weight", {
+            {...register("age", {
               required: true,
-              min: 40,
-              max: 150,
+              min: 10,
+              max: 100,
               valueAsNumber: true,
             })}
           />
           <p className="validator-hint mb-2">That does not seem right!</p>
         </div>
-        {errors.weight && (
+        {errors.age && (
           <p role="alert" className="mb-2">
-            {errors.weight.message}
+            {errors.age.message}
           </p>
         )}
         <button className="btn btn-primary" type="submit">

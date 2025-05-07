@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useStore, onBoardingSchema } from "../state/onboarding";
+import { useStore, onBoardingSchema } from "../../state/onboarding";
 import { z } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const genderSchema = onBoardingSchema.pick({ gender: true });
 type GenderFormValues = z.infer<typeof genderSchema>;
 
-export const Route = createFileRoute("/gender-select")({
+export const Route = createFileRoute("/_onboarding/gender-select")({
   component: RouteComponent,
 });
 

@@ -2,9 +2,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useStore } from "../state/onboarding";
+import { useStore } from "../../state/onboarding";
 
-export const Route = createFileRoute("/day-time")({
+export const Route = createFileRoute("/_onboarding/day-time")({
   component: RouteComponent,
 });
 

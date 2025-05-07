@@ -2,11 +2,11 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { onBoardingSchema, useStore } from "../state/onboarding";
+import { onBoardingSchema, useStore } from "../../state/onboarding";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const Route = createFileRoute("/time-selector")({
+export const Route = createFileRoute("/_onboarding/time-selector")({
   component: RouteComponent,
 });
 

@@ -4,9 +4,9 @@ import {
   useStore,
   type onBoardingState,
   onBoardingSchema,
-} from "../state/onboarding";
+} from "../../state/onboarding";
 
-export const Route = createFileRoute("/notifications")({
+export const Route = createFileRoute("/_onboarding/notifications")({
   component: RouteComponent,
 });
 

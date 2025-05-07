@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useStore } from "../state/onboarding";
+import { useStore } from "../../state/onboarding";
 
-export const Route = createFileRoute("/cardio-equipment")({
+export const Route = createFileRoute("/_onboarding/cardio-equipment")({
   component: RouteComponent,
 });
 
