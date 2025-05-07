@@ -4,6 +4,7 @@ import { getSession } from "../../lib/auth";
 export const Route = createFileRoute("/_onboarding")({
   beforeLoad: async () => {
     const { data: session } = await getSession();
+    console.log("session", session);
     if (!session) return redirect({ to: "/signup" });
   },
   component: RouteComponent,

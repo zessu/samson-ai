@@ -1,15 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { signIn } from "../lib/auth";
+import { useAuth } from "../authContext";
 
 export const Route = createFileRoute("/signup")({
   component: Signup,
 });
 
 function Signup() {
+  const { signIn } = useAuth();
+
+  const authenticateWithGoogle = async () => {
+    try {
+      await signIn("google");
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen">
         <div>
-          <button className="btn bg-white text-black border-[#e5e5e5]">
+          <button
+            className="btn bg-white text-black border-[#e5e5e5]"
+            onClick={authenticateWithGoogle}
+          >
             <svg
               aria-label="Google logo"
               width="16"
@@ -37,7 +52,7 @@ function Signup() {
                 ></path>
               </g>
             </svg>
-            Login with Google
+            LogIn or SignUp
           </button>
         </div>
       </div>

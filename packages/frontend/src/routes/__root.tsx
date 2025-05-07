@@ -1,6 +1,5 @@
 import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { getSession } from "../lib/auth";
 
 export const Route = createRootRoute({
   component: () => (
