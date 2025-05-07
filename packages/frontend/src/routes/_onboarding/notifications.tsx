@@ -39,7 +39,6 @@ function RouteComponent() {
     try {
       const validated = await onBoardingSchema.parse(userSettings);
       const res = await submitForm(validated);
-      console.log(res);
       if (res.ok) navigate({ to: "/" });
     } catch (error) {
       console.log(error);

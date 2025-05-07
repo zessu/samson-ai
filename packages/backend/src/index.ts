@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-
 import { auth } from "../auth";
 
 const app = new Hono();
@@ -19,6 +18,7 @@ app.get("/", (c) => {
 
 app.post("/createProfile", async (c) => {
   const userData = await c.req.json();
+  console.log(userData);
   return c.text("generated your workout routine");
 });
 

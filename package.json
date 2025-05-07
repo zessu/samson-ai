@@ -6,6 +6,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "backend": "cd packages/backend && bun run dev",
+    "frontend": "cd packages/frontend && bun run dev"
+  },
   "peerDependencies": {
     "typescript": "^5"
   }

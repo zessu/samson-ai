@@ -24,5 +24,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false
-  }
+  },
+  "paths": {
+    "frontend": ["./packages/frontend"],
+    "backend": ["./packages/backend"]
+  },
+  "include": ["packages/**/*"]
 }
