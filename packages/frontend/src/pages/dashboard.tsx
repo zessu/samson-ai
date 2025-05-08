@@ -1,7 +1,6 @@
 import { useState, type FC } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-
 export const Dashboard: FC = () => {
   const [selected, setSelected] = useState<Date[] | undefined>();
   return (

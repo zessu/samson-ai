@@ -25,7 +25,7 @@
     "react-hook-form": "^7.56.1",
     "tailwindcss": "^4.0.12",
     "zustand": "^5.0.3",
-    "backend": "*"
+    "shared": "*"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
