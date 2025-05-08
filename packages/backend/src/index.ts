@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { auth } from "../auth";
+import { Human } from "shared";
+
 const app = new Hono();
 
 app.use(

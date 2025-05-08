@@ -1,10 +1,17 @@
 {
   "name": "shared",
   "module": "index.ts",
+  "version": "0.0.1",
+  "description": "Shared code",
   "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
   "private": true,
   "devDependencies": {
     "@types/bun": "latest"
+  },
+  "exports": {
+    ".": "./index.ts"
   },
   "peerDependencies": {
     "typescript": "^5"
