@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { onBoardingSchema, onBoardingState } from "shared";
-import { useSession } from "../../lib/auth";
 
 import { useStore } from "../../state/onboarding";
 
@@ -16,6 +16,7 @@ type notificationInputs = {
 };
 
 function RouteComponent() {
+  const [onBoardingError, setonBoardingError] = useState(false);
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm<notificationInputs>({
     defaultValues: {
@@ -26,11 +27,9 @@ function RouteComponent() {
   });
 
   const submitForm = async (data: onBoardingState) => {
-    const user = useSession();
-    const payload = { ...data, userId: user.data?.user.id };
     return await fetch(`${import.meta.env.VITE_API_URL}/createProfile`, {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: JSON.stringify(data),
     });
   };
 
@@ -40,7 +39,11 @@ function RouteComponent() {
     try {
       const validated = await onBoardingSchema.parse(userSettings);
       const res = await submitForm(validated);
-      if (res.ok) navigate({ to: "/" });
+      if (res.ok) {
+        navigate({ to: "/" });
+      } else {
+        if (!res.ok) setonBoardingError(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -48,6 +51,27 @@ function RouteComponent() {
 
   return (
     <div className="text-xl flex flex-col">
+      {onBoardingError && (
+        <div role="alert" className="alert alert-error mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            There was a problem processing your request. Give it a minute and
+            try again
+          </span>
+        </div>
+      )}
       <h3 className="font-bold text-lg mb-2">
         What's the best way to reach you with your daily workouts?
       </h3>

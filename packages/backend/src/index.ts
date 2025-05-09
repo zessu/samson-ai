@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { validator } from "hono/validator";
 import { cors } from "hono/cors";
 import { auth } from "../auth";
 import { onBoardingSchema } from "shared";
@@ -21,7 +20,11 @@ app.get("/", (c) => {
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
-  console.log(validated);
+  const user = await auth.api.getSession({
+    headers: c.req.raw.headers,
+  });
+  if (!user)
+    return c.text("You are not authorised to perform that action", 401);
   return c.text("generated your workout routine");
 });
 
