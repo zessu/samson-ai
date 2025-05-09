@@ -9,7 +9,7 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: process.env.LOCALDOMAIN as string,
+    origin: Bun.env.LOCALDOMAIN as string,
     credentials: true,
   })
 );
@@ -20,6 +20,7 @@ app.get("/", (c) => {
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
+  console.log(c.req.raw.headers);
   const user = await auth.api.getSession({
     headers: c.req.raw.headers,
   });

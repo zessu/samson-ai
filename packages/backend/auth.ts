@@ -4,6 +4,21 @@ import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
 import { workoutSchedules } from "./src/db/schema/index";
 
+const cookieAttr =
+  Bun.env.NODE_ENV === "production"
+    ? ({
+        secure: true,
+        httpOnly: true,
+        sameSite: "lax",
+        partitioned: true,
+      } as const)
+    : ({
+        secure: true,
+        httpOnly: false,
+        sameSite: "lax",
+        partitioned: true,
+      } as const);
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -17,11 +32,11 @@ export const auth = betterAuth({
   }),
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: Bun.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: Bun.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  trustedOrigins: [`${process.env.LOCALDOMAIN}`],
+  trustedOrigins: [`${Bun.env.LOCALDOMAIN}`],
   session: {
     cookieCache: {
       enabled: true,
@@ -33,11 +48,6 @@ export const auth = betterAuth({
       enabled: true,
       domain: "localhost",
     },
-    defaultCookieAttributes: {
-      secure: true,
-      httpOnly: true,
-      sameSite: "none",
-      partitioned: true,
-    },
+    defaultCookieAttributes: cookieAttr,
   },
 });
