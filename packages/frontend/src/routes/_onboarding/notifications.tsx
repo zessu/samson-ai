@@ -1,7 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
 import { onBoardingSchema, onBoardingState } from "shared";
+import { useSession } from "../../lib/auth";
+
+import { useStore } from "../../state/onboarding";
 
 export const Route = createFileRoute("/_onboarding/notifications")({
   component: RouteComponent,
@@ -24,9 +26,11 @@ function RouteComponent() {
   });
 
   const submitForm = async (data: onBoardingState) => {
+    const user = useSession();
+    const payload = { ...data, userId: user.data?.user.id };
     return await fetch(`${import.meta.env.VITE_API_URL}/createProfile`, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   };
 
