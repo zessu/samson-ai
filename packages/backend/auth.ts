@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
+import { workoutSchedules } from "./src/db/schema/index";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -11,6 +12,7 @@ export const auth = betterAuth({
       session,
       account,
       verification,
+      workoutSchedules,
     },
   }),
   socialProviders: {

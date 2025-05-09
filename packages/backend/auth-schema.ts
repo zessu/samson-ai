@@ -27,8 +27,6 @@ export const user = pgTable("user", {
   weight: smallint("weight"),
   goals: text("goals"),
   equipment: text("equipment"),
-  workoutTime: timestamp("workout_time", { withTimezone: true }),
-  workoutDuration: smallint("workout_duration"),
   notifications: notificationEnum(),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),

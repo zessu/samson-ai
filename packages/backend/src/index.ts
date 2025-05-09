@@ -1,7 +1,9 @@
 import { Hono } from "hono";
+import { zValidator } from "@hono/zod-validator";
+import { validator } from "hono/validator";
 import { cors } from "hono/cors";
 import { auth } from "../auth";
-import { Human } from "shared";
+import { onBoardingSchema } from "shared";
 
 const app = new Hono();
 
@@ -17,9 +19,9 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.post("/createProfile", async (c) => {
-  const userData = await c.req.json();
-  console.log(userData);
+app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
+  const validated = c.req.valid("json");
+  console.log(validated);
   return c.text("generated your workout routine");
 });
 
