@@ -30,6 +30,9 @@ function RouteComponent() {
     return await fetch(`${import.meta.env.VITE_API_URL}/createProfile`, {
       method: "POST",
       body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   };
 
