@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { signIn, signOut } from "./lib/auth";
 import authClient from "./lib/auth";
 

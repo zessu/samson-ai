@@ -1,10 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import {
-  useStore,
-  type onBoardingState,
-  onBoardingSchema,
-} from "../../state/onboarding";
+import { useStore } from "../../state/onboarding";
+import { onBoardingSchema, onBoardingState } from "shared";
 
 export const Route = createFileRoute("/_onboarding/notifications")({
   component: RouteComponent,

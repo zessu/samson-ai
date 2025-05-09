@@ -10,6 +10,7 @@
     "packages/backend": {
       "name": "backend",
       "dependencies": {
+        "@hono/zod-validator": "^0.5.0",
         "better-auth": "^1.2.7",
         "dotenv": "^16.5.0",
         "drizzle-orm": "^0.43.1",
@@ -43,6 +44,7 @@
         "react-day-picker": "^9.6.1",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.56.1",
+        "shared": "workspace:*",
         "tailwindcss": "^4.0.12",
         "zustand": "^5.0.3",
       },
@@ -63,6 +65,10 @@
     },
     "packages/shared": {
       "name": "shared",
+      "version": "0.0.1",
+      "dependencies": {
+        "zod": "^3.24.4",
+      },
       "devDependencies": {
         "@types/bun": "latest",
       },
@@ -199,6 +205,8 @@
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.2.8", "", { "dependencies": { "@eslint/core": "^0.13.0", "levn": "^0.4.1" } }, "sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA=="],
 
     "@hexagon/base64": ["@hexagon/base64@1.1.28", "", {}, "sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw=="],
+
+    "@hono/zod-validator": ["@hono/zod-validator@0.5.0", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.19.1" } }, "sha512-ds5bW6DCgAnNHP33E3ieSbaZFd5dkV52ZjyaXtGoR06APFrCtzAsKZxTHwOrJNBdXsi0e5wNwo5L4nVEVnJUdg=="],
 
     "@hookform/resolvers": ["@hookform/resolvers@5.0.1", "", { "dependencies": { "@standard-schema/utils": "^0.3.0" }, "peerDependencies": { "react-hook-form": "^7.55.0" } }, "sha512-u/+Jp83luQNx9AdyW2fIPGY6Y7NG68eN2ZW8FOJYL+M0i4s49+refdJdOp/A9n9HFQtQs3HIDHQvX3ZET2o7YA=="],
 

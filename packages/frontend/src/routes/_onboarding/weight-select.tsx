@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore, onBoardingSchema } from "../../state/onboarding";
+import { useStore } from "../../state/onboarding";
+import { onBoardingSchema } from "shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 export const Route = createFileRoute("/_onboarding/weight-select")({
