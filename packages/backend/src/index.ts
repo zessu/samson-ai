@@ -24,6 +24,7 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const user = await auth.api.getSession({
     headers: c.req.raw.headers,
   });
+  console.log("user", user);
   if (!user)
     return c.text("You are not authorised to perform that action", 401);
   return c.text("generated your workout routine");
