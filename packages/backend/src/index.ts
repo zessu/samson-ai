@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
@@ -44,11 +45,18 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     notifications: "sms",
   };
 
-  const parsedUserData = userUpdateSchema.parse(userData);
+  const parsedUserData = userUpdateSchema.safeParse(userData);
+
+  if (!parsedUserData.success) {
+    return c.json(
+      { error: "Validation failed", issues: parsedUserData.error.format() },
+      400
+    );
+  }
 
   const userResult = await db
     .update(User)
-    .set(parsedUserData)
+    .set(parsedUserData.data)
     .where(eq(User.id, userid))
     .returning({ userid: User.id });
 
@@ -65,13 +73,22 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     workoutDuration: validated.duration,
     offset: validated.offset,
     userId: userResult[0].userid,
+    id: nanoid(),
   };
 
-  const parsedWorkoutData = await workoutScheduleInsertSchema.parse(schedule);
+  const parsedWorkoutData =
+    await workoutScheduleInsertSchema.safeParse(schedule);
+
+  if (!parsedWorkoutData.success) {
+    return c.json(
+      { error: "Validation failed", issues: parsedWorkoutData.error.format() },
+      400
+    );
+  }
 
   const workoutResult = await db
     .insert(workoutSchedule)
-    .values(parsedWorkoutData)
+    .values(parsedWorkoutData.data)
     .returning({ id: workoutSchedule.id });
 
   if (!workoutResult || workoutResult.length === 0) {
