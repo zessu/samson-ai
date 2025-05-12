@@ -1,8 +1,12 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
-import { auth } from "../auth";
+import { eq } from "drizzle-orm";
+
+import { auth } from "@/auth";
 import { onBoardingSchema } from "shared";
+import { user as User } from "@/auth-schema";
+import { db } from "@/src/db/index";
 
 const app = new Hono();
 
@@ -20,16 +24,24 @@ app.get("/", (c) => {
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
-  console.log(c.req.raw.headers);
+  console.log(validated);
   const user = await auth.api.getSession({
     headers: c.req.raw.headers,
   });
-  console.log("user", user);
   if (!user)
     return c.text("You are not authorised to perform that action", 401);
+  const userid = user.user.id;
+  const res = db.update(User).set({}).where(eq(User.id, userid)).returning();
   return c.text("generated your workout routine");
 });
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
+
+app.onError((err, c) => {
+  if (err.message.startsWith("Validation error")) {
+    return c.json({ error: "Validation Error" }, 400);
+  }
+  return c.json({ error: "Internal Server Error" }, 500);
+});
 
 export default app;

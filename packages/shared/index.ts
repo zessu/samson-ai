@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const numberRangeRegex = /^[-+]?([0-9]|1[0-2])$/;
+
 export const onBoardingSchema = z.object({
   gender: z.enum(["male", "female"]),
   age: z.number(),
@@ -19,7 +21,10 @@ export const onBoardingSchema = z.object({
     ])
   ),
   time: z.string(),
-  offset: z.string(),
+  offset: z
+    .number()
+    .min(-12, "Incorrect TimeZone offset")
+    .max(12, "Incorrect Timezone offset"),
   duration: z.number(),
   notifications: z.object({
     email: z.boolean(),
@@ -28,5 +33,4 @@ export const onBoardingSchema = z.object({
   }),
 });
 
-const x = 12;
 export type onBoardingState = z.infer<typeof onBoardingSchema>;
