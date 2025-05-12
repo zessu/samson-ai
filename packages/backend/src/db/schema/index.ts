@@ -6,7 +6,7 @@ import {
   text,
   time,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { user } from "../../../auth-schema";
 
 const weekdays = pgEnum("weekdays", [
@@ -33,3 +33,4 @@ export const workoutSchedule = pgTable("workoutSchedules", {
 });
 
 export const workoutScheduleInsertSchema = createInsertSchema(workoutSchedule);
+export const workoutScheduleUpdateSchema = createUpdateSchema(workoutSchedule);

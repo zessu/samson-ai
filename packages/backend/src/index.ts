@@ -7,7 +7,12 @@ import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
-import { workoutSchedule, workoutScheduleInsertSchema } from "@db/schema/index";
+import {
+  workoutSchedule,
+  workoutScheduleInsertSchema,
+  workoutScheduleUpdateSchema,
+} from "@db/schema/index";
+import { userUpdateSchema } from "@/auth-schema";
 
 const app = new Hono();
 
@@ -19,10 +24,6 @@ app.use(
   })
 );
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
-
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
   const user = await auth.api.getSession({
@@ -32,17 +33,22 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     return c.text("You are not authorised to perform that action", 401);
 
   const userid = user.user.id;
+
+  const userData = {
+    gender: validated.gender,
+    age: validated.age,
+    weight: validated.weight,
+    fitnessLevel: validated.fitnessLevel,
+    goals: validated.goals.join(","),
+    equipment: validated.equipment.join(","),
+    notifications: "sms",
+  };
+
+  const parsedUserData = userUpdateSchema.parse(userData);
+
   const userResult = await db
     .update(User)
-    .set({
-      gender: validated.gender,
-      age: validated.age,
-      weight: validated.weight,
-      fitnessLevel: validated.fitnessLevel,
-      goals: validated.goals.join(","),
-      equipment: validated.equipment.join(","),
-      notifications: "sms",
-    })
+    .set(parsedUserData)
     .where(eq(User.id, userid))
     .returning({ userid: User.id });
 
@@ -61,10 +67,11 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     userId: userResult[0].userid,
   };
 
-  const parsed = await workoutScheduleInsertSchema.parse(schedule);
+  const parsedWorkoutData = await workoutScheduleInsertSchema.parse(schedule);
+
   const workoutResult = await db
     .insert(workoutSchedule)
-    .values(parsed)
+    .values(parsedWorkoutData)
     .returning({ id: workoutSchedule.id });
 
   if (!workoutResult || workoutResult.length === 0) {

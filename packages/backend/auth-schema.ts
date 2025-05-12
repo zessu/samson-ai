@@ -6,6 +6,7 @@ import {
   pgEnum,
   smallint,
 } from "drizzle-orm/pg-core";
+import { createUpdateSchema } from "drizzle-zod";
 
 const fitnessLevelEnum = pgEnum("fitness_level", [
   "beginner",
@@ -31,6 +32,8 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export const userUpdateSchema = createUpdateSchema(user);
 
 export const session = pgTable("session", {
   id: text("id").primaryKey(),
