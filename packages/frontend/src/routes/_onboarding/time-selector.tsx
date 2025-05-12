@@ -28,10 +28,11 @@ function RouteComponent() {
   };
 
   const onSubmit: SubmitHandler<timeSelectorInputs> = (data) => {
+    useStore.setState(data);
     dayjs.extend(utc);
     const utcOffset = dayjs().format("Z");
-    useStore.setState(data);
-    useStore.setState(() => ({ offset: utcOffset }));
+    const time = parseInt(utcOffset.split(":")[0]);
+    useStore.setState(() => ({ offset: time }));
     goToNextPage();
   };
 

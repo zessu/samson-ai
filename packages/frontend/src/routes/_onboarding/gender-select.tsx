@@ -44,7 +44,7 @@ function RouteComponent() {
               <input
                 type="radio"
                 className="radio"
-                value="Male"
+                value="male"
                 {...register("gender", { required: true })}
               />
               <span className="ml-2">Male</span>
@@ -53,7 +53,7 @@ function RouteComponent() {
               <input
                 type="radio"
                 className="radio"
-                value="Female"
+                value="female"
                 {...register("gender", { required: true })}
               />
               <span className="ml-2">Female</span>

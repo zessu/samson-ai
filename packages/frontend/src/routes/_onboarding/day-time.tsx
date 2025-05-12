@@ -9,25 +9,25 @@ export const Route = createFileRoute("/_onboarding/day-time")({
 });
 
 const dayTimeSchema = z.object({
-  Monday: z.union([z.literal("Monday"), z.boolean()]),
-  Tuesday: z.union([z.literal("Tuesday"), z.boolean()]),
-  Wednesday: z.union([z.literal("Wednesday"), z.boolean()]),
-  Thursday: z.union([z.literal("Thursday"), z.boolean()]),
-  Friday: z.union([z.literal("Friday"), z.boolean()]),
-  Saturday: z.union([z.literal("Saturday"), z.boolean()]),
-  Sunday: z.union([z.literal("Sunday"), z.boolean()]),
+  Monday: z.union([z.literal("monday"), z.boolean()]),
+  Tuesday: z.union([z.literal("tuesday"), z.boolean()]),
+  Wednesday: z.union([z.literal("wednesday"), z.boolean()]),
+  Thursday: z.union([z.literal("thursday"), z.boolean()]),
+  Friday: z.union([z.literal("friday"), z.boolean()]),
+  Saturday: z.union([z.literal("saturday"), z.boolean()]),
+  Sunday: z.union([z.literal("sunday"), z.boolean()]),
 });
 
 type daysOfWeekInput = z.infer<typeof dayTimeSchema>;
 
 type Weekday =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
 
 function RouteComponent() {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Monday")}
-            value="Monday"
+            value="monday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Monday</span>
@@ -67,7 +67,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Tuesday")}
-            value="Tuesday"
+            value="tuesday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Tuesday</span>
@@ -76,7 +76,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Wednesday")}
-            value="Wednesday"
+            value="wednesday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Wednesday</span>
@@ -86,7 +86,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Thursday")}
-            value="Thursday"
+            value="thursday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Thursday</span>
@@ -96,7 +96,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Friday")}
-            value="Friday"
+            value="friday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Friday</span>
@@ -106,7 +106,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Saturday")}
-            value="Saturday"
+            value="saturday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Saturday</span>
@@ -116,7 +116,7 @@ function RouteComponent() {
           <input
             type="checkbox"
             {...register("Sunday")}
-            value="Sunday"
+            value="sunday"
             className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Sunday</span>
