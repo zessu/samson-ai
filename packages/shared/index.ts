@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const onBoardingSchema = z.object({
-  gender: z.enum(["Male", "Female"]),
+  gender: z.enum(["male", "female"]),
   age: z.number(),
   weight: z.number(),
   fitnessLevel: z.enum(["beginner", "intermediate", "advanced"]),
@@ -9,13 +9,13 @@ export const onBoardingSchema = z.object({
   equipment: z.array(z.string()),
   weekdays: z.array(
     z.enum([
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
     ])
   ),
   time: z.string(),
@@ -28,4 +28,5 @@ export const onBoardingSchema = z.object({
   }),
 });
 
+const x = 12;
 export type onBoardingState = z.infer<typeof onBoardingSchema>;
