@@ -3,10 +3,11 @@ import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
 
-import { auth } from "@/auth";
 import { onBoardingSchema } from "shared";
+import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
-import { db } from "@/src/db/index";
+import { db } from "@db/index";
+import { workoutSchedule, workoutScheduleInsertSchema } from "@db/schema/index";
 
 const app = new Hono();
 
@@ -24,15 +25,59 @@ app.get("/", (c) => {
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
-  console.log(validated);
   const user = await auth.api.getSession({
     headers: c.req.raw.headers,
   });
   if (!user)
     return c.text("You are not authorised to perform that action", 401);
+
   const userid = user.user.id;
-  const res = db.update(User).set({}).where(eq(User.id, userid)).returning();
-  return c.text("generated your workout routine");
+  const userResult = await db
+    .update(User)
+    .set({
+      gender: validated.gender,
+      age: validated.age,
+      weight: validated.weight,
+      fitnessLevel: validated.fitnessLevel,
+      goals: validated.goals.join(","),
+      equipment: validated.equipment.join(","),
+      notifications: "sms",
+    })
+    .where(eq(User.id, userid))
+    .returning({ userid: User.id });
+
+  if (!userResult || userResult.length === 0) {
+    return c.json(
+      { error: "We could not make the user request, please try again later" },
+      404
+    );
+  }
+
+  const schedule = {
+    weekdays: validated.weekdays,
+    workoutTime: validated.time,
+    workoutDuration: validated.duration,
+    offset: validated.offset,
+    userId: userResult[0].userid,
+  };
+
+  const parsed = await workoutScheduleInsertSchema.parse(schedule);
+  const workoutResult = await db
+    .insert(workoutSchedule)
+    .values(parsed)
+    .returning({ id: workoutSchedule.id });
+
+  if (!workoutResult || workoutResult.length === 0) {
+    return c.json(
+      {
+        error:
+          "We could not create a workout schedule for you. Please try again in a bit",
+      },
+      404
+    );
+  }
+
+  return c.json("generated your workout routine");
 });
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
