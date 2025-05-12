@@ -20,6 +20,7 @@ const weekdays = pgEnum("weekdays", [
 ] as const);
 
 export const workoutSchedule = pgTable("workoutSchedules", {
+  id: text("id").primaryKey(),
   weekdays: weekdays().array(),
   workoutTime: time("workout_time"),
   workoutDuration: smallint("workout_duration"),
