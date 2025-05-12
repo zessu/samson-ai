@@ -3,6 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { z } from "zod";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
@@ -14,8 +15,12 @@ import {
   workoutScheduleUpdateSchema,
 } from "@db/schema/index";
 import { userUpdateSchema } from "@/auth-schema";
+import { connectRoutineQueue, createRoutineWorker } from "@lib/index";
 
 const app = new Hono();
+
+const queue = connectRoutineQueue();
+createRoutineWorker();
 
 app.use(
   "*",
@@ -101,7 +106,12 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
-  return c.json("generated your workout routine");
+  const { notifications, ...rest } = validated;
+  queue.add("", { ...rest, id: userid });
+
+  return c.json(
+    "Generating your workout routine. We will be done in a short time"
+  );
 });
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
