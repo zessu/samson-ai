@@ -1,7 +1,7 @@
 CREATE TYPE weekdays AS ENUM ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
 
 CREATE TABLE "workoutSchedules" (
-	"weekdays" "weekdays",
+	"weekdays" weekdays[],
 	"workout_time" timestamp with time zone,
 	"workout_duration" smallint,
 	"offset" smallint,
