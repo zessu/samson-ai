@@ -32,5 +32,20 @@ export const workoutSettings = pgTable("workoutSettings", {
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const workoutScheduleInsertSchema = createInsertSchema(workoutSettings);
-export const workoutScheduleUpdateSchema = createUpdateSchema(workoutSettings);
+export const workoutSchedule = pgTable("workout_schedule", {
+  id: text("id").primaryKey(),
+  week: text("week").notNull(),
+  day: text("day").notNull(),
+  workout: text("workout").notNull(),
+  calories: smallint("calories").notNull(),
+  caution: text("caution").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const workoutSettingsInsertSchema = createInsertSchema(workoutSettings);
+export const workoutSettingsUpdateSchema = createUpdateSchema(workoutSettings);
+export const workoutScheduleInsertSchema = createInsertSchema(workoutSchedule);

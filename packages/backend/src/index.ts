@@ -9,11 +9,7 @@ import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
-import {
-  workoutSettings,
-  workoutScheduleInsertSchema,
-  workoutScheduleUpdateSchema,
-} from "@db/schema/index";
+import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { userUpdateSchema } from "@/auth-schema";
 import { connectRoutineQueue, createRoutineWorker } from "@lib/index";
 
@@ -82,7 +78,7 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   };
 
   const parsedWorkoutData =
-    await workoutScheduleInsertSchema.safeParse(schedule);
+    await workoutSettingsInsertSchema.safeParse(schedule);
 
   if (!parsedWorkoutData.success) {
     return c.json(
