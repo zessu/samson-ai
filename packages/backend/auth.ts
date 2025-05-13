@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
-import { workoutSchedule } from "./src/db/schema/index";
+import { workoutSettings } from "./src/db/schema/index";
 
 const cookieAttr =
   Bun.env.NODE_ENV === "production"
@@ -27,7 +27,7 @@ export const auth = betterAuth({
       session,
       account,
       verification,
-      workoutSchedule,
+      workoutSettings,
     },
   }),
   socialProviders: {

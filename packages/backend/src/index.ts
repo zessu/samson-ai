@@ -10,7 +10,7 @@ import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import {
-  workoutSchedule,
+  workoutSettings,
   workoutScheduleInsertSchema,
   workoutScheduleUpdateSchema,
 } from "@db/schema/index";
@@ -92,9 +92,9 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   }
 
   const workoutResult = await db
-    .insert(workoutSchedule)
+    .insert(workoutSettings)
     .values(parsedWorkoutData.data)
-    .returning({ id: workoutSchedule.id });
+    .returning({ id: workoutSettings.id });
 
   if (!workoutResult || workoutResult.length === 0) {
     return c.json(

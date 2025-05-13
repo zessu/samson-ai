@@ -19,7 +19,7 @@ const weekdays = pgEnum("weekdays", [
   "sunday",
 ] as const);
 
-export const workoutSchedule = pgTable("workoutSchedules", {
+export const workoutSettings = pgTable("workoutSettings", {
   id: text("id").primaryKey(),
   weekdays: weekdays().array(),
   workoutTime: time("workout_time"),
@@ -32,5 +32,5 @@ export const workoutSchedule = pgTable("workoutSchedules", {
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const workoutScheduleInsertSchema = createInsertSchema(workoutSchedule);
-export const workoutScheduleUpdateSchema = createUpdateSchema(workoutSchedule);
+export const workoutScheduleInsertSchema = createInsertSchema(workoutSettings);
+export const workoutScheduleUpdateSchema = createUpdateSchema(workoutSettings);

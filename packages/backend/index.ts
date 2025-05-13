@@ -7,7 +7,7 @@ import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
-import { workoutSchedule, workoutScheduleInsertSchema } from "@db/schema/index";
+import { workoutSettings, workoutScheduleInsertSchema } from "@db/schema/index";
 
 const app = new Hono();
 
@@ -63,9 +63,9 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
 
   const parsed = await workoutScheduleInsertSchema.parse(schedule);
   const workoutResult = await db
-    .insert(workoutSchedule)
+    .insert(workoutSettings)
     .values(parsed)
-    .returning({ id: workoutSchedule.id });
+    .returning({ id: workoutSettings.id });
 
   if (!workoutResult || workoutResult.length === 0) {
     return c.json(
