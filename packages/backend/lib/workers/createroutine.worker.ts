@@ -1,13 +1,19 @@
-import { Worker } from "bullmq";
+import { Worker, Job } from "bullmq";
 import IORedis from "ioredis";
+
+import { routineType } from "@lib/index";
+import { queryAgent } from "@lib/agent";
+
 const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
   maxRetriesPerRequest: null,
 });
 
 export const createRoutineWorker = () => {
-  const createRoutineWorker = new Worker(
+  const createRoutineWorker = new Worker<routineType>(
     "generateRoutine",
-    async (job) => {
+    async (job: Job<routineType>) => {
+      const res = await queryAgent(job.data);
+      console.log(res);
       return { status: "success" };
     },
     {
