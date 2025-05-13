@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Worker, Job } from "bullmq";
 import IORedis from "ioredis";
+import { nanoid } from "nanoid";
 
 import { workoutScheduleInsertSchema, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
@@ -51,9 +52,6 @@ export const createRoutineWorker = () => {
           .replace(/\n```$/, "") // Remove closing ```
           .trim();
 
-        console.log("Cleaned JSON string:");
-        console.log(jsonString);
-
         // Parse the workout plan
         const workoutPlan = JSON.parse(jsonString);
         const parsed = inputSchema.safeParse(workoutPlan);
@@ -63,7 +61,6 @@ export const createRoutineWorker = () => {
           throw new Error("Invalid workout plan structure");
         }
 
-        console.log("Successfully parsed workout plan");
         const extractedData = parsed.data.data;
         const userId = extractedData.userId;
 
@@ -80,6 +77,7 @@ export const createRoutineWorker = () => {
           for (const day in currentWeek) {
             const currentDay = currentWeek[day];
             output.push({
+              id: nanoid(),
               userId: userId,
               week: weekKey,
               day: day,
