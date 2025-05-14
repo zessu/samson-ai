@@ -21,7 +21,7 @@ export const Dashboard: FC = () => {
         </svg>
         <span>
           Congratulations🥳🎉 You will get daily work-outs sent directly to your
-          email every day before your next workout
+          email every day an hour before your next workout
         </span>
       </div>
       {/* <div className="p-10 flex flex-row gap-5">
