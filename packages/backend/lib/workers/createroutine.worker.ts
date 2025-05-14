@@ -87,10 +87,6 @@ export const createRoutineWorker = () => {
             });
           }
         }
-
-        console.log("Processed output:");
-        console.log(output);
-
         const validated = workoutScheduleInsertSchema.array().parse(output);
         await db.insert(workoutSchedule).values(validated).execute();
 

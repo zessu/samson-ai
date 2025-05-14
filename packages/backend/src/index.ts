@@ -68,14 +68,25 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
+  const userId = userResult[0].userid;
   const schedule = {
     weekdays: validated.weekdays,
     workoutTime: validated.time,
     workoutDuration: validated.duration,
     offset: validated.offset,
-    userId: userResult[0].userid,
+    userId,
     id: nanoid(),
   };
+
+  const existingUser = await db
+    .select()
+    .from(workoutSettings)
+    .where(eq(workoutSettings.userId, userId))
+    .limit(1);
+
+  if (existingUser[0]) {
+    return c.json({ error: "User settings already saved" }, 404);
+  }
 
   const parsedWorkoutData =
     await workoutSettingsInsertSchema.safeParse(schedule);
