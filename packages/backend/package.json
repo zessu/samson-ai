@@ -16,6 +16,7 @@
     "nanoid": "^5.1.5",
     "pg": "^8.15.6",
     "postgres": "^3.4.5",
+    "resend": "^4.5.1",
     "shared": "workspace:*"
   },
   "devDependencies": {
