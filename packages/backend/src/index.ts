@@ -3,7 +3,6 @@ import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { z } from "zod";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
