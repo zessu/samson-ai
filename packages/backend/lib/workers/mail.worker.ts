@@ -12,14 +12,9 @@ const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
 });
 
 export const mailWorker = () => {
-  const mailWorker = new Worker(
-    "mailWorker",
-    async (job) => {
-      const dayofTheWeek = dayjs.day();
-      console.log(`today is ${dayofTheWeek}`);
-    },
-    { connection }
-  );
+  const mailWorker = new Worker("mailWorker", async (job) => {}, {
+    connection,
+  });
 
   mailWorker.on("completed", (job) => {
     console.log(`Job ${job.id} completed`);
