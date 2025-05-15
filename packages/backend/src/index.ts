@@ -11,12 +11,11 @@ import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { userUpdateSchema } from "@/auth-schema";
-import { connectRoutineQueue, createRoutineWorker } from "@lib/index";
+import { initQueues } from "@lib/index";
 
 const app = new Hono();
 
-const queue = connectRoutineQueue();
-createRoutineWorker();
+const { routineQueue: queue } = initQueues();
 
 app.use(
   "*",

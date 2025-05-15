@@ -45,6 +45,8 @@ export const createRoutineWorker = () => {
       try {
         const agentResponse = await queryAgent(job.data);
         const agentResponseObject = await agentResponse.json();
+        // TODO: check if the job had already been processed, reject if so
+        // TODO: make sure all operations are ATOMIC in nature
 
         // Extract and clean the JSON string from the response
         const jsonString = agentResponseObject.text
