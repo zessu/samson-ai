@@ -1,10 +1,15 @@
-import { Worker, Job } from "bullmq";
-import { gte, lt, and, arrayOverlaps } from "drizzle-orm";
+import { Worker } from "bullmq";
+import { gte, lt, and, arrayOverlaps, eq, inArray } from "drizzle-orm";
 import IORedis from "ioredis";
 const dayjs = require("dayjs");
+const weekOfYear = require("dayjs/plugin/weekOfYear");
+dayjs.extend(weekOfYear);
 
-import { workoutSettings } from "@db/schema/index";
+import { workoutSettings, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
+import { initQueues } from "@/lib/index";
+import { nanoid } from "nanoid";
+const { mq } = initQueues();
 
 const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
   maxRetriesPerRequest: null,
@@ -23,10 +28,12 @@ const weekMap = {
 export const workoutMailWorker = () => {
   const workoutMailWorker = new Worker(
     "workoutMailQueue",
-    async (job) => {
+    async () => {
+      //TODO: reconcile user timezone with server timezone to get accurate data
       const dayofTheWeek = (dayjs().day() as keyof typeof weekMap) ?? 0;
       const mappedDay = weekMap[dayofTheWeek];
       const hour = dayjs().hour(); // e.g 16
+      const weekOfTheYear = dayjs().week();
       const startTime = `${hour.toString().padStart(2, "0")}:00:00`;
       const endTime = `${(hour + 1).toString().padStart(2, "0")}:00:00`;
       const result = await db
@@ -43,7 +50,37 @@ export const workoutMailWorker = () => {
       if (!result[0])
         throw new Error("No users scheduled a workout at this time");
 
-      console.log(result);
+      const remainder = weekOfTheYear % 4;
+      const weekprefix = remainder === 0 ? 4 : remainder;
+
+      const userIdsToSearch = result.map((res) => res.userId);
+
+      if (userIdsToSearch.length > 0) {
+        const dbResult = await db
+          .select({
+            userId: workoutSchedule.userId,
+            workout: workoutSchedule.workout,
+            caution: workoutSchedule.caution,
+            calories: workoutSchedule.calories,
+          })
+          .from(workoutSchedule)
+          .where(
+            and(
+              eq(workoutSchedule.week, `week${weekprefix}`),
+              eq(workoutSchedule.day, mappedDay),
+              inArray(workoutSchedule.userId, userIdsToSearch)
+            )
+          );
+
+        if (dbResult.length > 0) {
+          dbResult.map((item) => {
+            const jobId = nanoid();
+            mq.add(`sendMail:${jobId}`, item);
+          });
+        }
+
+        return { status: "success" };
+      }
     },
     { connection }
   );

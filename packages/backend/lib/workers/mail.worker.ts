@@ -1,20 +1,24 @@
-import { z } from "zod";
 import { Worker, Job } from "bullmq";
 import IORedis from "ioredis";
-import { nanoid } from "nanoid";
-
-import { workoutScheduleInsertSchema, workoutSchedule } from "@db/schema/index";
-import { db } from "@db/index";
-import { queryAgent } from "@lib/agent";
+import { mailSend } from "@lib/index";
 
 const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
   maxRetriesPerRequest: null,
 });
 
 export const mailWorker = () => {
-  const mailWorker = new Worker("mailWorker", async (job) => {}, {
-    connection,
-  });
+  const mailWorker = new Worker(
+    "sendMail",
+    async (job: Job<mailSend>) => {
+      const jobData = job.data;
+      console.log(
+        `workout ${jobData.workout} calories ${jobData.calories} caution ${jobData.caution} userid ${jobData.userId}`
+      );
+    },
+    {
+      connection,
+    }
+  );
 
   mailWorker.on("completed", (job) => {
     console.log(`Job ${job.id} completed`);

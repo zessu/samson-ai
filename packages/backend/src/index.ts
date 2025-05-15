@@ -112,7 +112,7 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   }
 
   const { notifications, ...rest } = validated;
-  queue.add("", { ...rest, id: userid });
+  queue.add("createProfile", { ...rest, id: userid });
 
   return c.json(
     "Generating your workout routine. We will be done in a short time"
