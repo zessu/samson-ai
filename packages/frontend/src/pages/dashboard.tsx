@@ -75,7 +75,7 @@ export const Dashboard: FC = () => {
         </div>
       </div> */}
       <div className="flex flex-row justify-center w-full">
-        <img src="uc.svg" className="w-80 h-80" />
+        <img src="wip.png" className="w-80 h-80" />
       </div>
       <p>
         Working on the dashboard. You will still get emails and notifications in
