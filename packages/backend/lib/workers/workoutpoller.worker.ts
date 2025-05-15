@@ -7,9 +7,8 @@ dayjs.extend(weekOfYear);
 
 import { workoutSettings, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
-import { initQueues } from "@/lib/index";
+import { initMailQueue } from "@/lib/index";
 import { nanoid } from "nanoid";
-const { mq } = initQueues();
 
 const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
   maxRetriesPerRequest: null,
@@ -26,6 +25,7 @@ const weekMap = {
 } as const;
 
 export const workoutMailWorker = () => {
+  const { mq } = initMailQueue();
   const workoutMailWorker = new Worker(
     "workoutMailQueue",
     async () => {
@@ -47,8 +47,8 @@ export const workoutMailWorker = () => {
           )
         );
 
-      if (!result[0])
-        throw new Error("No users scheduled a workout at this time");
+      // if (!result[0])
+      //   throw new Error("No users scheduled a workout at this time");
 
       const remainder = weekOfTheYear % 4;
       const weekprefix = remainder === 0 ? 4 : remainder;

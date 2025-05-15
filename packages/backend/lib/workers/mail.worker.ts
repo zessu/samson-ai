@@ -27,12 +27,20 @@ export const mailWorker = () => {
       if (res.length === 0)
         throw new Error("Could not find a user with that id");
 
-      resend.emails.send({
+      console.log(`sending email to ${res[0].email}`);
+
+      const { data, error } = await resend.emails.send({
         from: "onboarding@resend.dev",
-        to: res[0].email,
+        // to: res[0].email, //TODO: change this once you validate your domain
+        to: Bun.env.TEST_DOMAIN as string,
         subject: "Hello World",
         html: `<p>Here here is your workout <br />workout ${jobData.workout} <br />calories ${jobData.calories} <br />caution ${jobData.caution}</p>`,
       });
+
+      console.log(error);
+      if (error) throw new Error("Could not send email to user");
+
+      return { status: "success" };
     },
     {
       connection,

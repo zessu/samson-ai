@@ -17,15 +17,18 @@ export type mailSend = {
   caution: string;
 };
 
+export const initMailQueue = () => {
+  const mq = mailQueue();
+  mailWorker();
+  return { mq };
+};
+
 export const initQueues = () => {
   const routineQueue = connectRoutineQueue();
-  const mq = mailQueue();
   createRoutineWorker();
   workoutMailQueue();
   workoutMailWorker();
-  mailWorker();
   return {
     routineQueue,
-    mq,
   };
 };
