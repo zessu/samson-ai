@@ -3,6 +3,7 @@ import { Worker, Job } from "bullmq";
 import IORedis from "ioredis";
 import { nanoid } from "nanoid";
 
+import { clients } from "@/src/index";
 import { workoutScheduleInsertSchema, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
 import { routineType } from "@lib/index";
@@ -92,6 +93,11 @@ export const createRoutineWorker = () => {
         const validated = workoutScheduleInsertSchema.array().parse(output);
         await db.insert(workoutSchedule).values(validated).execute();
 
+        clients
+          .get(userId)
+          ?.send(
+            JSON.stringify({ type: "notifty", message: "workout generated" })
+          );
         return { status: "success" };
       } catch (error) {
         console.error("Error in worker:", error);

@@ -1,20 +1,23 @@
+import { type ServerWebSocket } from "bun";
 import { Hono } from "hono";
+import { createBunWebSocket } from "hono/bun";
 import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
-import { nanoid } from "nanoid";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
-import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
-import { userUpdateSchema } from "@/auth-schema";
-import { initQueues } from "@lib/index";
+import { workoutSettings, workoutScheduleInsertSchema } from "@db/schema/index";
+
+type webSocketData = { userid: string };
+export const clients = new Map<string, ServerWebSocket<webSocketData>>();
+
+const { upgradeWebSocket, websocket } =
+  createBunWebSocket<ServerWebSocket<webSocketData>>();
 
 const app = new Hono();
-
-const { routineQueue: queue } = initQueues();
 
 app.use(
   "*",
@@ -23,6 +26,10 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
@@ -33,29 +40,17 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     return c.text("You are not authorised to perform that action", 401);
 
   const userid = user.user.id;
-
-  const userData = {
-    gender: validated.gender,
-    age: validated.age,
-    weight: validated.weight,
-    fitnessLevel: validated.fitnessLevel,
-    goals: validated.goals.join(","),
-    equipment: validated.equipment.join(","),
-    notifications: "sms",
-  };
-
-  const parsedUserData = userUpdateSchema.safeParse(userData);
-
-  if (!parsedUserData.success) {
-    return c.json(
-      { error: "Validation failed", issues: parsedUserData.error.format() },
-      400
-    );
-  }
-
   const userResult = await db
     .update(User)
-    .set(parsedUserData.data)
+    .set({
+      gender: validated.gender,
+      age: validated.age,
+      weight: validated.weight,
+      fitnessLevel: validated.fitnessLevel,
+      goals: validated.goals.join(","),
+      equipment: validated.equipment.join(","),
+      notifications: "sms",
+    })
     .where(eq(User.id, userid))
     .returning({ userid: User.id });
 
@@ -66,39 +61,18 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
-  const userId = userResult[0].userid;
   const schedule = {
     weekdays: validated.weekdays,
     workoutTime: validated.time,
     workoutDuration: validated.duration,
     offset: validated.offset,
-    userId,
-    id: nanoid(),
+    userId: userResult[0].userid,
   };
 
-  const existingUser = await db
-    .select()
-    .from(workoutSettings)
-    .where(eq(workoutSettings.userId, userId))
-    .limit(1);
-
-  if (existingUser[0]) {
-    return c.json({ error: "User settings already saved" }, 404);
-  }
-
-  const parsedWorkoutData =
-    await workoutSettingsInsertSchema.safeParse(schedule);
-
-  if (!parsedWorkoutData.success) {
-    return c.json(
-      { error: "Validation failed", issues: parsedWorkoutData.error.format() },
-      400
-    );
-  }
-
+  const parsed = await workoutScheduleInsertSchema.parse(schedule);
   const workoutResult = await db
     .insert(workoutSettings)
-    .values(parsedWorkoutData.data)
+    .values(parsed)
     .returning({ id: workoutSettings.id });
 
   if (!workoutResult || workoutResult.length === 0) {
@@ -111,12 +85,7 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
-  const { notifications, ...rest } = validated;
-  queue.add("createProfile", { ...rest, id: userid });
-
-  return c.json(
-    "Generating your workout routine. We will be done in a short time"
-  );
+  return c.json("generated your workout routine");
 });
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
@@ -128,4 +97,34 @@ app.onError((err, c) => {
   return c.json({ error: "Internal Server Error" }, 500);
 });
 
-export default app;
+app.get(
+  "/ws",
+  upgradeWebSocket((c) => {
+    const url = new URL(c.req.url);
+    const userid = url.searchParams.get("userId");
+    if (!userid) return {};
+    return {
+      onOpen: (_, ws) => {
+        const wss = ws.raw as ServerWebSocket<webSocketData>;
+        clients.set(userid, wss);
+        console.log("hiphip we established some kind of connection man");
+      },
+      onMessage(event, ws) {
+        console.log(`Message from client: ${event.data}`);
+        ws.send("Hello from server!");
+      },
+      onClose: (_, ws) => {
+        ws.raw?.close();
+        clients.delete(userid);
+        console.log("Connection closed");
+      },
+      onError: () => console.log("Websocket Error"),
+    };
+  })
+);
+
+Bun.serve({
+  fetch: app.fetch,
+  port: 3000,
+  websocket,
+});
