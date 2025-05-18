@@ -55,6 +55,10 @@ export const workoutMailWorker = () => {
 
       const userIdsToSearch = result.map((res) => res.userId);
 
+      console.log(
+        `Looking for schedules: week${weekprefix} ${mappedDay}, ${startTime} ${endTime}`
+      );
+
       if (userIdsToSearch.length > 0) {
         const dbResult = await db
           .select({

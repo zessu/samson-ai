@@ -11,6 +11,7 @@
     "start": "NODE_ENV=production bun src/index.tsx"
   },
   "dependencies": {
+    "@react-email/render": "1.1.2",
     "react": "^19",
     "react-dom": "^19"
   },

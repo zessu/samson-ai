@@ -10,6 +10,7 @@ import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import { workoutSettings, workoutScheduleInsertSchema } from "@db/schema/index";
+import { initQueues } from "@/lib/index";
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
@@ -18,6 +19,8 @@ const { upgradeWebSocket, websocket } =
   createBunWebSocket<ServerWebSocket<webSocketData>>();
 
 const app = new Hono();
+
+const { routineQueue: queue } = initQueues();
 
 app.use(
   "*",
@@ -85,6 +88,8 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
+  await queue.add("create-routine", { ...validated, id: userid });
+
   return c.json("generated your workout routine");
 });
 
@@ -128,3 +133,5 @@ Bun.serve({
   port: 3000,
   websocket,
 });
+
+console.log("started backend server");

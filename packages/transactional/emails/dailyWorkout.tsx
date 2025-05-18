@@ -11,10 +11,9 @@ import {
   Hr,
 } from "@react-email/components";
 
-export const MyEmail = () => {
+export const DailyWorkoutsTemplate = () => {
   return (
     <Html>
-      {/* Hero Banner */}
       <table
         align="center"
         border={0}
@@ -101,7 +100,6 @@ export const MyEmail = () => {
         </tbody>
       </table>
 
-      {/* Footer */}
       <Section
         style={{
           maxWidth: 600,
@@ -112,7 +110,6 @@ export const MyEmail = () => {
         }}
       >
         <Row>
-          {/* Left Column - Brand Info */}
           <Column colSpan={4}>
             <Text
               style={{
@@ -133,7 +130,6 @@ export const MyEmail = () => {
               Your personal AI fitness trainer
             </Text>
 
-            {/* Social Icons */}
             <Row>
               <Column
                 style={{
@@ -152,7 +148,6 @@ export const MyEmail = () => {
               </Column>
             </Row>
 
-            {/* Footer Text */}
             <Row>
               <Text
                 style={{
@@ -180,4 +175,4 @@ export const MyEmail = () => {
   );
 };
 
-export default MyEmail;
+export default DailyWorkoutsTemplate;
