@@ -8,7 +8,6 @@ import {
   Column,
   Link,
   Img,
-  Hr,
 } from "@react-email/components";
 
 export const DailyWorkoutsTemplate = () => {
@@ -73,9 +72,6 @@ export const DailyWorkoutsTemplate = () => {
                   color: "rgb(45, 24, 83)",
                 }}
               >
-                Uncover the power of accent furniture in transforming your space
-                with subtle touches of style, personality, and functionality, as
-                we explore the art of curating captivating accents.
               </Text>
               <Button
                 href="https://react.email "

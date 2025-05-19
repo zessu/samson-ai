@@ -90,14 +90,18 @@ export const createRoutineWorker = () => {
             });
           }
         }
+
         const validated = workoutScheduleInsertSchema.array().parse(output);
+
         await db.insert(workoutSchedule).values(validated).execute();
 
-        clients
+        await clients
           .get(userId)
           ?.send(
             JSON.stringify({ type: "notifty", message: "workout generated" })
           );
+
+        console.log("generated user workout");
         return { status: "success" };
       } catch (error) {
         console.error("Error in worker:", error);

@@ -22,7 +22,7 @@ export const Dashboard: FC = () => {
             <div className="status status-primary animate-ping"></div>
             <div className="status status-primary"></div>
           </div>{" "}
-          Generating your workout. I will notifiy you when I am done
+          Generating your workout. I will notify you when I am done
         </>
       )}
       {doneGenerating && (

@@ -9,8 +9,9 @@ import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
 import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
-import { workoutSettings, workoutScheduleInsertSchema } from "@db/schema/index";
+import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { initQueues } from "@/lib/index";
+import { nanoid } from "nanoid";
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
@@ -20,7 +21,7 @@ const { upgradeWebSocket, websocket } =
 
 const app = new Hono();
 
-const { routineQueue: queue } = initQueues();
+const { routineQueue: createRoutineQueue } = initQueues();
 
 app.use(
   "*",
@@ -64,7 +65,8 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
-  const schedule = {
+  const userWorkoutSettings = {
+    id: nanoid(),
     weekdays: validated.weekdays,
     workoutTime: validated.time,
     workoutDuration: validated.duration,
@@ -72,7 +74,8 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     userId: userResult[0].userid,
   };
 
-  const parsed = await workoutScheduleInsertSchema.parse(schedule);
+  const parsed = await workoutSettingsInsertSchema.parse(userWorkoutSettings);
+
   const workoutResult = await db
     .insert(workoutSettings)
     .values(parsed)
@@ -88,7 +91,12 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     );
   }
 
-  await queue.add("create-routine", { ...validated, id: userid });
+  const jobId = nanoid();
+
+  await createRoutineQueue.add(`create-routine:${jobId}`, {
+    ...validated,
+    id: userid,
+  });
 
   return c.json("generated your workout routine");
 });
@@ -112,7 +120,6 @@ app.get(
       onOpen: (_, ws) => {
         const wss = ws.raw as ServerWebSocket<webSocketData>;
         clients.set(userid, wss);
-        console.log("hiphip we established some kind of connection man");
       },
       onMessage(event, ws) {
         console.log(`Message from client: ${event.data}`);

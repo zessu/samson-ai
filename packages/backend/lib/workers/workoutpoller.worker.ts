@@ -47,8 +47,8 @@ export const workoutMailWorker = () => {
           )
         );
 
-      // if (!result[0])
-      //   throw new Error("No users scheduled a workout at this time");
+      if (!result[0])
+        throw new Error("No users scheduled a workout at this time");
 
       const remainder = weekOfTheYear % 4;
       const weekprefix = remainder === 0 ? 4 : remainder;

@@ -65,9 +65,9 @@ export const mailWorker = () => {
           </h1>
           <p
             style="font-size:16px;line-height:24px;margin:16px 0 0 0;color:rgb(45, 24, 83);margin-top:16px;margin-right:0;margin-bottom:0;margin-left:0">
-            ${jobData.workout}<br />
-            calories:${jobData.calories}<br />
-            caution:${jobData.caution}
+            ${jobData.workout}<br /> <br />
+            <strong>🔥 Calories:</strong> ${jobData.calories}<br /><br />
+  &nbsp;&nbsp;&nbsp;<strong>⚠️ Caution:</strong> ${jobData.caution}
           </p>
           <a
             href="https://react.email "
@@ -174,7 +174,6 @@ export const mailWorker = () => {
 </html>`,
       });
 
-      console.log(error);
       if (error) throw new Error("Could not send email to user");
 
       return { status: "success" };

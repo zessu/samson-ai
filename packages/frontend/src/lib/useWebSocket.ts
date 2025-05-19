@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function useWebSocket(
   userid: string | undefined,
   markCompleted: () => void
 ) {
+  const socketRef = useRef<WebSocket | null>(null);
+
   useEffect(() => {
     if (!userid) return;
 
     const socket = new WebSocket(`ws://localhost:3000/ws?userId=${userid}`);
+    socketRef.current = socket;
 
     socket.onopen = () => {
       console.log("WebSocket connected");
