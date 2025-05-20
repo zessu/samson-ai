@@ -71,8 +71,7 @@ export const DailyWorkoutsTemplate = () => {
                   lineHeight: "24px",
                   color: "rgb(45, 24, 83)",
                 }}
-              >
-              </Text>
+              ></Text>
               <Button
                 href="https://react.email "
                 style={{
