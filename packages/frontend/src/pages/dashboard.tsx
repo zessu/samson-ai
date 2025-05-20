@@ -1,14 +1,17 @@
 import { useState, type FC } from "react";
 import { useSession } from "@/src/lib/auth";
 import { useWebSocket } from "@/src/lib/useWebSocket";
+import { useLocalStorage } from "@/src/lib/useLocalStorage";
 
 export const Dashboard: FC = () => {
   const [doneGenerating, setDoneGenerating] = useState<boolean>(false);
+  const [generatedWorkout, setGeneratedWorkout] =
+    useLocalStorage("generatedWorkout");
   const { data: session } = useSession();
   const userid = session?.user.id;
 
   const markCompleted = () => {
-    console.log("this has been called");
+    setGeneratedWorkout(true);
     setDoneGenerating(true);
   };
 
@@ -16,7 +19,7 @@ export const Dashboard: FC = () => {
 
   return (
     <>
-      {!doneGenerating && (
+      {!generatedWorkout && !doneGenerating && (
         <>
           <div className="inline-grid *:[grid-area:1/1]">
             <div className="status status-primary animate-ping"></div>
