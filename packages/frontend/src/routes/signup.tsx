@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { signIn } from "../lib/auth";
 import { useAuth } from "../authContext";
@@ -8,9 +9,11 @@ export const Route = createFileRoute("/signup")({
 
 function Signup() {
   const { signIn } = useAuth();
+  const [isloading, setIsLoading] = useState<boolean>(false);
 
   const authenticateWithGoogle = async () => {
     try {
+      setIsLoading(true);
       await signIn("google");
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -56,7 +59,9 @@ function Signup() {
                 ></path>
               </g>
             </svg>
-            LogIn or SignUp
+            {isloading
+              ? "Authenticating you, one moment ...."
+              : "Sign Up / Sign In"}
           </button>
         </div>
       </div>

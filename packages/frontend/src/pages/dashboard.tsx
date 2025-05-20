@@ -48,17 +48,15 @@ export const Dashboard: FC = () => {
           </div>
         </div>
       )}
-      <div className="flex flex-row justify-center w-full">
-        <img src="wip.png" className="w-80 h-80" />
+      <div className="flex flex-col justify-center items-center w-full">
+        <img src="wip.png" width="300" height="300" className="w-80 h-80" />
+        <p className="font-bold text-xs w-80 ">
+          The dashboard is still a work in progress. You will still get emails
+          and notifications in your mailbox an hour to your workout. I've sent
+          you an example workout email. Once the dashboard is ready, I will
+          notify you via email
+        </p>
       </div>
-      <p>
-        Working on the dashboard. You will still get emails and notifications in
-        your mailbox an hour to your workout.
-      </p>
-      <p>
-        We will send you a notification once you can log in here to track your
-        workouts and view some metrics
-      </p>
     </>
   );
 };

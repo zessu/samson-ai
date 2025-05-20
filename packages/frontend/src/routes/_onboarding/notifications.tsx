@@ -17,6 +17,7 @@ type notificationInputs = {
 
 function RouteComponent() {
   const [onBoardingError, setonBoardingError] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm<notificationInputs>({
     defaultValues: {
@@ -42,6 +43,7 @@ function RouteComponent() {
     const userSettings = useStore.getState();
     try {
       const validated = await onBoardingSchema.parse(userSettings);
+      setIsLoading(true);
       const res = await submitForm(validated);
       if (res.ok) {
         navigate({ to: "/" });
@@ -76,9 +78,11 @@ function RouteComponent() {
           </span>
         </div>
       )}
+
       <h3 className="font-bold text-lg mb-2">
         What's the best way to reach you with your daily workouts?
       </h3>
+
       <form onSubmit={handleSubmit(finish)} className="mb-10 flex flex-col">
         <span className="mb-4">
           <input
@@ -113,7 +117,7 @@ function RouteComponent() {
         </span>
 
         <button className="btn btn-accent" type="submit">
-          Start My Journey
+          {isLoading ? "Submitting your details ..." : "Start My Journey"}
         </button>
       </form>
     </div>
