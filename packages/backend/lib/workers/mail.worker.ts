@@ -44,6 +44,7 @@ export const mailWorker = () => {
     },
     {
       connection,
+      concurrency: 10,
     }
   );
 
