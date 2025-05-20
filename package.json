@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "backend": "cd packages/backend && bun run dev",
-    "frontend": "cd packages/frontend && bun run dev"
+    "frontend": "cd packages/frontend && bun run dev",
+    "email": "cd packages/transactional && bun run dev"
   },
   "peerDependencies": {
     "typescript": "^5"

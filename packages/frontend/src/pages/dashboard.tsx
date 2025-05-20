@@ -57,7 +57,8 @@ export const Dashboard: FC = () => {
           The dashboard is still a work in progress. You will still get emails
           and notifications in your mailbox an hour to your workout. I've sent
           you an example workout email. Once the dashboard is ready, I will
-          notify you via email
+          notify you via email. You'll be able to login, chat to me and view
+          your metrics
         </p>
       </div>
     </>

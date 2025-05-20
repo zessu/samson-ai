@@ -36,6 +36,7 @@ export const workoutMailWorker = () => {
       const weekOfTheYear = dayjs().week();
       const startTime = `${hour.toString().padStart(2, "0")}:00:00`;
       const endTime = `${(hour + 1).toString().padStart(2, "0")}:00:00`;
+
       const result = await db
         .select()
         .from(workoutSettings)
@@ -83,7 +84,7 @@ export const workoutMailWorker = () => {
         if (dbResult.length > 0) {
           dbResult.map((item) => {
             const jobId = nanoid();
-            mq.add(`sendMail:${jobId}`, item);
+            mq.add(`sendMail:${jobId}`, { ...item, emailType: "workout" });
           });
         }
 

@@ -10,11 +10,21 @@ import { mailWorker } from "@lib/workers/mail.worker";
 
 export const routineInput = onBoardingSchema.omit({ notifications: true });
 export type routineType = z.infer<typeof routineInput> & { id: string };
-export type mailSend = {
+
+export type workoutEmailData = {
   workout: string;
   calories: number;
-  userId: string;
   caution: string;
+};
+
+export type workOutEmail = workoutEmailData & {
+  emailType: "workout";
+  userId: string;
+};
+
+export type introEmail = {
+  emailType: "intro";
+  userId: string;
 };
 
 export const initMailQueue = () => {
