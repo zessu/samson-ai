@@ -1,7 +1,6 @@
 import { Queue } from "bullmq";
 import IORedis from "ioredis";
 import { workOutEmail, introEmail } from "@lib/index";
-import { withReplicas } from "drizzle-orm/gel-core";
 
 const connection = new IORedis(`${Bun.env.REDIS_HOST}`);
 
