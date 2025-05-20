@@ -4,6 +4,7 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
+    "@bull-board/hono": "^6.9.6",
     "@hono/zod-validator": "^0.5.0",
     "better-auth": "^1.2.7",
     "bullmq": "^5.52.2",
