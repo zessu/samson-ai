@@ -24,7 +24,7 @@ export type workOutEmail = workoutEmailData & {
 
 export type introEmail = {
   emailType: "intro";
-  userId: string;
+  email: string;
 };
 
 export const initMailQueue = () => {

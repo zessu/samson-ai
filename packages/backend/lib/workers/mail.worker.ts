@@ -17,19 +17,20 @@ export const mailWorker = () => {
     "sendMail",
     async (job: Job<workOutEmail | introEmail>) => {
       const jobData = job.data;
-      const userid = job.data.userId;
-      const res = await db
-        .select({ email: user.email })
-        .from(user)
-        .where(eq(user.id, userid));
-
-      if (res.length === 0)
-        throw new Error("Could not find a user with that id");
-
-      console.log(`sending email to ${res[0].email}`);
 
       switch (jobData.emailType) {
         case "workout":
+          const userid = jobData.userId;
+          const res = await db
+            .select({ email: user.email })
+            .from(user)
+            .where(eq(user.id, userid));
+
+          if (res.length === 0)
+            throw new Error("Could not find a user with that id");
+
+          console.log(`sending email to ${res[0].email}`);
+
           await sendWorkoutEmail(jobData);
           break;
         case "intro":

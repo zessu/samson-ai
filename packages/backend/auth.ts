@@ -1,8 +1,15 @@
 import { betterAuth } from "better-auth";
+import { createAuthMiddleware } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { nanoid } from "nanoid";
+
 import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
 import { workoutSettings } from "./src/db/schema/index";
+import { sendIntroEmail } from "@/lib/sendIntroEmail";
+import { initMailQueue } from "@/lib/index";
+
+const { mq } = initMailQueue();
 
 const cookieAttr =
   Bun.env.NODE_ENV === "production"
@@ -49,5 +56,17 @@ export const auth = betterAuth({
       domain: "localhost",
     },
     defaultCookieAttributes: cookieAttr,
+  },
+  hooks: {
+    after: createAuthMiddleware(async (ctx) => {
+      if (ctx.path.startsWith("/sign-up")) {
+        const newSession = ctx.context.newSession;
+        if (newSession) {
+          const email = newSession.user.email;
+          const jobId = nanoid();
+          await mq.add(`sendMail:${jobId}`, { emailType: "intro", email });
+        }
+      }
+    }),
   },
 });
