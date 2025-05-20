@@ -4,11 +4,11 @@ import { introEmail } from "@lib/index";
 export const sendIntroEmail = async (jobData: introEmail) => {
   const resend = new Resend(Bun.env.RESEND_API_KEY);
 
-  const { data, error } = await resend.emails.send({
+  await resend.emails.send({
     from: "onboarding@resend.dev",
     // to: res[0].email, //TODO: change this once you validate your domain
     to: Bun.env.TEST_DOMAIN as string,
-    subject: "Hello World",
+    subject: "Hi there, Welcome to SAMSON AI",
     html: `
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
