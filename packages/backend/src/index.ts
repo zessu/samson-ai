@@ -139,6 +139,7 @@ Bun.serve({
   fetch: app.fetch,
   port: 3000,
   websocket,
+  idleTimeout: 20,
 });
 
 console.log("started backend server");
