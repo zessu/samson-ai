@@ -48,7 +48,11 @@ export const workoutMailWorker = () => {
         );
 
       // We dont need to error, theres no one to send an email to right now so no point retrying
-      if (!result[0]) return { status: "success" };
+
+      if (!result[0]) {
+        console.log("No users to send email to right now ...");
+        return { status: "success" };
+      }
 
       const remainder = weekOfTheYear % 4;
       const weekprefix = remainder === 0 ? 4 : remainder;
