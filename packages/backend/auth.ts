@@ -1,15 +1,12 @@
 import { betterAuth } from "better-auth";
 import { createAuthMiddleware } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { nanoid } from "nanoid";
+import { eq } from "drizzle-orm";
 
 import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
 import { workoutSettings } from "./src/db/schema/index";
 import { sendIntroEmail } from "@/lib/sendIntroEmail";
-import { initMailQueue } from "@/lib/index";
-
-const { mq } = initMailQueue();
 
 const cookieAttr =
   Bun.env.NODE_ENV === "production"
@@ -59,12 +56,22 @@ export const auth = betterAuth({
   },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
-      if (ctx.path.startsWith("/sign-up")) {
-        const newSession = ctx.context.newSession;
+      if (ctx.path.startsWith("/callback")) {
+        const newSession = await ctx.context.newSession;
         if (newSession) {
           const email = newSession.user.email;
-          const jobId = nanoid();
-          await mq.add(`sendMail:${jobId}`, { emailType: "intro", email });
+          const res = await db
+            .select({ firstTimeLogginIn: user.firstTimeLogin })
+            .from(user)
+            .where(eq(user.email, email));
+          if (!res || res.length === 0) return;
+          if (!res[0].firstTimeLogginIn) return;
+          // send them intro email if first time login in
+          await sendIntroEmail({ email, emailType: "intro" });
+          await db
+            .update(user)
+            .set({ firstTimeLogin: false })
+            .where(eq(user.email, email));
         }
       }
     }),
