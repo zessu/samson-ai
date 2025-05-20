@@ -47,8 +47,8 @@ export const workoutMailWorker = () => {
           )
         );
 
-      if (!result[0])
-        throw new Error("No users scheduled a workout at this time");
+      // We dont need to error, theres no one to send an email to right now so no point retrying
+      if (!result[0]) return { status: "success" };
 
       const remainder = weekOfTheYear % 4;
       const weekprefix = remainder === 0 ? 4 : remainder;
