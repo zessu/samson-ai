@@ -20,6 +20,10 @@ function Signup() {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen">
+        <img height="300px" width="300px" src="samson.webp" />
+        <p className="mb-4 font-bold text-lg">
+          Samson: Your AI fitness trainer
+        </p>
         <div>
           <button
             className="btn bg-white text-black border-[#e5e5e5]"
