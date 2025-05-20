@@ -43,6 +43,13 @@
       "when": 1747166359949,
       "tag": "0005_large_spectrum",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1747761612990,
+      "tag": "0006_awesome_firebrand",
+      "breakpoints": true
     }
   ]
 }

@@ -29,6 +29,7 @@ export const user = pgTable("user", {
   goals: text("goals"),
   equipment: text("equipment"),
   notifications: notificationEnum(),
+  firstTimeLogin: boolean().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
