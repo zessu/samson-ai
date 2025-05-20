@@ -25,7 +25,7 @@ export const Dashboard: FC = () => {
             <div className="status status-primary animate-ping"></div>
             <div className="status status-primary"></div>
           </div>{" "}
-          Generating your workout. I will notify you when I am done
+          Configuring your profile and generating some workouts for you.
         </>
       )}
       {doneGenerating && (
@@ -55,10 +55,10 @@ export const Dashboard: FC = () => {
         <img src="wip.png" width="300" height="300" className="w-80 h-80" />
         <p className="font-bold text-xs w-80 ">
           The dashboard is still a work in progress. You will still get emails
-          and notifications in your mailbox an hour to your workout. I've sent
-          you an example workout email. Once the dashboard is ready, I will
-          notify you via email. You'll be able to login, chat to me and view
-          your metrics
+          and notifications in your mailbox an hour to your workout. I'll send
+          you an example workout email so you know what to expect. Once the
+          dashboard is ready, I will notify you via email. You'll be able to
+          login, chat to me and view your metrics
         </p>
       </div>
     </>
