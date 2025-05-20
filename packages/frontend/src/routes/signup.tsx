@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { signIn } from "../lib/auth";
 import { useAuth } from "../authContext";
 
 export const Route = createFileRoute("/signup")({
