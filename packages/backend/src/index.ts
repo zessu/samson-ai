@@ -70,8 +70,8 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
     weekdays: validated.weekdays,
     workoutTime: validated.time,
     workoutDuration: validated.duration,
-    offset: validated.offset,
     userId: userResult[0].userid,
+    userTimezoneOffset: validated.offset,
   };
 
   const parsed = await workoutSettingsInsertSchema.parse(userWorkoutSettings);
