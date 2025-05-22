@@ -50,6 +50,41 @@
       "when": 1747761612990,
       "tag": "0006_awesome_firebrand",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1747913325120,
+      "tag": "0007_tan_slipstream",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1747913703023,
+      "tag": "0008_wakeful_squadron_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1747914218287,
+      "tag": "0009_whole_rictor",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1747915779529,
+      "tag": "0010_uneven_nightmare",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1747915841274,
+      "tag": "0011_unusual_jack_flag",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE "workoutSettings" ADD COLUMN "offset" smallint;
