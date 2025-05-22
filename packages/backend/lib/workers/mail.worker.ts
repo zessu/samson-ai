@@ -3,15 +3,16 @@ import { eq } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { user } from "@/auth-schema";
-import { workOutEmail, introEmail } from "@lib/index";
-import { sendIntroEmail } from "@/lib/sendIntroEmail";
+import { workOutEmail, introEmail, exampleWorkoutEmail } from "@lib/index";
+import { sendIntroEmail } from "@lib/sendIntroEmail";
 import { sendWorkoutEmail } from "@lib/sendWorkoutEmail";
+import { sendExampleWorkoutEmail } from "@/lib/sendExampleWorkoutEmail";
 import { connection } from "@/lib/connection";
 
 export const mailWorker = () => {
   const mailWorker = new Worker(
     "sendMail",
-    async (job: Job<workOutEmail | introEmail>) => {
+    async (job: Job<workOutEmail | introEmail | exampleWorkoutEmail>) => {
       const jobData = job.data;
 
       switch (jobData.emailType) {
@@ -30,6 +31,9 @@ export const mailWorker = () => {
           break;
         case "intro":
           await sendIntroEmail(jobData);
+          break;
+        case "exampleWorkout":
+          await sendExampleWorkoutEmail(jobData);
           break;
         default:
           throw new Error("Provided email type does not exist");

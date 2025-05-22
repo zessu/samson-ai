@@ -24,6 +24,11 @@ export type introEmail = {
   email: string;
 };
 
+export type exampleWorkoutEmail = {
+  emailType: "exampleWorkout";
+  email: string;
+};
+
 export const initMailQueue = () => {
   const mq = mailQueue();
   mailWorker();
