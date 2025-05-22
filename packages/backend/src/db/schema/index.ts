@@ -24,7 +24,7 @@ export const workoutSettings = pgTable("workoutSettings", {
   weekdays: weekdays().array(),
   workoutTime: time("workout_time"),
   workoutDuration: smallint("workout_duration"),
-  offset: smallint("offset"),
+  userTimezoneOffset: smallint("offset"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   userId: text("user_id")
