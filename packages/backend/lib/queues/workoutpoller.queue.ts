@@ -1,7 +1,5 @@
 import { Queue } from "bullmq";
-import IORedis from "ioredis";
-
-const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`);
+import { connection } from "@/lib/connection";
 
 export const workoutMailQueue = () => {
   return new Queue("workoutMailQueue", {

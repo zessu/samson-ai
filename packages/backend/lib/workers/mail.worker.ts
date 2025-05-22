@@ -1,5 +1,4 @@
 import { Worker, Job } from "bullmq";
-import IORedis from "ioredis";
 import { eq } from "drizzle-orm";
 
 import { db } from "@db/index";
@@ -7,10 +6,7 @@ import { user } from "@/auth-schema";
 import { workOutEmail, introEmail } from "@lib/index";
 import { sendIntroEmail } from "@/lib/sendIntroEmail";
 import { sendWorkoutEmail } from "@lib/sendWorkoutEmail";
-
-const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
-  maxRetriesPerRequest: null,
-});
+import { connection } from "@/lib/connection";
 
 export const mailWorker = () => {
   const mailWorker = new Worker(
@@ -30,7 +26,6 @@ export const mailWorker = () => {
             throw new Error("Could not find a user with that id");
 
           console.log(`sending email to ${res[0].email}`);
-
           await sendWorkoutEmail(jobData);
           break;
         case "intro":

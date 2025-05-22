@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { Worker, Job } from "bullmq";
-import IORedis from "ioredis";
 import { nanoid } from "nanoid";
 
 import { clients } from "@/src/index";
@@ -8,10 +7,7 @@ import { workoutScheduleInsertSchema, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
 import { routineType } from "@lib/index";
 import { queryAgent } from "@lib/agent";
-
-const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
-  maxRetriesPerRequest: null,
-});
+import { connection } from "@/lib/connection";
 
 const workoutDaySchema = z.object({
   workout: z.string(),
