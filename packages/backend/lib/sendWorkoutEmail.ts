@@ -1,14 +1,14 @@
 import { Resend } from "resend";
-import { workoutEmailData } from "@lib/index";
+import { workOutEmail } from "@lib/index";
 
-export const sendWorkoutEmail = async (jobData: workoutEmailData) => {
+export const sendWorkoutEmail = async (jobData: workOutEmail) => {
   const resend = new Resend(Bun.env.RESEND_API_KEY);
 
   const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",
     // to: res[0].email, //TODO: change this once you validate your domain
     to: Bun.env.TEST_DOMAIN as string,
-    subject: "Hello World",
+    subject: "SAMSON AI: Today's workout",
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
 <head>
