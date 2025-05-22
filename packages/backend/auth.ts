@@ -7,6 +7,7 @@ import { db } from "./src/db/index";
 import { verification, user, account, session } from "./auth-schema";
 import { workoutSettings } from "./src/db/schema/index";
 import { sendIntroEmail } from "@/lib/sendIntroEmail";
+import { sendExampleWorkoutEmail } from "@/lib/sendExampleWorkoutEmail";
 
 const cookieAttr =
   Bun.env.NODE_ENV === "production"
@@ -68,6 +69,7 @@ export const auth = betterAuth({
           if (!res[0].firstTimeLogginIn) return;
           // send them intro email if first time login in
           await sendIntroEmail({ email, emailType: "intro" });
+          await sendExampleWorkoutEmail({ email, emailType: "exampleWorkout" });
           await db
             .update(user)
             .set({ firstTimeLogin: false })
