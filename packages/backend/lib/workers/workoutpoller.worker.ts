@@ -1,18 +1,17 @@
 import { Worker } from "bullmq";
-import { gte, lt, and, arrayOverlaps, eq, inArray } from "drizzle-orm";
-import IORedis from "ioredis";
+import { sql, and, arrayOverlaps, eq, inArray } from "drizzle-orm";
+
 const dayjs = require("dayjs");
 const weekOfYear = require("dayjs/plugin/weekOfYear");
+const utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 dayjs.extend(weekOfYear);
 
 import { workoutSettings, workoutSchedule } from "@db/schema/index";
 import { db } from "@db/index";
 import { initMailQueue } from "@/lib/index";
 import { nanoid } from "nanoid";
-
-const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
-  maxRetriesPerRequest: null,
-});
+import { connection } from "@/lib/connection";
 
 const weekMap = {
   0: "sunday",
@@ -25,11 +24,12 @@ const weekMap = {
 } as const;
 
 export const workoutMailWorker = () => {
-  const { mq } = initMailQueue();
   const workoutMailWorker = new Worker(
     "workoutMailQueue",
     async () => {
-      //TODO: reconcile user timezone with server timezone to get accurate data
+      const { mq } = initMailQueue();
+      const serverTimeOffset = dayjs().utcOffset();
+      console.log(`server utc timezone offset ${serverTimeOffset}`);
       const dayofTheWeek = (dayjs().day() as keyof typeof weekMap) ?? 0;
       const mappedDay = weekMap[dayofTheWeek];
       const hour = dayjs().hour(); // e.g 16
@@ -37,14 +37,28 @@ export const workoutMailWorker = () => {
       const startTime = `${hour.toString().padStart(2, "0")}:00:00`;
       const endTime = `${(hour + 1).toString().padStart(2, "0")}:00:00`;
 
+      console.log(
+        `startTime ${startTime} endTime ${endTime} serverOffset ${serverTimeOffset / 60}`
+      );
+
       const result = await db
         .select()
         .from(workoutSettings)
         .where(
           and(
-            gte(workoutSettings.workoutTime, startTime),
-            lt(workoutSettings.workoutTime, endTime),
-            arrayOverlaps(workoutSettings.weekdays, [mappedDay])
+            arrayOverlaps(workoutSettings.weekdays, [mappedDay]),
+            sql`
+            (
+              ${workoutSettings.workoutTime} + 
+              INTERVAL '1 HOUR' * (
+                ${workoutSettings.userTimezoneOffset} - (${sql.param(serverTimeOffset / 60)})
+              )
+            )::TIME
+            BETWEEN
+              (${sql.param(startTime)}::TIME - INTERVAL '2 MINUTES')
+              AND
+              (${sql.param(endTime)}::TIME + INTERVAL '2 MINUTES')
+          `
           )
         );
 
@@ -59,6 +73,8 @@ export const workoutMailWorker = () => {
       const weekprefix = remainder === 0 ? 4 : remainder;
 
       const userIdsToSearch = result.map((res) => res.userId);
+
+      console.log(userIdsToSearch);
 
       console.log(
         `Looking for schedules: week${weekprefix} ${mappedDay}, ${startTime} ${endTime}`
@@ -81,13 +97,23 @@ export const workoutMailWorker = () => {
             )
           );
 
-        if (dbResult.length > 0) {
-          dbResult.map((item) => {
-            const jobId = nanoid();
-            mq.add(`sendMail:${jobId}`, { ...item, emailType: "workout" });
-          });
-        }
+        if (dbResult.length && dbResult.length > 0) {
+          try {
+            const promisesMap = dbResult.map(async (item) => {
+              const jobId = nanoid();
+              console.log(`sendMail:${jobId}`);
+              await mq.add(`sendMail:${jobId}`, {
+                ...item,
+                emailType: "workout",
+              });
+              return;
+            });
 
+            await Promise.all(promisesMap);
+          } catch (error) {
+            console.log(`Error sending emails to the queue : ${error}`);
+          }
+        }
         return { status: "success" };
       }
     },
