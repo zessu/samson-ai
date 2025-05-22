@@ -7,5 +7,5 @@
 **Get workout recommendations directly in your inbox**
 
 <p align="center">
-  <img src="./archdiag.svg" width="400" alt="samson" />
+  <img src="./archdg.svg" alt="samson" />
 </p>
