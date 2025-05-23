@@ -52,7 +52,7 @@ export const Dashboard: FC = () => {
         </div>
       )}
       <div className="flex flex-col justify-center items-center w-full">
-        <img src="wip.png" width="300" height="300" className="w-80 h-80" />
+        <img src="/wip.png" width="300" height="300" className="w-80 h-80" />
         <p className="font-bold text-xs w-80 ">
           The dashboard is still a work in progress. You will still get emails
           and notifications in your mailbox an hour to your workout. I'll send
