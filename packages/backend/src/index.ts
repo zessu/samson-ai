@@ -1,6 +1,7 @@
+import { join } from "path";
 import { type ServerWebSocket } from "bun";
 import { Hono } from "hono";
-import { createBunWebSocket } from "hono/bun";
+import { createBunWebSocket, serveStatic } from "hono/bun";
 import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
@@ -30,10 +31,6 @@ app.use(
     credentials: true,
   })
 );
-
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
 
 app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
   const validated = c.req.valid("json");
@@ -103,13 +100,6 @@ app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
-app.onError((err, c) => {
-  if (err.message.startsWith("Validation error")) {
-    return c.json({ error: "Validation Error" }, 400);
-  }
-  return c.json({ error: "Internal Server Error" }, 500);
-});
-
 app.get(
   "/ws",
   upgradeWebSocket((c) => {
@@ -135,6 +125,30 @@ app.get(
   })
 );
 
+const distDir = join(import.meta.dir, "../../frontend/dist");
+
+app.use("/assets/*", serveStatic({ root: distDir }));
+app.use("/vite.svg", serveStatic({ path: join(distDir, "vite.svg") }));
+app.use(
+  "/*",
+  serveStatic({
+    root: distDir,
+    rewriteRequestPath: (path) => {
+      const isAsset =
+        path.startsWith("/assets/") ||
+        /\.(js|css|png|jpg|jpeg|svg|ico|gif|webp)$/i.test(path);
+      return isAsset ? path : "/index.html";
+    },
+  })
+);
+
+app.onError((err, c) => {
+  if (err.message.startsWith("Validation error")) {
+    return c.json({ error: "Validation Error" }, 400);
+  }
+  return c.json({ error: "Internal Server Error" }, 500);
+});
+
 Bun.serve({
   fetch: app.fetch,
   port: 3000,
@@ -142,4 +156,4 @@ Bun.serve({
   idleTimeout: 20,
 });
 
-console.log("started backend server");
+console.log("✅✅✅ Started Backend Server");
