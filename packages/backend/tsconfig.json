@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
@@ -7,6 +9,8 @@
       "@/*": ["./*"],
       "@db/*": ["./src/db/*"],
       "@lib/*": ["./lib/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   }
 }
