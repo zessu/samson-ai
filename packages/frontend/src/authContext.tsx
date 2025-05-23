@@ -18,7 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const signIn = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: `${import.meta.env.VITE_APP_URL}/gender-select`,
+      callbackURL: `${import.meta.env.VITE_API_URL}/gender-select`,
     });
   };
 
