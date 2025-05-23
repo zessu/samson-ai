@@ -6,7 +6,7 @@ export const useStore = create<onBoardingState>()(
   devtools(
     persist(
       (set) => ({
-        gender: "Male",
+        gender: "male",
         age: 0,
         weight: 0,
         fitnessLevel: "beginner",
@@ -14,12 +14,20 @@ export const useStore = create<onBoardingState>()(
         equipment: [],
         weekdays: [],
         time: "",
-        offset: "",
+        offset: 0,
         duration: 0,
         notifications: {
           email: true,
           sms: false,
           app: false,
+        },
+        setGender: (gender: "male" | "female") => {
+          set({ gender });
+        },
+        setFitnessLevel: (
+          fitnessLevel: "beginner" | "intermediate" | "advanced"
+        ) => {
+          set({ fitnessLevel });
         },
       }),
       { name: "onboardingState" }

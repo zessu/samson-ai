@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const numberRangeRegex = /^[-+]?([0-9]|1[0-2])$/;
-
 export const onBoardingSchema = z.object({
   gender: z.enum(["male", "female"]),
   age: z.number(),
