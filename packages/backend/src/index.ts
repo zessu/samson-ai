@@ -5,6 +5,7 @@ import { createBunWebSocket, serveStatic } from "hono/bun";
 import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
@@ -12,7 +13,6 @@ import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { initQueues } from "@/lib/index";
-import { nanoid } from "nanoid";
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
