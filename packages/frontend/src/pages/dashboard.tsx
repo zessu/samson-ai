@@ -21,11 +21,13 @@ export const Dashboard: FC = () => {
     <>
       {!generatedWorkout && !doneGenerating && (
         <>
-          <div className="inline-grid *:[grid-area:1/1]">
-            <div className="status status-primary animate-ping"></div>
-            <div className="status status-primary"></div>
-          </div>{" "}
-          Configuring your profile and generating some workouts for you.
+          <div className="flex flex-row align-center items-center">
+            <div className="inline-grid *:[grid-area:1/1] mr-2">
+              <div className="status status-primary animate-ping"></div>
+              <div className="status status-primary"></div>
+            </div>{" "}
+            Configuring your profile and generating some workouts for you.
+          </div>
         </>
       )}
       {doneGenerating && (

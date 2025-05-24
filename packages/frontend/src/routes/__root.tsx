@@ -1,17 +1,20 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-export const Route = createRootRoute({
-  component: () => (
+export const RootComponent = () => {
+  return (
     <>
-      <div className="flex flex-row h-screen justify-center items-center">
+      <div>
         <div>
           <Outlet />
         </div>
       </div>
       <TanStackRouterDevtools />
     </>
-  ),
+  );
+};
+export const Route = createRootRoute({
+  component: RootComponent,
   notFoundComponent: () => (
     <div>404: What you are looking for does not exist!</div>
   ),

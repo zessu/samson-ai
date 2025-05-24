@@ -6,5 +6,11 @@ export const Route = createFileRoute("/_onboarding/")({
 });
 
 function Main() {
-  return <Dashboard />;
+  return (
+    <>
+      <div className="flex flex-col">
+        <Dashboard />
+      </div>
+    </>
+  );
 }

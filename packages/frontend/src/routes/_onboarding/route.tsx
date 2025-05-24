@@ -11,5 +11,18 @@ export const Route = createFileRoute("/_onboarding")({
 });
 
 function RouteComponent() {
-  return <Outlet />;
+  return (
+    <>
+      <div className="flex flex-row justify-end p-2">
+        <div className="avatar">
+          <div className="w-8 rounded-full mr-5 cursor-pointer">
+            <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-row h-screen justify-center items-center">
+        <Outlet />
+      </div>
+    </>
+  );
 }
