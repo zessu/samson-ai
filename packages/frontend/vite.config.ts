@@ -18,4 +18,12 @@ export default defineConfig({
       frontend: path.resolve(__dirname, "../frontend/src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: import.meta.env.VITE_API_URL,
+        changeOrigin: true,
+      },
+    },
+  },
 });
