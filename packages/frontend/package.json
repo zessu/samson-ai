@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --build tsconfig.app.json && vite build",
+    "dev": "bunx --bun vite",
+    "build": "bunx --build vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
