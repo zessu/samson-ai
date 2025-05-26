@@ -5,13 +5,16 @@ export function useWebSocket(
   markCompleted: () => void
 ) {
   const socketRef = useRef<WebSocket | null>(null);
+  /* use flag to avoid dev mode warnings from react mounting twice and socket being closed*/
+  const isConnected = useRef(false);
 
   useEffect(() => {
     if (!userid) return;
 
-    if (!socketRef.current) {
+    if (!socketRef.current && !isConnected.current) {
       const socket = new WebSocket(`ws://localhost:3000/ws?userId=${userid}`);
       socketRef.current = socket;
+      isConnected.current = true;
 
       socket.onopen = () => {
         console.log("WebSocket connected");
@@ -23,8 +26,12 @@ export function useWebSocket(
         console.log("Received from server:", data);
       };
 
-      socket.onclose = () => {
-        console.log("WebSocket disconnected");
+      socket.onclose = (event) => {
+        console.log("WebSocket disconnected", {
+          reason: event.reason,
+          code: event.code,
+          wasClean: event.wasClean,
+        });
       };
 
       socket.onerror = (err) => {
@@ -33,10 +40,15 @@ export function useWebSocket(
     }
 
     return () => {
-      if (socketRef.current) {
+      if (socketRef.current && isConnected.current === false) {
         socketRef.current.close();
         socketRef.current = null;
+        isConnected.current = false;
       }
     };
   }, [userid]);
+
+  return {
+    socketRef,
+  };
 }
