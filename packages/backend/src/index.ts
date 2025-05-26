@@ -24,79 +24,87 @@ const app = new Hono();
 
 const { routineQueue: createRoutineQueue } = initQueues();
 
-app.use(
-  "*",
-  cors({
+const corsSettings = () => {
+  if (import.meta.env.NODE_ENV === "production") {
+    return { origin: "" };
+  }
+  return {
     origin: Bun.env.LOCALDOMAIN as string,
     credentials: true,
-  })
-);
-
-app.post("/createProfile", zValidator("json", onBoardingSchema), async (c) => {
-  const validated = c.req.valid("json");
-  const user = await auth.api.getSession({
-    headers: c.req.raw.headers,
-  });
-  if (!user)
-    return c.text("You are not authorised to perform that action", 401);
-
-  const userid = user.user.id;
-  const userResult = await db
-    .update(User)
-    .set({
-      gender: validated.gender,
-      age: validated.age,
-      weight: validated.weight,
-      fitnessLevel: validated.fitnessLevel,
-      goals: validated.goals.join(","),
-      equipment: validated.equipment.join(","),
-      notifications: "sms",
-    })
-    .where(eq(User.id, userid))
-    .returning({ userid: User.id });
-
-  if (!userResult || userResult.length === 0) {
-    return c.json(
-      { error: "We could not make the user request, please try again later" },
-      404
-    );
-  }
-
-  const userWorkoutSettings = {
-    id: nanoid(),
-    weekdays: validated.weekdays,
-    workoutTime: validated.time,
-    workoutDuration: validated.duration,
-    userId: userResult[0].userid,
-    userTimezoneOffset: validated.offset,
   };
+};
 
-  const parsed = await workoutSettingsInsertSchema.parse(userWorkoutSettings);
+app.use("*", cors(corsSettings()));
 
-  const workoutResult = await db
-    .insert(workoutSettings)
-    .values(parsed)
-    .returning({ id: workoutSettings.id });
+app.post(
+  "/api/createProfile",
+  zValidator("json", onBoardingSchema),
+  async (c) => {
+    const validated = c.req.valid("json");
+    const user = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!user)
+      return c.text("You are not authorised to perform that action", 401);
 
-  if (!workoutResult || workoutResult.length === 0) {
-    return c.json(
-      {
-        error:
-          "We could not create a workout schedule for you. Please try again in a bit",
-      },
-      404
-    );
+    const userid = user.user.id;
+    const userResult = await db
+      .update(User)
+      .set({
+        gender: validated.gender,
+        age: validated.age,
+        weight: validated.weight,
+        fitnessLevel: validated.fitnessLevel,
+        goals: validated.goals.join(","),
+        equipment: validated.equipment.join(","),
+        notifications: "sms",
+      })
+      .where(eq(User.id, userid))
+      .returning({ userid: User.id });
+
+    if (!userResult || userResult.length === 0) {
+      return c.json(
+        { error: "We could not make the user request, please try again later" },
+        404
+      );
+    }
+
+    const userWorkoutSettings = {
+      id: nanoid(),
+      weekdays: validated.weekdays,
+      workoutTime: validated.time,
+      workoutDuration: validated.duration,
+      userId: userResult[0].userid,
+      userTimezoneOffset: validated.offset,
+    };
+
+    const parsed = await workoutSettingsInsertSchema.parse(userWorkoutSettings);
+
+    const workoutResult = await db
+      .insert(workoutSettings)
+      .values(parsed)
+      .returning({ id: workoutSettings.id });
+
+    if (!workoutResult || workoutResult.length === 0) {
+      return c.json(
+        {
+          error:
+            "We could not create a workout schedule for you. Please try again in a bit",
+        },
+        404
+      );
+    }
+
+    const jobId = nanoid();
+
+    await createRoutineQueue.add(`create-routine:${jobId}`, {
+      ...validated,
+      id: userid,
+    });
+
+    return c.json("generated your workout routine");
   }
-
-  const jobId = nanoid();
-
-  await createRoutineQueue.add(`create-routine:${jobId}`, {
-    ...validated,
-    id: userid,
-  });
-
-  return c.json("generated your workout routine");
-});
+);
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
 
@@ -127,18 +135,12 @@ app.get(
 
 const distDir = join(import.meta.dir, "../../frontend/dist");
 
-app.use("/assets/*", serveStatic({ root: distDir }));
-app.use("/vite.svg", serveStatic({ path: join(distDir, "vite.svg") }));
+app.use("*", serveStatic({ root: distDir }));
 app.use(
   "/*",
   serveStatic({
     root: distDir,
-    rewriteRequestPath: (path) => {
-      const isAsset =
-        path.startsWith("/assets/") ||
-        /\.(js|css|png|jpg|jpeg|svg|ico|gif|webp)$/i.test(path);
-      return isAsset ? path : "/index.html";
-    },
+    path: "index.html",
   })
 );
 
