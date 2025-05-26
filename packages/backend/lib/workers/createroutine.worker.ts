@@ -106,7 +106,7 @@ export const createRoutineWorker = () => {
     },
     {
       connection,
-      concurrency: 10,
+      concurrency: 1,
     }
   );
 

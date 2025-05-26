@@ -117,7 +117,7 @@ export const workoutMailWorker = () => {
         return { status: "success" };
       }
     },
-    { connection }
+    { connection, concurrency: 1 }
   );
 
   workoutMailWorker.on("completed", (job) => {
