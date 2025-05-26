@@ -24,22 +24,16 @@ const app = new Hono();
 
 const { routineQueue: createRoutineQueue } = initQueues();
 
-const corsSettings = () => {
-  if (import.meta.env.NODE_ENV === "production") {
-    return { origin: "" };
-  }
-  return {
-    origin: Bun.env.LOCALDOMAIN as string,
-    credentials: true,
-  };
-};
-
-app.use("*", cors(corsSettings()));
+app.use(
+  "*",
+  cors({ origin: import.meta.env.LOCALDOMAIN as string, credentials: true })
+);
 
 app.post(
   "/api/createProfile",
   zValidator("json", onBoardingSchema),
   async (c) => {
+    console.log("got user request");
     const validated = c.req.valid("json");
     const user = await auth.api.getSession({
       headers: c.req.raw.headers,

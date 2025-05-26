@@ -18,4 +18,12 @@ export default defineConfig({
       frontend: path.resolve(__dirname, "../frontend/src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 });

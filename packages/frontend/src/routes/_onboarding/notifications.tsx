@@ -28,7 +28,7 @@ function RouteComponent() {
   });
 
   const submitForm = async (data: onBoardingState) => {
-    return await fetch(`${import.meta.env.VITE_API_URL}/createProfile`, {
+    return await fetch("/api/createProfile", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
