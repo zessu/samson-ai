@@ -33,7 +33,6 @@ app.post(
   "/api/createProfile",
   zValidator("json", onBoardingSchema),
   async (c) => {
-    console.log("got user request");
     const validated = c.req.valid("json");
     const user = await auth.api.getSession({
       headers: c.req.raw.headers,
@@ -110,6 +109,7 @@ app.get(
     if (!userid) return {};
     return {
       onOpen: (_, ws) => {
+        console.log("new connection opened");
         const wss = ws.raw as ServerWebSocket<webSocketData>;
         clients.set(userid, wss);
       },
