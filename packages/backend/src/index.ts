@@ -129,7 +129,7 @@ app.get(
 
 const distDir = join(import.meta.dir, "../../frontend/dist");
 
-app.use("*", serveStatic({ root: distDir }));
+app.use("/*", serveStatic({ root: distDir }));
 app.use(
   "/*",
   serveStatic({
@@ -149,7 +149,7 @@ Bun.serve({
   fetch: app.fetch,
   port: 3000,
   websocket,
-  idleTimeout: 20,
+  idleTimeout: 120,
 });
 
 console.log("✅✅✅ Started Backend Server");
