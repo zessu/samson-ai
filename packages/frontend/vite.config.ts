@@ -5,6 +5,21 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
+const setProxyConfig = () => {
+  if (process.env.NODE_ENV === "production") {
+    return {
+      proxy: {
+        "/api": {
+          target: "http://localhost:3000",
+          changeOrigin: true,
+        },
+      },
+    };
+  } else {
+    return {};
+  }
+};
+
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
@@ -18,12 +33,5 @@ export default defineConfig({
       frontend: path.resolve(__dirname, "../frontend/src"),
     },
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        changeOrigin: true,
-      },
-    },
-  },
+  server: setProxyConfig(),
 });

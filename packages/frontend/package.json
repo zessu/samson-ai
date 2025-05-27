@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bunx --bun vite",
-    "build": "bunx --build vite build",
+    "build": "bunx --build vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview"
   },
