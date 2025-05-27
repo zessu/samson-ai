@@ -2,7 +2,8 @@
   "name": "backend",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "start": "NODE_ENV=production && bun run src/index.ts"
   },
   "dependencies": {
     "@bull-board/hono": "^6.9.6",
