@@ -7,9 +7,11 @@
     "packages/*"
   ],
   "scripts": {
-    "backend": "cd packages/backend && bun run dev",
-    "frontend": "cd packages/frontend && bun run dev",
-    "email": "cd packages/transactional && bun run dev"
+    "backend:dev": "cd packages/backend && bun run dev",
+    "frontend:dev": "cd packages/frontend && bun run dev",
+    "email": "cd packages/transactional && bun run dev",
+    "build:frontend": "cd packages/frontend && bun run build",
+    "start:backend": "cd packages/backend && bun run start"
   },
   "peerDependencies": {
     "typescript": "^5"
