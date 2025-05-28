@@ -1,0 +1,12 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  samson:
+    build:
+      context: .
+      target: release
+    container_name: samsonai
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
