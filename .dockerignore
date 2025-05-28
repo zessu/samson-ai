@@ -1,0 +1,12 @@
+.git
+node_modules
+dist
+.env.local
+.env.development
+*.log
+*.md
+Dockerfile
+*.yml
+*.test.*
+__tests__
+coverage
