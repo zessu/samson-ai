@@ -12,7 +12,9 @@ export function useWebSocket(
     if (!userid) return;
 
     if (!socketRef.current && !isConnected.current) {
-      const socket = new WebSocket(`ws://localhost:3000/ws?userId=${userid}`);
+      const socket = new WebSocket(
+        `ws://${import.meta.env.VITE_WS_URL}/ws?userId=${userid}`
+      );
       socketRef.current = socket;
       isConnected.current = true;
 

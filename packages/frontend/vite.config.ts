@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 const setProxyConfig = () => {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV !== "production") {
     return {
       proxy: {
         "/api": {
