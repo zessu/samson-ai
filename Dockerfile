@@ -14,7 +14,7 @@ COPY . .
 RUN bun run build:frontend
 
 # Final runtime image
-FROM base AS release
+FROM oven/bun:alpine AS release
 
 # Copy only production node_modules
 COPY --from=install /usr/src/app/node_modules node_modules
