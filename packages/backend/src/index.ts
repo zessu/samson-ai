@@ -6,6 +6,7 @@ import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import * as HyperDX from "@hyperdx/node-opentelemetry";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
@@ -13,6 +14,11 @@ import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { initQueues } from "@/lib/index";
+
+HyperDX.init({
+  apiKey: Bun.env.HYPERDX_INGESTION_KEY,
+  service: "samsonai",
+});
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
@@ -26,7 +32,7 @@ const { routineQueue: createRoutineQueue } = initQueues();
 
 app.use(
   "*",
-  cors({ origin: import.meta.env.LOCALDOMAIN as string, credentials: true })
+  cors({ origin: import.meta.env.LOCALDOMAIN as string, credentials: true }),
 );
 
 app.post(
@@ -58,7 +64,7 @@ app.post(
     if (!userResult || userResult.length === 0) {
       return c.json(
         { error: "We could not make the user request, please try again later" },
-        404
+        404,
       );
     }
 
@@ -84,7 +90,7 @@ app.post(
           error:
             "We could not create a workout schedule for you. Please try again in a bit",
         },
-        404
+        404,
       );
     }
 
@@ -96,7 +102,7 @@ app.post(
     });
 
     return c.json("generated your workout routine");
-  }
+  },
 );
 
 app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
@@ -124,7 +130,7 @@ app.get(
       },
       onError: () => console.log("Websocket Error"),
     };
-  })
+  }),
 );
 
 const distDir = join(import.meta.dir, "../../frontend/dist");
@@ -135,10 +141,11 @@ app.use(
   serveStatic({
     root: distDir,
     path: "index.html",
-  })
+  }),
 );
 
 app.onError((err, c) => {
+  Hyperdx.recordException(err);
   if (err.message.startsWith("Validation error")) {
     return c.json({ error: "Validation Error" }, 400);
   }
