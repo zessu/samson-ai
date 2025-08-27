@@ -4,7 +4,7 @@
     "": {
       "name": "workouts",
       "peerDependencies": {
-        "typescript": "^5",
+        "typescript": "^5.8.3",
       },
     },
     "packages/ai": {
