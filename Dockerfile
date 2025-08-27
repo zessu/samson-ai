@@ -11,6 +11,12 @@ RUN bun install --prod
 FROM base AS prerelease
 COPY --from=install /usr/src/app/node_modules node_modules
 COPY . .
+# Debug: Force detailed directory listing
+RUN echo "Listing /usr/src/app:" && ls -la . && \
+    echo "Listing /usr/src/app/packages:" && ls -la packages || echo "packages directory missing" && \
+    echo "Listing /usr/src/app/packages/frontend:" && ls -la packages/frontend || echo "frontend directory missing"
+# Verify Vite is installed
+RUN bunx vite --version || echo "Vite not installed"
 RUN bun run build:frontend
 
 # Final runtime image
