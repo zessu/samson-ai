@@ -1,8 +1,7 @@
 import IORedis from "ioredis";
 
-const connection = new IORedis(`${Bun.env.REDIS_HOST}:${Bun.env.REDIS_PORT}`, {
+const connection = new IORedis(`rediss://default:${Bun.env.REDIS_SECRET}@ace-hound-14897.upstash.io:6379`, {
   maxRetriesPerRequest: null,
-  socketTimeout: 30000,
 });
 
 connection.on("connect", () => {
