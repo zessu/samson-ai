@@ -6,7 +6,6 @@ import { zValidator } from "@hono/zod-validator";
 import { cors } from "hono/cors";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import * as HyperDX from "@hyperdx/node-opentelemetry";
 
 import { onBoardingSchema } from "shared";
 import { auth } from "@/auth";
@@ -14,11 +13,6 @@ import { user as User } from "@/auth-schema";
 import { db } from "@db/index";
 import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
 import { initQueues } from "@/lib/index";
-
-HyperDX.init({
-  apiKey: Bun.env.HYPERDX_INGESTION_KEY,
-  service: "samsonai",
-});
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
@@ -77,11 +71,11 @@ app.post(
       userTimezoneOffset: validated.offset,
     };
 
-    const parsed = await workoutSettingsInsertSchema.parse(userWorkoutSettings);
+    const parsedWorkoutSettings = workoutSettingsInsertSchema.parse(userWorkoutSettings);
 
     const workoutResult = await db
       .insert(workoutSettings)
-      .values(parsed)
+      .values(userWorkoutSettings)
       .returning({ id: workoutSettings.id });
 
     if (!workoutResult || workoutResult.length === 0) {
@@ -143,14 +137,6 @@ app.use(
     path: "index.html",
   }),
 );
-
-app.onError((err, c) => {
-  Hyperdx.recordException(err);
-  if (err.message.startsWith("Validation error")) {
-    return c.json({ error: "Validation Error" }, 400);
-  }
-  return c.json({ error: "Internal Server Error" }, 500);
-});
 
 Bun.serve({
   fetch: app.fetch,
