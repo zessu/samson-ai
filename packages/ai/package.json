@@ -13,19 +13,19 @@
   "description": "",
   "type": "module",
   "dependencies": {
-    "@ai-sdk/google": "^1.2.14",
-    "@mastra/core": "^0.9.1",
-    "@mastra/libsql": "^0.0.1",
-    "@mastra/memory": "^0.3.1",
-    "zod": "^3.24.3"
+    "@ai-sdk/google": "^2.0.35",
+    "@mastra/core": "^0.24.1",
+    "@mastra/libsql": "^0.16.2",
+    "@mastra/memory": "^0.15.11",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.1",
-    "@types/node": "^22.15.3",
-    "eslint": "^9.25.1",
-    "globals": "^16.0.0",
-    "mastra": "^0.6.0",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.31.1"
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22.19.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "mastra": "^0.18.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0"
   }
 }

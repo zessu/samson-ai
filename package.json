@@ -14,7 +14,7 @@
     "start:backend": "cd packages/backend && bun run start"
   },
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "zod": "^4.1.12"

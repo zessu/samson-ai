@@ -71,7 +71,7 @@ app.post(
       userTimezoneOffset: validated.offset,
     };
 
-    const parsedWorkoutSettings = workoutSettingsInsertSchema.parse(userWorkoutSettings);
+    workoutSettingsInsertSchema.parse(userWorkoutSettings);
 
     const workoutResult = await db
       .insert(workoutSettings)
