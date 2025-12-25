@@ -12,17 +12,17 @@ import { sendExampleWorkoutEmail } from "@/lib/sendExampleWorkoutEmail";
 const cookieAttr =
   Bun.env.NODE_ENV === "production"
     ? ({
-        secure: true,
-        httpOnly: true,
-        sameSite: "lax",
-        partitioned: true,
-      } as const)
+      secure: true,
+      httpOnly: true,
+      sameSite: "lax",
+      partitioned: true,
+    } as const)
     : ({
-        secure: true,
-        httpOnly: false,
-        sameSite: "lax",
-        partitioned: true,
-      } as const);
+      secure: true,
+      httpOnly: false,
+      sameSite: "lax",
+      partitioned: true,
+    } as const);
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -58,7 +58,7 @@ export const auth = betterAuth({
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path.startsWith("/callback")) {
-        const newSession = await ctx.context.newSession;
+        const newSession = ctx.context.newSession;
         if (newSession) {
           const email = newSession.user.email;
           const res = await db

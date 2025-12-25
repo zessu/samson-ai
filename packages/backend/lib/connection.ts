@@ -1,8 +1,11 @@
 import IORedis from "ioredis";
 
-const connection = new IORedis(`rediss://default:${Bun.env.REDIS_SECRET}@ace-hound-14897.upstash.io:6379`, {
-  maxRetriesPerRequest: null,
-});
+const connection = new IORedis(
+  `rediss://default:${Bun.env.REDIS_SECRET}@harmless-dragon-52262.upstash.io:6379`,
+  {
+    maxRetriesPerRequest: null,
+  },
+);
 
 connection.on("connect", () => {
   console.log("IORedis connected to Redis");
