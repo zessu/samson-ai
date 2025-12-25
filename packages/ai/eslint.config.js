@@ -1,11 +1,8 @@
-import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import { defineConfig } from "eslint/config";
+import rootConfig from '../../eslint.config.js';
+import tseslint from 'typescript-eslint';
 
+export default tseslint.config(...rootConfig, {
+  files: ['**/*.{js,mjs,cjs,ts}'],
+  // AI package specific rules or overrides here
+});
 
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.{js,mjs,cjs,ts}"], languageOptions: { globals: globals.browser } },
-  tseslint.configs.recommended,
-]);
