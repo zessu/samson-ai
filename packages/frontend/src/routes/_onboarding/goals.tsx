@@ -49,7 +49,7 @@ function RouteComponent() {
               {...register("weight", { required: false })}
               type="checkbox"
               value="lose weight"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Lose Weight</span>
           </div>
@@ -59,7 +59,7 @@ function RouteComponent() {
               {...register("muscle", { required: false })}
               type="checkbox"
               value="add muscle"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Add Muscle / Build Strength</span>
           </div>
@@ -69,7 +69,7 @@ function RouteComponent() {
               {...register("tone", { required: false })}
               type="checkbox"
               value="tone my body"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Tone Muscles (Lean & Defined)</span>
           </div>
@@ -80,7 +80,7 @@ function RouteComponent() {
               {...register("cardio", { required: false })}
               type="checkbox"
               value="increase cardiovascular fitness"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Improve Cardio (Running, Cycling, etc.)</span>
           </div>
@@ -90,7 +90,7 @@ function RouteComponent() {
               {...register("endurance", { required: false })}
               type="checkbox"
               value="increase endurance and stamina"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Increase Endurance & Stamina</span>
           </div>
@@ -101,7 +101,7 @@ function RouteComponent() {
               {...register("flexibility", { required: false })}
               type="checkbox"
               value="improve flexibility and mobility"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Improve Flexibility & Mobility</span>
           </div>
@@ -111,7 +111,7 @@ function RouteComponent() {
               {...register("posture", { required: false })}
               type="checkbox"
               value="fix posture and reduce back pain"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Fix Posture / Reduce Back Pain</span>
           </div>
@@ -122,7 +122,7 @@ function RouteComponent() {
               {...register("stress", { required: false })}
               type="checkbox"
               value="stress relief and mental wellness"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Stress Relief & Mental Wellness</span>
           </div>
@@ -132,7 +132,7 @@ function RouteComponent() {
               {...register("maintain", { required: false })}
               type="checkbox"
               value="maintain fitness as I age"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Maintain Fitness as I Age</span>
           </div>
@@ -143,7 +143,7 @@ function RouteComponent() {
               {...register("sport", { required: false })}
               type="checkbox"
               value="train for a sport"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Train for a Sport (Basketball, Soccer, etc.)</span>
           </div>
@@ -153,7 +153,7 @@ function RouteComponent() {
               {...register("rehabilitate", { required: false })}
               value="rehabilitate an injury"
               type="checkbox"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Rehabilitate an Injury</span>
           </div>

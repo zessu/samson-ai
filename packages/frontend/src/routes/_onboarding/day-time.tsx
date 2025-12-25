@@ -58,7 +58,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Monday")}
             value="monday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Monday</span>
         </div>
@@ -68,7 +68,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Tuesday")}
             value="tuesday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Tuesday</span>
         </div>
@@ -77,7 +77,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Wednesday")}
             value="wednesday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Wednesday</span>
         </div>
@@ -87,7 +87,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Thursday")}
             value="thursday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Thursday</span>
         </div>
@@ -97,7 +97,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Friday")}
             value="friday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Friday</span>
         </div>
@@ -107,7 +107,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Saturday")}
             value="saturday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Saturday</span>
         </div>
@@ -117,7 +117,7 @@ function RouteComponent() {
             type="checkbox"
             {...register("Sunday")}
             value="sunday"
-            className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
           />
           <span>Sunday</span>
         </div>

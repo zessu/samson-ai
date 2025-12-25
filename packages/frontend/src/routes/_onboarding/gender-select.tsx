@@ -1,37 +1,37 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
 
-import { useStore } from "../../state/onboarding";
-import { onBoardingSchema } from "shared";
+import { useStore } from '../../state/onboarding'
+import { onBoardingSchema } from 'shared'
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod'
 
-const genderSchema = onBoardingSchema.pick({ gender: true });
-type GenderFormValues = z.infer<typeof genderSchema>;
+const genderSchema = onBoardingSchema.pick({ gender: true })
+type GenderFormValues = z.infer<typeof genderSchema>
 
-export const Route = createFileRoute("/_onboarding/gender-select")({
+export const Route = createFileRoute('/_onboarding/gender-select')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm<GenderFormValues>({
     resolver: zodResolver(genderSchema),
-  });
+  })
 
   const onSubmit: SubmitHandler<GenderFormValues> = (data) => {
     try {
-      useStore.setState(data);
-      goToNextPage();
+      useStore.setState(data)
+      goToNextPage()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const goToNextPage = () => {
-    navigate({ to: "/age-select" });
-  };
+    navigate({ to: '/age-select' })
+  }
   return (
     <div>
       <div className="text-xl flex flex-col">
@@ -45,7 +45,7 @@ function RouteComponent() {
                 type="radio"
                 className="radio"
                 value="male"
-                {...register("gender", { required: true })}
+                {...register('gender', { required: true })}
               />
               <span className="ml-2">Male</span>
             </span>
@@ -54,7 +54,7 @@ function RouteComponent() {
                 type="radio"
                 className="radio"
                 value="female"
-                {...register("gender", { required: true })}
+                {...register('gender', { required: true })}
               />
               <span className="ml-2">Female</span>
             </span>
@@ -65,5 +65,5 @@ function RouteComponent() {
         </form>
       </div>
     </div>
-  );
+  )
 }

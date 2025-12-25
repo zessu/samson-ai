@@ -1,8 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useStore } from '../../state/onboarding';
 
-export const Route = createFileRoute("/_onboarding/strength-equipment")({
+export const Route = createFileRoute('/_onboarding/strength-equipment')({
   component: RouteComponent,
 });
 
@@ -38,7 +38,7 @@ function RouteComponent() {
   };
 
   const goToNextPage = () => {
-    navigate({ to: "/day-time" });
+    navigate({ to: '/day-time' });
   };
 
   return (
@@ -53,9 +53,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("dumbbells", { required: false })}
+              {...register('dumbbells', { required: false })}
               value="Dumbbells"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Dumbbells</span>
           </div>
@@ -63,9 +63,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("barbells", { required: false })}
+              {...register('barbells', { required: false })}
               value="Barbells"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Barbells</span>
           </div>
@@ -73,9 +73,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("kettlebells", { required: false })}
+              {...register('kettlebells', { required: false })}
               value="Kettlebells"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Kettlebells</span>
           </div>
@@ -83,9 +83,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("weightPlates", { required: false })}
+              {...register('weightPlates', { required: false })}
               value="Weight Plates"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Weight Plates</span>
           </div>
@@ -94,9 +94,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("pullUpBar", { required: false })}
+              {...register('pullUpBar', { required: false })}
               value="Pull Up Bar"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Pull Up Bar</span>
           </div>
@@ -104,9 +104,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("longBar", { required: false })}
+              {...register('longBar', { required: false })}
               value="Long Bar"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Long Bar</span>
           </div>
@@ -114,9 +114,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("heavyBar", { required: false })}
+              {...register('heavyBar', { required: false })}
               value="Heavy Bar"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Heavy Bar</span>
           </div>
@@ -124,9 +124,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("deadliftBar", { required: false })}
+              {...register('deadliftBar', { required: false })}
               value="Deadlift Bar"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Deadlift Bar</span>
           </div>
@@ -135,9 +135,11 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("legPressMachine", { required: false })}
+              {...register('legPressMachine', {
+                required: false,
+              })}
               value="Leg Press Machine"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Leg Press Machine</span>
           </div>
@@ -145,9 +147,11 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("latPulldownMachine", { required: false })}
+              {...register('latPulldownMachine', {
+                required: false,
+              })}
               value="Lat Pulldown Machine"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Lat Pulldown Machine</span>
           </div>
@@ -155,9 +159,11 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("chestPressMachine", { required: false })}
+              {...register('chestPressMachine', {
+                required: false,
+              })}
               value="Chest Press Machine"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Chest Press Machine</span>
           </div>
@@ -165,9 +171,11 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("shoulderPressMachine", { required: false })}
+              {...register('shoulderPressMachine', {
+                required: false,
+              })}
               value="Shoulder Press Machine"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Shoulder Press Machine</span>
           </div>
@@ -175,9 +183,11 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("seatedRowMachine", { required: false })}
+              {...register('seatedRowMachine', {
+                required: false,
+              })}
               value="Seated Row Machine"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Seated Row Machine</span>
           </div>
@@ -186,9 +196,9 @@ function RouteComponent() {
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              {...register("weightBelt", { required: false })}
+              {...register('weightBelt', { required: false })}
               value="Weight Belt"
-              className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
             />
             <span>Weight Belt</span>
           </div>

@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
-import { onBoardingSchema } from "shared";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useStore } from '../../state/onboarding';
+import { onBoardingSchema } from 'shared';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-export const Route = createFileRoute("/_onboarding/fitness-select")({
+export const Route = createFileRoute('/_onboarding/fitness-select')({
   component: RouteComponent,
 });
 
@@ -28,7 +28,7 @@ function RouteComponent() {
   };
 
   const goToNextPage = () => {
-    navigate({ to: "/goals" });
+    navigate({ to: '/goals' });
   };
 
   return (
@@ -38,7 +38,7 @@ function RouteComponent() {
         <select
           defaultValue="beginner"
           className="select mb-4"
-          {...register("fitnessLevel", { required: true })}
+          {...register('fitnessLevel', { required: true })}
         >
           <option disabled={true}>What's your experience level ?</option>
           <option value="beginner">Beginner</option>
