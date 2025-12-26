@@ -8,269 +8,101 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as OnboardingRouteRouteImport } from './routes/_onboarding/route'
+import { Route as OnboardingIndexRouteImport } from './routes/_onboarding/index'
+import { Route as OnboardingWorkoutRouteImport } from './routes/_onboarding/workout'
+import { Route as OnboardingWeightSelectRouteImport } from './routes/_onboarding/weight-select'
+import { Route as OnboardingTimeSelectorRouteImport } from './routes/_onboarding/time-selector'
+import { Route as OnboardingStrengthEquipmentRouteImport } from './routes/_onboarding/strength-equipment'
+import { Route as OnboardingSettingsRouteImport } from './routes/_onboarding/settings'
+import { Route as OnboardingNotificationsRouteImport } from './routes/_onboarding/notifications'
+import { Route as OnboardingGoalsRouteImport } from './routes/_onboarding/goals'
+import { Route as OnboardingGenderSelectRouteImport } from './routes/_onboarding/gender-select'
+import { Route as OnboardingFitnessSelectRouteImport } from './routes/_onboarding/fitness-select'
+import { Route as OnboardingDayTimeRouteImport } from './routes/_onboarding/day-time'
+import { Route as OnboardingCardioEquipmentRouteImport } from './routes/_onboarding/cardio-equipment'
+import { Route as OnboardingAgeSelectRouteImport } from './routes/_onboarding/age-select'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as OnboardingRouteImport } from './routes/_onboarding/route'
-import { Route as OnboardingIndexImport } from './routes/_onboarding/index'
-import { Route as OnboardingWorkoutImport } from './routes/_onboarding/workout'
-import { Route as OnboardingWeightSelectImport } from './routes/_onboarding/weight-select'
-import { Route as OnboardingTimeSelectorImport } from './routes/_onboarding/time-selector'
-import { Route as OnboardingStrengthEquipmentImport } from './routes/_onboarding/strength-equipment'
-import { Route as OnboardingSettingsImport } from './routes/_onboarding/settings'
-import { Route as OnboardingNotificationsImport } from './routes/_onboarding/notifications'
-import { Route as OnboardingGoalsImport } from './routes/_onboarding/goals'
-import { Route as OnboardingGenderSelectImport } from './routes/_onboarding/gender-select'
-import { Route as OnboardingFitnessSelectImport } from './routes/_onboarding/fitness-select'
-import { Route as OnboardingDayTimeImport } from './routes/_onboarding/day-time'
-import { Route as OnboardingCardioEquipmentImport } from './routes/_onboarding/cardio-equipment'
-import { Route as OnboardingAgeSelectImport } from './routes/_onboarding/age-select'
-
-// Create/Update Routes
-
-const SignupRoute = SignupImport.update({
+const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const OnboardingRouteRoute = OnboardingRouteImport.update({
+const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
   id: '/_onboarding',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const OnboardingIndexRoute = OnboardingIndexImport.update({
+const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingWorkoutRoute = OnboardingWorkoutImport.update({
+const OnboardingWorkoutRoute = OnboardingWorkoutRouteImport.update({
   id: '/workout',
   path: '/workout',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingWeightSelectRoute = OnboardingWeightSelectImport.update({
+const OnboardingWeightSelectRoute = OnboardingWeightSelectRouteImport.update({
   id: '/weight-select',
   path: '/weight-select',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingTimeSelectorRoute = OnboardingTimeSelectorImport.update({
+const OnboardingTimeSelectorRoute = OnboardingTimeSelectorRouteImport.update({
   id: '/time-selector',
   path: '/time-selector',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
 const OnboardingStrengthEquipmentRoute =
-  OnboardingStrengthEquipmentImport.update({
+  OnboardingStrengthEquipmentRouteImport.update({
     id: '/strength-equipment',
     path: '/strength-equipment',
     getParentRoute: () => OnboardingRouteRoute,
   } as any)
-
-const OnboardingSettingsRoute = OnboardingSettingsImport.update({
+const OnboardingSettingsRoute = OnboardingSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingNotificationsRoute = OnboardingNotificationsImport.update({
+const OnboardingNotificationsRoute = OnboardingNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingGoalsRoute = OnboardingGoalsImport.update({
+const OnboardingGoalsRoute = OnboardingGoalsRouteImport.update({
   id: '/goals',
   path: '/goals',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingGenderSelectRoute = OnboardingGenderSelectImport.update({
+const OnboardingGenderSelectRoute = OnboardingGenderSelectRouteImport.update({
   id: '/gender-select',
   path: '/gender-select',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingFitnessSelectRoute = OnboardingFitnessSelectImport.update({
+const OnboardingFitnessSelectRoute = OnboardingFitnessSelectRouteImport.update({
   id: '/fitness-select',
   path: '/fitness-select',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingDayTimeRoute = OnboardingDayTimeImport.update({
+const OnboardingDayTimeRoute = OnboardingDayTimeRouteImport.update({
   id: '/day-time',
   path: '/day-time',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-
-const OnboardingCardioEquipmentRoute = OnboardingCardioEquipmentImport.update({
-  id: '/cardio-equipment',
-  path: '/cardio-equipment',
-  getParentRoute: () => OnboardingRouteRoute,
-} as any)
-
-const OnboardingAgeSelectRoute = OnboardingAgeSelectImport.update({
+const OnboardingCardioEquipmentRoute =
+  OnboardingCardioEquipmentRouteImport.update({
+    id: '/cardio-equipment',
+    path: '/cardio-equipment',
+    getParentRoute: () => OnboardingRouteRoute,
+  } as any)
+const OnboardingAgeSelectRoute = OnboardingAgeSelectRouteImport.update({
   id: '/age-select',
   path: '/age-select',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/_onboarding': {
-      id: '/_onboarding'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/_onboarding/age-select': {
-      id: '/_onboarding/age-select'
-      path: '/age-select'
-      fullPath: '/age-select'
-      preLoaderRoute: typeof OnboardingAgeSelectImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/cardio-equipment': {
-      id: '/_onboarding/cardio-equipment'
-      path: '/cardio-equipment'
-      fullPath: '/cardio-equipment'
-      preLoaderRoute: typeof OnboardingCardioEquipmentImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/day-time': {
-      id: '/_onboarding/day-time'
-      path: '/day-time'
-      fullPath: '/day-time'
-      preLoaderRoute: typeof OnboardingDayTimeImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/fitness-select': {
-      id: '/_onboarding/fitness-select'
-      path: '/fitness-select'
-      fullPath: '/fitness-select'
-      preLoaderRoute: typeof OnboardingFitnessSelectImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/gender-select': {
-      id: '/_onboarding/gender-select'
-      path: '/gender-select'
-      fullPath: '/gender-select'
-      preLoaderRoute: typeof OnboardingGenderSelectImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/goals': {
-      id: '/_onboarding/goals'
-      path: '/goals'
-      fullPath: '/goals'
-      preLoaderRoute: typeof OnboardingGoalsImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/notifications': {
-      id: '/_onboarding/notifications'
-      path: '/notifications'
-      fullPath: '/notifications'
-      preLoaderRoute: typeof OnboardingNotificationsImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/settings': {
-      id: '/_onboarding/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof OnboardingSettingsImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/strength-equipment': {
-      id: '/_onboarding/strength-equipment'
-      path: '/strength-equipment'
-      fullPath: '/strength-equipment'
-      preLoaderRoute: typeof OnboardingStrengthEquipmentImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/time-selector': {
-      id: '/_onboarding/time-selector'
-      path: '/time-selector'
-      fullPath: '/time-selector'
-      preLoaderRoute: typeof OnboardingTimeSelectorImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/weight-select': {
-      id: '/_onboarding/weight-select'
-      path: '/weight-select'
-      fullPath: '/weight-select'
-      preLoaderRoute: typeof OnboardingWeightSelectImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/workout': {
-      id: '/_onboarding/workout'
-      path: '/workout'
-      fullPath: '/workout'
-      preLoaderRoute: typeof OnboardingWorkoutImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-    '/_onboarding/': {
-      id: '/_onboarding/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof OnboardingIndexImport
-      parentRoute: typeof OnboardingRouteImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface OnboardingRouteRouteChildren {
-  OnboardingAgeSelectRoute: typeof OnboardingAgeSelectRoute
-  OnboardingCardioEquipmentRoute: typeof OnboardingCardioEquipmentRoute
-  OnboardingDayTimeRoute: typeof OnboardingDayTimeRoute
-  OnboardingFitnessSelectRoute: typeof OnboardingFitnessSelectRoute
-  OnboardingGenderSelectRoute: typeof OnboardingGenderSelectRoute
-  OnboardingGoalsRoute: typeof OnboardingGoalsRoute
-  OnboardingNotificationsRoute: typeof OnboardingNotificationsRoute
-  OnboardingSettingsRoute: typeof OnboardingSettingsRoute
-  OnboardingStrengthEquipmentRoute: typeof OnboardingStrengthEquipmentRoute
-  OnboardingTimeSelectorRoute: typeof OnboardingTimeSelectorRoute
-  OnboardingWeightSelectRoute: typeof OnboardingWeightSelectRoute
-  OnboardingWorkoutRoute: typeof OnboardingWorkoutRoute
-  OnboardingIndexRoute: typeof OnboardingIndexRoute
-}
-
-const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
-  OnboardingAgeSelectRoute: OnboardingAgeSelectRoute,
-  OnboardingCardioEquipmentRoute: OnboardingCardioEquipmentRoute,
-  OnboardingDayTimeRoute: OnboardingDayTimeRoute,
-  OnboardingFitnessSelectRoute: OnboardingFitnessSelectRoute,
-  OnboardingGenderSelectRoute: OnboardingGenderSelectRoute,
-  OnboardingGoalsRoute: OnboardingGoalsRoute,
-  OnboardingNotificationsRoute: OnboardingNotificationsRoute,
-  OnboardingSettingsRoute: OnboardingSettingsRoute,
-  OnboardingStrengthEquipmentRoute: OnboardingStrengthEquipmentRoute,
-  OnboardingTimeSelectorRoute: OnboardingTimeSelectorRoute,
-  OnboardingWeightSelectRoute: OnboardingWeightSelectRoute,
-  OnboardingWorkoutRoute: OnboardingWorkoutRoute,
-  OnboardingIndexRoute: OnboardingIndexRoute,
-}
-
-const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
-  OnboardingRouteRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
-  '': typeof OnboardingRouteRouteWithChildren
   '/signup': typeof SignupRoute
   '/age-select': typeof OnboardingAgeSelectRoute
   '/cardio-equipment': typeof OnboardingCardioEquipmentRoute
@@ -286,7 +118,6 @@ export interface FileRoutesByFullPath {
   '/workout': typeof OnboardingWorkoutRoute
   '/': typeof OnboardingIndexRoute
 }
-
 export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/age-select': typeof OnboardingAgeSelectRoute
@@ -303,9 +134,8 @@ export interface FileRoutesByTo {
   '/workout': typeof OnboardingWorkoutRoute
   '/': typeof OnboardingIndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/_onboarding': typeof OnboardingRouteRouteWithChildren
   '/signup': typeof SignupRoute
   '/_onboarding/age-select': typeof OnboardingAgeSelectRoute
@@ -322,11 +152,9 @@ export interface FileRoutesById {
   '/_onboarding/workout': typeof OnboardingWorkoutRoute
   '/_onboarding/': typeof OnboardingIndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
     | '/signup'
     | '/age-select'
     | '/cardio-equipment'
@@ -376,104 +204,161 @@ export interface FileRouteTypes {
     | '/_onboarding/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren
   SignupRoute: typeof SignupRoute
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_onboarding': {
+      id: '/_onboarding'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof OnboardingRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_onboarding/': {
+      id: '/_onboarding/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof OnboardingIndexRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/workout': {
+      id: '/_onboarding/workout'
+      path: '/workout'
+      fullPath: '/workout'
+      preLoaderRoute: typeof OnboardingWorkoutRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/weight-select': {
+      id: '/_onboarding/weight-select'
+      path: '/weight-select'
+      fullPath: '/weight-select'
+      preLoaderRoute: typeof OnboardingWeightSelectRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/time-selector': {
+      id: '/_onboarding/time-selector'
+      path: '/time-selector'
+      fullPath: '/time-selector'
+      preLoaderRoute: typeof OnboardingTimeSelectorRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/strength-equipment': {
+      id: '/_onboarding/strength-equipment'
+      path: '/strength-equipment'
+      fullPath: '/strength-equipment'
+      preLoaderRoute: typeof OnboardingStrengthEquipmentRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/settings': {
+      id: '/_onboarding/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof OnboardingSettingsRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/notifications': {
+      id: '/_onboarding/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof OnboardingNotificationsRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/goals': {
+      id: '/_onboarding/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof OnboardingGoalsRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/gender-select': {
+      id: '/_onboarding/gender-select'
+      path: '/gender-select'
+      fullPath: '/gender-select'
+      preLoaderRoute: typeof OnboardingGenderSelectRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/fitness-select': {
+      id: '/_onboarding/fitness-select'
+      path: '/fitness-select'
+      fullPath: '/fitness-select'
+      preLoaderRoute: typeof OnboardingFitnessSelectRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/day-time': {
+      id: '/_onboarding/day-time'
+      path: '/day-time'
+      fullPath: '/day-time'
+      preLoaderRoute: typeof OnboardingDayTimeRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/cardio-equipment': {
+      id: '/_onboarding/cardio-equipment'
+      path: '/cardio-equipment'
+      fullPath: '/cardio-equipment'
+      preLoaderRoute: typeof OnboardingCardioEquipmentRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/age-select': {
+      id: '/_onboarding/age-select'
+      path: '/age-select'
+      fullPath: '/age-select'
+      preLoaderRoute: typeof OnboardingAgeSelectRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+  }
+}
+
+interface OnboardingRouteRouteChildren {
+  OnboardingAgeSelectRoute: typeof OnboardingAgeSelectRoute
+  OnboardingCardioEquipmentRoute: typeof OnboardingCardioEquipmentRoute
+  OnboardingDayTimeRoute: typeof OnboardingDayTimeRoute
+  OnboardingFitnessSelectRoute: typeof OnboardingFitnessSelectRoute
+  OnboardingGenderSelectRoute: typeof OnboardingGenderSelectRoute
+  OnboardingGoalsRoute: typeof OnboardingGoalsRoute
+  OnboardingNotificationsRoute: typeof OnboardingNotificationsRoute
+  OnboardingSettingsRoute: typeof OnboardingSettingsRoute
+  OnboardingStrengthEquipmentRoute: typeof OnboardingStrengthEquipmentRoute
+  OnboardingTimeSelectorRoute: typeof OnboardingTimeSelectorRoute
+  OnboardingWeightSelectRoute: typeof OnboardingWeightSelectRoute
+  OnboardingWorkoutRoute: typeof OnboardingWorkoutRoute
+  OnboardingIndexRoute: typeof OnboardingIndexRoute
+}
+
+const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
+  OnboardingAgeSelectRoute: OnboardingAgeSelectRoute,
+  OnboardingCardioEquipmentRoute: OnboardingCardioEquipmentRoute,
+  OnboardingDayTimeRoute: OnboardingDayTimeRoute,
+  OnboardingFitnessSelectRoute: OnboardingFitnessSelectRoute,
+  OnboardingGenderSelectRoute: OnboardingGenderSelectRoute,
+  OnboardingGoalsRoute: OnboardingGoalsRoute,
+  OnboardingNotificationsRoute: OnboardingNotificationsRoute,
+  OnboardingSettingsRoute: OnboardingSettingsRoute,
+  OnboardingStrengthEquipmentRoute: OnboardingStrengthEquipmentRoute,
+  OnboardingTimeSelectorRoute: OnboardingTimeSelectorRoute,
+  OnboardingWeightSelectRoute: OnboardingWeightSelectRoute,
+  OnboardingWorkoutRoute: OnboardingWorkoutRoute,
+  OnboardingIndexRoute: OnboardingIndexRoute,
+}
+
+const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
+  OnboardingRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
   SignupRoute: SignupRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_onboarding",
-        "/signup"
-      ]
-    },
-    "/_onboarding": {
-      "filePath": "_onboarding/route.tsx",
-      "children": [
-        "/_onboarding/age-select",
-        "/_onboarding/cardio-equipment",
-        "/_onboarding/day-time",
-        "/_onboarding/fitness-select",
-        "/_onboarding/gender-select",
-        "/_onboarding/goals",
-        "/_onboarding/notifications",
-        "/_onboarding/settings",
-        "/_onboarding/strength-equipment",
-        "/_onboarding/time-selector",
-        "/_onboarding/weight-select",
-        "/_onboarding/workout",
-        "/_onboarding/"
-      ]
-    },
-    "/signup": {
-      "filePath": "signup.tsx"
-    },
-    "/_onboarding/age-select": {
-      "filePath": "_onboarding/age-select.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/cardio-equipment": {
-      "filePath": "_onboarding/cardio-equipment.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/day-time": {
-      "filePath": "_onboarding/day-time.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/fitness-select": {
-      "filePath": "_onboarding/fitness-select.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/gender-select": {
-      "filePath": "_onboarding/gender-select.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/goals": {
-      "filePath": "_onboarding/goals.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/notifications": {
-      "filePath": "_onboarding/notifications.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/settings": {
-      "filePath": "_onboarding/settings.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/strength-equipment": {
-      "filePath": "_onboarding/strength-equipment.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/time-selector": {
-      "filePath": "_onboarding/time-selector.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/weight-select": {
-      "filePath": "_onboarding/weight-select.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/workout": {
-      "filePath": "_onboarding/workout.tsx",
-      "parent": "/_onboarding"
-    },
-    "/_onboarding/": {
-      "filePath": "_onboarding/index.tsx",
-      "parent": "/_onboarding"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

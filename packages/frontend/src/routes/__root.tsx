@@ -1,10 +1,10 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 export const RootComponent = () => {
   return (
     <>
-      <div>
+      <div className="">
         <div>
           <Outlet />
         </div>
