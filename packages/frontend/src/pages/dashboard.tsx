@@ -1,12 +1,14 @@
-import { useState, type FC } from "react";
-import { useSession } from "@/src/lib/auth";
-import { useWebSocket } from "@/src/lib/useWebSocket";
-import { useLocalStorage } from "@/src/lib/useLocalStorage";
+import { useState, type FC } from 'react';
+import { useSession } from '@/src/lib/auth';
+import { useWebSocket } from '@/src/lib/useWebSocket';
+import { useLocalStorage } from '@/src/lib/useLocalStorage';
+import { AISearchBar } from '@/src/components/search';
 
 export const Dashboard: FC = () => {
+  const [isLoading] = useState(false);
   const [doneGenerating, setDoneGenerating] = useState<boolean>(false);
   const [generatedWorkout, setGeneratedWorkout] =
-    useLocalStorage("generatedWorkout");
+    useLocalStorage('generatedWorkout');
   const { data: session } = useSession();
   const userid = session?.user.id;
 
@@ -17,52 +19,24 @@ export const Dashboard: FC = () => {
 
   useWebSocket(userid, markCompleted);
 
+  const search = (_input: string) => console.log('you tried to search');
+
   return (
-    <>
-      <div className="flex flex-col justify-center items-center w-full -mt-20">
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 flex flex-col justify-center items-center w-full">
         {!generatedWorkout && !doneGenerating && (
-          <>
-            <div className="flex flex-row align-center items-center">
-              <div className="inline-grid *:[grid-area:1/1] mr-2">
-                <div className="status status-primary animate-ping"></div>
-                <div className="status status-primary"></div>
-              </div>{" "}
-              Configuring your profile and generating some workouts for you.
+          <div className="flex flex-row items-center gap-2">
+            <div className="inline-grid *:[grid-area:1/1]">
+              <div className="status status-primary animate-ping"></div>
+              <div className="status status-primary"></div>
             </div>
-          </>
-        )}
-        {doneGenerating && (
-          <div>
-            <div role="alert" className="alert alert-success mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0 stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>
-                Congratulations🥳🎉 You will get daily work-outs sent directly
-                to your email every day an hour before your next workout
-              </span>
-            </div>
+            Configuring your profile and generating some workouts for you.
           </div>
         )}
-        <img src="/wip.webp" width="250" height="250" className="w-80 h-80" />
-        <p className="font-bold text-xs w-80 ">
-          The dashboard is still a work in progress. You will still get emails
-          and notifications in your mailbox an hour to your workout. I'll send
-          you an example workout email so you know what to expect. Once the
-          dashboard is ready, I will notify you via email. You'll be able to
-          login, chat to me and view your metrics
-        </p>
       </div>
-    </>
+      <div className="p-6 pb-8">
+        <AISearchBar isLoading={isLoading} onSearch={() => search('')} />
+      </div>
+    </div>
   );
 };
