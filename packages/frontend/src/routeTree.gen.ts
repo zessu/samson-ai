@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OnboardingRouteRouteImport } from './routes/_onboarding/route'
-import { Route as OnboardingIndexRouteImport } from './routes/_onboarding/index'
+import { Route as RouteRouteImport } from './routes/_/route'
 import { Route as OnboardingWorkoutRouteImport } from './routes/_onboarding/workout'
 import { Route as OnboardingWeightSelectRouteImport } from './routes/_onboarding/weight-select'
 import { Route as OnboardingTimeSelectorRouteImport } from './routes/_onboarding/time-selector'
@@ -24,6 +24,7 @@ import { Route as OnboardingFitnessSelectRouteImport } from './routes/_onboardin
 import { Route as OnboardingDayTimeRouteImport } from './routes/_onboarding/day-time'
 import { Route as OnboardingCardioEquipmentRouteImport } from './routes/_onboarding/cardio-equipment'
 import { Route as OnboardingAgeSelectRouteImport } from './routes/_onboarding/age-select'
+import { Route as DashboardRouteImport } from './routes/_/dashboard'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -34,10 +35,9 @@ const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
   id: '/_onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => OnboardingRouteRoute,
+const RouteRoute = RouteRouteImport.update({
+  id: '/_',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingWorkoutRoute = OnboardingWorkoutRouteImport.update({
   id: '/workout',
@@ -101,9 +101,15 @@ const OnboardingAgeSelectRoute = OnboardingAgeSelectRouteImport.update({
   path: '/age-select',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => RouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
+  '/dashboard': typeof DashboardRoute
   '/age-select': typeof OnboardingAgeSelectRoute
   '/cardio-equipment': typeof OnboardingCardioEquipmentRoute
   '/day-time': typeof OnboardingDayTimeRoute
@@ -116,10 +122,10 @@ export interface FileRoutesByFullPath {
   '/time-selector': typeof OnboardingTimeSelectorRoute
   '/weight-select': typeof OnboardingWeightSelectRoute
   '/workout': typeof OnboardingWorkoutRoute
-  '/': typeof OnboardingIndexRoute
 }
 export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
+  '/dashboard': typeof DashboardRoute
   '/age-select': typeof OnboardingAgeSelectRoute
   '/cardio-equipment': typeof OnboardingCardioEquipmentRoute
   '/day-time': typeof OnboardingDayTimeRoute
@@ -132,12 +138,13 @@ export interface FileRoutesByTo {
   '/time-selector': typeof OnboardingTimeSelectorRoute
   '/weight-select': typeof OnboardingWeightSelectRoute
   '/workout': typeof OnboardingWorkoutRoute
-  '/': typeof OnboardingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_': typeof RouteRouteWithChildren
   '/_onboarding': typeof OnboardingRouteRouteWithChildren
   '/signup': typeof SignupRoute
+  '/_/dashboard': typeof DashboardRoute
   '/_onboarding/age-select': typeof OnboardingAgeSelectRoute
   '/_onboarding/cardio-equipment': typeof OnboardingCardioEquipmentRoute
   '/_onboarding/day-time': typeof OnboardingDayTimeRoute
@@ -150,12 +157,12 @@ export interface FileRoutesById {
   '/_onboarding/time-selector': typeof OnboardingTimeSelectorRoute
   '/_onboarding/weight-select': typeof OnboardingWeightSelectRoute
   '/_onboarding/workout': typeof OnboardingWorkoutRoute
-  '/_onboarding/': typeof OnboardingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/signup'
+    | '/dashboard'
     | '/age-select'
     | '/cardio-equipment'
     | '/day-time'
@@ -168,10 +175,10 @@ export interface FileRouteTypes {
     | '/time-selector'
     | '/weight-select'
     | '/workout'
-    | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/signup'
+    | '/dashboard'
     | '/age-select'
     | '/cardio-equipment'
     | '/day-time'
@@ -184,11 +191,12 @@ export interface FileRouteTypes {
     | '/time-selector'
     | '/weight-select'
     | '/workout'
-    | '/'
   id:
     | '__root__'
+    | '/_'
     | '/_onboarding'
     | '/signup'
+    | '/_/dashboard'
     | '/_onboarding/age-select'
     | '/_onboarding/cardio-equipment'
     | '/_onboarding/day-time'
@@ -201,10 +209,10 @@ export interface FileRouteTypes {
     | '/_onboarding/time-selector'
     | '/_onboarding/weight-select'
     | '/_onboarding/workout'
-    | '/_onboarding/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  RouteRoute: typeof RouteRouteWithChildren
   OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren
   SignupRoute: typeof SignupRoute
 }
@@ -225,12 +233,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_onboarding/': {
-      id: '/_onboarding/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof OnboardingIndexRouteImport
-      parentRoute: typeof OnboardingRouteRoute
+    '/_': {
+      id: '/_'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof RouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_onboarding/workout': {
       id: '/_onboarding/workout'
@@ -316,8 +324,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingAgeSelectRouteImport
       parentRoute: typeof OnboardingRouteRoute
     }
+    '/_/dashboard': {
+      id: '/_/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof RouteRoute
+    }
   }
 }
+
+interface RouteRouteChildren {
+  DashboardRoute: typeof DashboardRoute
+}
+
+const RouteRouteChildren: RouteRouteChildren = {
+  DashboardRoute: DashboardRoute,
+}
+
+const RouteRouteWithChildren = RouteRoute._addFileChildren(RouteRouteChildren)
 
 interface OnboardingRouteRouteChildren {
   OnboardingAgeSelectRoute: typeof OnboardingAgeSelectRoute
@@ -332,7 +357,6 @@ interface OnboardingRouteRouteChildren {
   OnboardingTimeSelectorRoute: typeof OnboardingTimeSelectorRoute
   OnboardingWeightSelectRoute: typeof OnboardingWeightSelectRoute
   OnboardingWorkoutRoute: typeof OnboardingWorkoutRoute
-  OnboardingIndexRoute: typeof OnboardingIndexRoute
 }
 
 const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
@@ -348,7 +372,6 @@ const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
   OnboardingTimeSelectorRoute: OnboardingTimeSelectorRoute,
   OnboardingWeightSelectRoute: OnboardingWeightSelectRoute,
   OnboardingWorkoutRoute: OnboardingWorkoutRoute,
-  OnboardingIndexRoute: OnboardingIndexRoute,
 }
 
 const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
@@ -356,6 +379,7 @@ const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  RouteRoute: RouteRouteWithChildren,
   OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
   SignupRoute: SignupRoute,
 }

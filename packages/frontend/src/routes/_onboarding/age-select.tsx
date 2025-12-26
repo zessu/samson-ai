@@ -1,12 +1,14 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
-import { onBoardingSchema } from "shared";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useStore } from '../../state/onboarding';
+import { onBoardingSchema } from 'shared';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-export const Route = createFileRoute("/_onboarding/age-select")({
+export const Route = createFileRoute('/_onboarding/age-select')({
   component: RouteComponent,
+  pendingComponent: () => <div>Loading ...</div>,
+  errorComponent: () => <div> An error occurred ...</div>,
 });
 
 const ageSchema = onBoardingSchema.pick({ age: true });
@@ -26,7 +28,7 @@ function RouteComponent() {
     goToNextPage();
   };
   const goToNextPage = () => {
-    navigate({ to: "/weight-select" });
+    navigate({ to: '/weight-select' });
   };
 
   return (
@@ -41,7 +43,7 @@ function RouteComponent() {
             min="10"
             max="100"
             title="Select correct age"
-            {...register("age", {
+            {...register('age', {
               required: true,
               min: 10,
               max: 100,
