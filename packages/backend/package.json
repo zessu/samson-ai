@@ -20,7 +20,8 @@
     "pg": "^8.16.3",
     "postgres": "^3.4.7",
     "resend": "^4.8.0",
-    "shared": "workspace:*"
+    "shared": "workspace:*",
+    "samson-agent": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "^1.3.5",
