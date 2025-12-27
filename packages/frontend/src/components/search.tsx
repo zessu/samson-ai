@@ -34,14 +34,13 @@ export const AISearchBar: React.FC<SearchProps> = ({
         {/* Input Field */}
         <input
           type="text"
-          placeholder="Ask anything..."
-          className="input bg-transparent border-none focus:outline-none focus:ring-0 flex-grow px-4"
+          placeholder="Ask Samson Anything ..."
+          className="input bg-transparent border-none focus:outline-none focus:ring-0 grow px-4"
           value={state.query}
           onChange={(e) => setState({ query: e.target.value })}
           onKeyDown={handleKeyDown}
         />
 
-        {/* Send Button */}
         <button
           onClick={handleSend}
           disabled={isLoading || !state.query.trim()}
