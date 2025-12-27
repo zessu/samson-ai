@@ -1,18 +1,25 @@
-import { join } from "path";
-import { type ServerWebSocket } from "bun";
-import { Hono } from "hono";
-import { createBunWebSocket, serveStatic } from "hono/bun";
-import { zValidator } from "@hono/zod-validator";
-import { cors } from "hono/cors";
-import { eq } from "drizzle-orm";
-import { nanoid } from "nanoid";
+import { join } from 'path';
+import { type ServerWebSocket } from 'bun';
+import { Hono } from 'hono';
+import { createBunWebSocket, serveStatic } from 'hono/bun';
+import { z } from 'zod';
+import { zValidator } from '@hono/zod-validator';
+import { cors } from 'hono/cors';
+import { eq } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
 
-import { onBoardingSchema } from "shared";
-import { auth } from "@/auth";
-import { user as User } from "@/auth-schema";
-import { db } from "@db/index";
-import { workoutSettings, workoutSettingsInsertSchema } from "@db/schema/index";
-import { initQueues } from "@/lib/index";
+import { mastra } from 'samson-agent';
+
+import { onBoardingSchema } from 'shared';
+import { auth } from '@/auth';
+import { user as User } from '@/auth-schema';
+import { db } from '@db/index';
+import { workoutSettings, workoutSettingsInsertSchema } from '@db/schema/index';
+import { initQueues } from '@/lib/index';
+
+const searchSchema = z.object({
+  query: z.string(),
+});
 
 type webSocketData = { userid: string };
 export const clients = new Map<string, ServerWebSocket<webSocketData>>();
@@ -25,20 +32,20 @@ const app = new Hono();
 const { routineQueue: createRoutineQueue } = initQueues();
 
 app.use(
-  "*",
-  cors({ origin: import.meta.env.LOCALDOMAIN as string, credentials: true }),
+  '*',
+  cors({ origin: import.meta.env.LOCALDOMAIN as string, credentials: true })
 );
 
 app.post(
-  "/api/createProfile",
-  zValidator("json", onBoardingSchema),
+  '/api/createProfile',
+  zValidator('json', onBoardingSchema),
   async (c) => {
-    const validated = c.req.valid("json");
+    const validated = c.req.valid('json');
     const user = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
     if (!user)
-      return c.text("You are not authorised to perform that action", 401);
+      return c.text('You are not authorised to perform that action', 401);
 
     const userid = user.user.id;
     const userResult = await db
@@ -48,17 +55,17 @@ app.post(
         age: validated.age,
         weight: validated.weight,
         fitnessLevel: validated.fitnessLevel,
-        goals: validated.goals.join(","),
-        equipment: validated.equipment.join(","),
-        notifications: "sms",
+        goals: validated.goals.join(','),
+        equipment: validated.equipment.join(','),
+        notifications: 'sms',
       })
       .where(eq(User.id, userid))
       .returning({ userid: User.id });
 
     if (!userResult || userResult.length === 0) {
       return c.json(
-        { error: "We could not make the user request, please try again later" },
-        404,
+        { error: 'We could not make the user request, please try again later' },
+        404
       );
     }
 
@@ -82,9 +89,9 @@ app.post(
       return c.json(
         {
           error:
-            "We could not create a workout schedule for you. Please try again in a bit",
+            'We could not create a workout schedule for you. Please try again in a bit',
         },
-        404,
+        404
       );
     }
 
@@ -95,47 +102,62 @@ app.post(
       id: userid,
     });
 
-    return c.json("generated your workout routine");
-  },
+    return c.json('generated your workout routine');
+  }
 );
 
-app.on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw));
+app.post('/ai-chat', zValidator('json', searchSchema), async (c) => {
+  const validated = c.req.valid('json');
+  const samson = mastra.getAgent('Samson');
+
+  const response = await samson.generate([
+    {
+      role: 'user',
+      content: validated.query,
+    },
+  ]);
+
+  console.log(response.object);
+  console.log(response.toolResults);
+});
+
+app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
 
 app.get(
-  "/ws",
+  '/ws',
   upgradeWebSocket((c) => {
     const url = new URL(c.req.url);
-    const userid = url.searchParams.get("userId");
+    const userid = url.searchParams.get('userId');
     if (!userid) return {};
     return {
       onOpen: (_, ws) => {
-        console.log("new connection opened");
+        console.log('new connection opened');
         const wss = ws.raw as ServerWebSocket<webSocketData>;
         clients.set(userid, wss);
       },
       onMessage(event, ws) {
         console.log(`Message from client: ${event.data}`);
-        ws.send("Hello from server!");
+        ws.send('Hello from server!');
       },
       onClose: (_, ws) => {
         ws.raw?.close();
         clients.delete(userid);
-        console.log("Connection closed");
+        console.log('Connection closed');
       },
-      onError: () => console.log("Websocket Error"),
+      onError: () => console.log('Websocket Error'),
     };
-  }),
+  })
 );
 
-const distDir = join(import.meta.dir, "../../frontend/dist");
+const distDir = join(import.meta.dir, '../../frontend/dist');
 
-app.use("/*", serveStatic({ root: distDir }));
+app.use('/*', serveStatic({ root: distDir }));
 app.use(
-  "/*",
+  '/*',
   serveStatic({
     root: distDir,
-    path: "index.html",
-  }),
+    path: 'index.html',
+  })
 );
 
 Bun.serve({
@@ -145,4 +167,4 @@ Bun.serve({
   idleTimeout: 120,
 });
 
-console.log("✅✅✅ Started Backend Server");
+console.log('✅✅✅ Started Backend Server');
