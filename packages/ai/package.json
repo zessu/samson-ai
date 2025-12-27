@@ -13,14 +13,14 @@
   "description": "",
   "type": "module",
   "dependencies": {
-    "@ai-sdk/google": "^2.0.35",
-    "@mastra/core": "^0.24.1",
-    "@mastra/libsql": "^0.16.2",
-    "@mastra/memory": "^0.15.11",
+    "@ai-sdk/google": "^2.0.51",
+    "@mastra/core": "^0.24.9",
+    "@mastra/libsql": "^0.16.4",
+    "@mastra/memory": "^0.15.13",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@types/node": "^22.19.1",
-    "mastra": "^0.18.1"
+    "@types/node": "^22.19.3",
+    "mastra": "^0.18.9"
   }
 }
