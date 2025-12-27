@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { onBoardingSchema, onBoardingState } from "shared";
+import { useState } from 'react';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+import { onBoardingSchema, onBoardingState } from 'shared';
 
-import { useStore } from "../../state/onboarding";
+import { useStore } from '../../state/onboarding';
 
-export const Route = createFileRoute("/_onboarding/notifications")({
+export const Route = createFileRoute('/_onboarding/notifications')({
   component: RouteComponent,
 });
 
@@ -28,13 +28,13 @@ function RouteComponent() {
   });
 
   const submitForm = async (data: onBoardingState) => {
-    return await fetch("/api/createProfile", {
-      method: "POST",
+    return await fetch('/api/createProfile', {
+      method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      credentials: "include",
+      credentials: 'include',
     });
   };
 
@@ -42,11 +42,11 @@ function RouteComponent() {
     useStore.setState({ notifications: data });
     const userSettings = useStore.getState();
     try {
-      const validated = await onBoardingSchema.parse(userSettings);
+      const validated = onBoardingSchema.parse(userSettings);
       setIsLoading(true);
       const res = await submitForm(validated);
       if (res.ok) {
-        navigate({ to: "/" });
+        navigate({ to: '/dashboard' });
       } else {
         if (!res.ok) setonBoardingError(true);
         setIsLoading(false);
@@ -90,7 +90,7 @@ function RouteComponent() {
             type="checkbox"
             className="checkbox"
             value="email"
-            {...register("email")}
+            {...register('email')}
           />
           <span className="ml-2">Email</span>
         </span>
@@ -101,7 +101,7 @@ function RouteComponent() {
             className="checkbox"
             value="app"
             disabled
-            {...register("app")}
+            {...register('app')}
           />
           <span className="ml-2">In App (Work In Progress)</span>
         </span>
@@ -112,13 +112,13 @@ function RouteComponent() {
             className="checkbox"
             value="sms"
             disabled
-            {...register("sms")}
+            {...register('sms')}
           />
           <span className="ml-2">Via SMS (Work In Progress)</span>
         </span>
 
         <button className="btn btn-accent" type="submit">
-          {isLoading ? "Submitting your details ..." : "Start My Journey"}
+          {isLoading ? 'Submitting your details ...' : 'Start My Journey'}
         </button>
       </form>
     </div>
