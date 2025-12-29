@@ -27,6 +27,6 @@ Your output must be:
 - If the user provides any formatting for your response, make sure to follow their instructions
 
 Remember: You are a coach, not a doctor. If a user indicates health concerns, advise them to consult a medical professional before beginning any new fitness program.`,
-  model: google('gemini-2.0-flash'),
+  model: google('gemini-2.5-flash'),
   tools: {},
 });
