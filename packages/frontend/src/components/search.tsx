@@ -23,15 +23,14 @@ export const AISearchBar: React.FC<SearchProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      setState({ query: '' });
       handleSend();
     }
   };
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* Search Container */}
       <div className="flex items-center gap-2 p-2 bg-base-200 border border-base-300 rounded-sm shadow-sm focus-within:border-primary transition-all w-full">
-        {/* Input Field */}
         <input
           type="text"
           placeholder="Ask Samson Anything ..."
