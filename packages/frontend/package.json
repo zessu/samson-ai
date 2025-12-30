@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@mastra/client-js": "^0.17.2",
     "@redux-devtools/extension": "^3.3.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
@@ -23,9 +24,9 @@
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.69.0",
+    "shared": "workspace:*",
     "tailwindcss": "^4.1.18",
-    "zustand": "^5.0.9",
-    "shared": "workspace:*"
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.144.0",
