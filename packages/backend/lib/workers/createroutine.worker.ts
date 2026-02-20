@@ -1,13 +1,13 @@
-import { z } from "zod";
-import { Worker, Job } from "bullmq";
-import { nanoid } from "nanoid";
+import { z } from 'zod';
+import { Worker, Job } from 'bullmq';
+import { nanoid } from 'nanoid';
 
-import { clients } from "@/src/index";
-import { workoutScheduleInsertSchema, workoutSchedule } from "@db/schema/index";
-import { db } from "@db/index";
-import { routineType } from "@lib/index";
-import { queryAgent } from "@lib/agent";
-import { connection } from "@/lib/connection";
+import { clients } from '@/src/index';
+import { workoutScheduleInsertSchema, workoutSchedule } from '@db/schema/index';
+import { db } from '@db/index';
+import { routineType } from '@lib/index';
+import { queryAgent } from '@lib/agent';
+import { connection } from '@/lib/connection';
 
 const workoutDaySchema = z.object({
   workout: z.string(),
@@ -37,7 +37,7 @@ const inputSchema = z.object({
 
 export const createRoutineWorker = () => {
   const createRoutineWorker = new Worker<routineType>(
-    "generateRoutine",
+    'generateRoutine',
     async (job: Job<routineType>) => {
       try {
         const agentResponse = await queryAgent(job.data);
@@ -46,8 +46,8 @@ export const createRoutineWorker = () => {
         // TODO: make sure all operations are ATOMIC in nature
         // Extract and clean the JSON string from the response
         const jsonString = agentResponseObject.text
-          .replace(/^```(json)?\n/, "") // Remove opening ```json or ```
-          .replace(/\n```$/, "") // Remove closing ```
+          .replace(/^```(json)?\n/, '') // Remove opening ```json or ```
+          .replace(/\n```$/, '') // Remove closing ```
           .trim();
 
         // Parse the workout plan
@@ -55,8 +55,8 @@ export const createRoutineWorker = () => {
         const parsed = inputSchema.safeParse(workoutPlan);
 
         if (!parsed.success) {
-          console.error("Validation failed:", parsed.error);
-          throw new Error("Invalid workout plan structure");
+          console.error('Validation failed:', parsed.error);
+          throw new Error('Invalid workout plan structure');
         }
 
         const extractedData = parsed.data.data;
@@ -90,16 +90,16 @@ export const createRoutineWorker = () => {
 
         await db.insert(workoutSchedule).values(validated).execute();
 
-        await clients
+        clients
           .get(userId)
           ?.send(
-            JSON.stringify({ type: "notifty", message: "workout generated" })
+            JSON.stringify({ type: 'notifty', message: 'workout generated' })
           );
 
-        console.log("generated user workout");
-        return { status: "success" };
+        console.log('generated user workout');
+        return { status: 'success' };
       } catch (error) {
-        console.error("Error in worker:", error);
+        console.error('Error in worker:', error);
         throw error; // This will trigger the 'failed' event
       }
     },
@@ -109,11 +109,11 @@ export const createRoutineWorker = () => {
     }
   );
 
-  createRoutineWorker.on("completed", (job) => {
+  createRoutineWorker.on('completed', (job) => {
     console.log(`Job ${job.id} completed`);
   });
 
-  createRoutineWorker.on("failed", (job, err) => {
+  createRoutineWorker.on('failed', (job, err) => {
     console.error(`Job ${job?.id} failed with error:`, err.message);
   });
 
