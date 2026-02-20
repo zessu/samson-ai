@@ -50,3 +50,5 @@ export const workoutSchedule = pgTable('workout_schedule', {
 export const workoutSettingsInsertSchema = createInsertSchema(workoutSettings);
 export const workoutSettingsUpdateSchema = createUpdateSchema(workoutSettings);
 export const workoutScheduleInsertSchema = createInsertSchema(workoutSchedule);
+
+export * from '../../../auth-schema';
