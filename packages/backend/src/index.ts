@@ -5,7 +5,7 @@ import { createBunWebSocket, serveStatic } from 'hono/bun';
 import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator';
 import { cors } from 'hono/cors';
-import { eq } from 'drizzle-orm';
+import { eq, asc } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 
 import { mastra } from 'samson-agent';
@@ -16,6 +16,7 @@ import { user as User } from '@/auth-schema';
 import { db } from '@db/index';
 import { workoutSettings, workoutSettingsInsertSchema } from '@db/schema/index';
 import { initQueues } from '@/lib/index';
+import type { routineType } from '@/lib/index';
 
 const searchSchema = z.object({
   query: z.string(),
@@ -122,6 +123,86 @@ app.post('/ai-chat', zValidator('json', searchSchema), async (c) => {
 });
 
 app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
+
+app.post('/generate', async (c) => {
+  const user = await auth.api.getSession({
+    headers: c.req.raw.headers,
+  });
+
+  if (!user)
+    return c.text('You are not authorised to perform that action', 401);
+
+  const userId = user.user.id;
+
+  const us = await db.query.user.findFirst({
+    where: (user, { eq }) => eq(user.id, userId),
+  });
+
+  if (!us) {
+    return c.json(
+      {
+        error: 'Could not find user to generate workout for',
+      },
+      500
+    );
+  }
+
+  const ws = await db
+    .select()
+    .from(workoutSettings)
+    .where(eq(workoutSettings.id, userId))
+    .orderBy(asc(workoutSettings.updatedAt));
+
+  if (!ws) {
+    return c.json(
+      {
+        error:
+          'Could not load user profile settings before generating a new workout',
+      },
+      500
+    );
+  }
+
+  const { gender, age, weight, fitnessLevel, goals, equipment } = us;
+  const { weekdays, workoutTime, workoutDuration, userTimezoneOffset } = ws[0];
+
+  if (
+    !gender ||
+    !age ||
+    !weight ||
+    !fitnessLevel ||
+    !goals ||
+    !equipment ||
+    !weekdays ||
+    !workoutTime ||
+    !workoutDuration ||
+    !userTimezoneOffset
+  ) {
+    return c.json({ error: 'Profile not complete' }, 500);
+  }
+
+  const input: routineType = {
+    gender,
+    age,
+    weight,
+    fitnessLevel,
+    goals: goals.split(','),
+    equipment: equipment.split(','),
+    weekdays,
+    time: workoutTime,
+    duration: workoutDuration,
+    offset: userTimezoneOffset,
+    id: userId,
+  };
+
+  const jobId = nanoid();
+
+  await createRoutineQueue.add(`create-routine:${jobId}`, {
+    ...input,
+  });
+
+  return c.json('generated your workout routine');
+});
 
 app.get(
   '/ws',
