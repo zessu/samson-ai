@@ -129,8 +129,7 @@ app.post('/generate', async (c) => {
     headers: c.req.raw.headers,
   });
 
-  if (!user)
-    return c.text('You are not authorised to perform that action', 401);
+  if (!user) return c.text('Please log in to continue', 401);
 
   const userId = user.user.id;
 
@@ -147,11 +146,9 @@ app.post('/generate', async (c) => {
     );
   }
 
-  const ws = await db
-    .select()
-    .from(workoutSettings)
-    .where(eq(workoutSettings.id, userId))
-    .orderBy(asc(workoutSettings.updatedAt));
+  const ws = await db.query.workoutSettings.findFirst({
+    where: eq(workoutSettings.userId, userId),
+  });
 
   if (!ws) {
     return c.json(
@@ -164,7 +161,7 @@ app.post('/generate', async (c) => {
   }
 
   const { gender, age, weight, fitnessLevel, goals, equipment } = us;
-  const { weekdays, workoutTime, workoutDuration, userTimezoneOffset } = ws[0];
+  const { weekdays, workoutTime, workoutDuration, userTimezoneOffset } = ws;
 
   if (
     !gender ||
