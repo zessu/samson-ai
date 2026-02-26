@@ -5,7 +5,7 @@ import { createBunWebSocket, serveStatic } from 'hono/bun';
 import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator';
 import { cors } from 'hono/cors';
-import { eq, asc } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 
 import { mastra } from 'samson-agent';
@@ -135,6 +135,7 @@ app.post('/generate', async (c) => {
 
   const us = await db.query.user.findFirst({
     where: (user, { eq }) => eq(user.id, userId),
+    with: { workoutSettings: true },
   });
 
   if (!us) {
@@ -146,22 +147,20 @@ app.post('/generate', async (c) => {
     );
   }
 
-  const ws = await db.query.workoutSettings.findFirst({
-    where: eq(workoutSettings.userId, userId),
-  });
-
-  if (!ws) {
-    return c.json(
-      {
-        error:
-          'Could not load user profile settings before generating a new workout',
-      },
-      500
-    );
-  }
-
-  const { gender, age, weight, fitnessLevel, goals, equipment } = us;
-  const { weekdays, workoutTime, workoutDuration, userTimezoneOffset } = ws;
+  const {
+    gender,
+    age,
+    weight,
+    fitnessLevel,
+    goals,
+    equipment,
+    workoutSettings: {
+      weekdays,
+      workoutTime,
+      workoutDuration,
+      userTimezoneOffset,
+    },
+  } = us;
 
   if (
     !gender ||
