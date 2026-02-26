@@ -51,4 +51,5 @@ export const workoutSettingsInsertSchema = createInsertSchema(workoutSettings);
 export const workoutSettingsUpdateSchema = createUpdateSchema(workoutSettings);
 export const workoutScheduleInsertSchema = createInsertSchema(workoutSchedule);
 
+export * from './relation';
 export * from '../../../auth-schema';
