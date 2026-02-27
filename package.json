@@ -12,7 +12,8 @@
     "ai": "cd packages/ai && bun run dev",
     "email": "cd packages/transactional && bun run dev",
     "build:frontend": "cd packages/frontend && bun run build",
-    "start:backend": "cd packages/backend && bun run start"
+    "start:backend": "cd packages/backend && bun run start",
+    "test:backend": "cd packages/backend && bun run test"
   },
   "peerDependencies": {},
   "dependencies": {
