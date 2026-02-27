@@ -11,6 +11,7 @@ This file provides guidelines for agentic coding systems working in the samson-a
 - `bun run email` - Start email template development server
 - `bun run build:frontend` - Build frontend for production
 - `bun run start:backend` - Start backend production server
+- `bun run test:backend` - Run backend tests
 
 ### Frontend (packages/frontend/)
 
@@ -23,6 +24,9 @@ This file provides guidelines for agentic coding systems working in the samson-a
 
 - `bun run dev` - Start Hono server with Bun hot reload
 - `bun run start` - Start production server
+- `bun run test` - Run all tests
+- `bun test tests/<file>` - Run single test file
+- `bun test --watch` - Run tests in watch mode
 
 ### AI Agent (packages/ai/)
 
@@ -127,8 +131,39 @@ Run from packages/backend/:
 
 ### Testing
 
-- Currently no test suite configured
-- Before running tests, verify test command exists in package.json
+- Tests use Bun's built-in test runner (`bun:test`)
+- Test files go in `packages/backend/tests/` directory
+- Test files follow pattern: `<feature>.test.ts`
+- Use `mock.module()` to mock external dependencies (db, auth, queues)
+- Use `mock()` to create mock functions
+- Use `beforeEach()` to clear mocks between tests
+- Use `expect().toHaveBeenCalled()` for assertion
+
+Example test structure:
+
+```typescript
+import { describe, test, expect, beforeEach, mock } from 'bun:test';
+
+const mockGetSession = mock(() => {}) as any;
+
+mock.module('../auth', () => ({
+  auth: { api: { getSession: mockGetSession } },
+}));
+
+const { app } = await import('../src/index');
+
+describe('POST /endpoint', () => {
+  beforeEach(() => {
+    mockGetSession.mockClear();
+  });
+
+  test('returns 401 if not authenticated', async () => {
+    mockGetSession.mockResolvedValue(null);
+    const res = await app.request('/endpoint', { method: 'POST' });
+    expect(res.status).toBe(401);
+  });
+});
+```
 
 ### Workspace Structure
 
