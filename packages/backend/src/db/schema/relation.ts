@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { user, session, account } from '../../../auth-schema';
-import { workoutSettings, workoutSchedule } from './index';
+import { workoutSettings, workoutSchedule } from './tables';
 
 export const userRelations = relations(user, ({ one, many }) => ({
   workoutSettings: one(workoutSettings, {
