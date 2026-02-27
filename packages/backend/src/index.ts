@@ -30,6 +30,8 @@ const { upgradeWebSocket, websocket } =
 
 const app = new Hono();
 
+export { app };
+
 const { routineQueue: createRoutineQueue } = initQueues();
 
 app.use(
