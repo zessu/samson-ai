@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useStore } from '../../state/onboarding';
-import { onBoardingSchema } from 'shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { onBoardingSchema } from 'shared';
+
+import { useStore } from '../../state/onboarding';
 
 export const Route = createFileRoute('/_onboarding/age-select')({
   component: RouteComponent,
@@ -16,6 +17,7 @@ type ageInputType = z.infer<typeof ageSchema>;
 
 function RouteComponent() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -23,10 +25,12 @@ function RouteComponent() {
   } = useForm<ageInputType>({
     resolver: zodResolver(ageSchema),
   });
+
   const onSubmit: SubmitHandler<ageInputType> = (data) => {
     useStore.setState(data);
     goToNextPage();
   };
+
   const goToNextPage = () => {
     navigate({ to: '/weight-select' });
   };
