@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useStore } from '../../state/onboarding';
-import { onBoardingSchema } from 'shared';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
+
+import { onBoardingSchema } from 'shared';
+import { useStore } from '../../state/onboarding';
 
 export const Route = createFileRoute('/_onboarding/fitness-select')({
   component: RouteComponent,
@@ -14,6 +15,7 @@ type fitnessLevelInput = z.infer<typeof levelSchema>;
 
 function RouteComponent() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,

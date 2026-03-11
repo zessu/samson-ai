@@ -13,6 +13,7 @@ export const RootComponent = () => {
     </>
   );
 };
+
 export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: () => (
