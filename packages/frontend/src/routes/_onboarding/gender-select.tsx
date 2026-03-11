@@ -1,41 +1,41 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useForm, type SubmitHandler } from 'react-hook-form'
-import { z } from 'zod'
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
 
-import { useStore } from '../../state/onboarding'
-import { onBoardingSchema } from 'shared'
+import { useStore } from '../../state/onboarding';
+import { onBoardingSchema } from 'shared';
 
-import { zodResolver } from '@hookform/resolvers/zod'
+import { zodResolver } from '@hookform/resolvers/zod';
 
-const genderSchema = onBoardingSchema.pick({ gender: true })
-type GenderFormValues = z.infer<typeof genderSchema>
+const genderSchema = onBoardingSchema.pick({ gender: true });
+type GenderFormValues = z.infer<typeof genderSchema>;
 
 export const Route = createFileRoute('/_onboarding/gender-select')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<GenderFormValues>({
     resolver: zodResolver(genderSchema),
-  })
+  });
 
   const onSubmit: SubmitHandler<GenderFormValues> = (data) => {
     try {
-      useStore.setState(data)
-      goToNextPage()
+      useStore.setState(data);
+      goToNextPage();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const goToNextPage = () => {
-    navigate({ to: '/age-select' })
-  }
+    navigate({ to: '/age-select' });
+  };
   return (
     <div>
       <div className="text-xl flex flex-col">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <h3 className="font-bold text-lg mb-4">
             Lets begin by creating your profile
           </h3>
@@ -65,5 +65,5 @@ function RouteComponent() {
         </form>
       </div>
     </div>
-  )
+  );
 }

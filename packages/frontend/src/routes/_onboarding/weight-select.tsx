@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
-import { onBoardingSchema } from "shared";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-export const Route = createFileRoute("/_onboarding/weight-select")({
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useStore } from '../../state/onboarding';
+import { onBoardingSchema } from 'shared';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+export const Route = createFileRoute('/_onboarding/weight-select')({
   component: RouteComponent,
 });
 
@@ -27,11 +27,11 @@ function RouteComponent() {
   };
 
   const goToNextPage = () => {
-    navigate({ to: "/fitness-select" });
+    navigate({ to: '/fitness-select' });
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="w-64">
           <input
             type="number"
@@ -41,7 +41,7 @@ function RouteComponent() {
             min="40"
             max="150"
             title="Select correct age"
-            {...register("weight", {
+            {...register('weight', {
               required: true,
               min: 40,
               max: 150,

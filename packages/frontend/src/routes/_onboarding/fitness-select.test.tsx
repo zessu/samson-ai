@@ -103,5 +103,21 @@ describe('Fitness Select Page', () => {
     });
   });
 
-  it('Shows error on wrong selection', async () => {});
+  it('Shows error on wrong selection', async () => {
+    const router = setupRouter();
+    render(<RouterProvider router={router} />);
+
+    await screen.findByText("What's your fitness level ?");
+
+    const selectElement = screen.getByRole('combobox');
+    fireEvent.change(selectElement, { target: { value: '' } });
+
+    await fireEvent.submit(screen.getByRole('button', { name: /continue/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+    });
+
+    expect(useStore.setState).not.toHaveBeenCalled();
+  });
 });

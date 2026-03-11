@@ -1,14 +1,14 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { z } from "zod";
-import { onBoardingSchema } from "shared";
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import { z } from 'zod';
+import { onBoardingSchema } from 'shared';
 
-import { useStore } from "../../state/onboarding";
+import { useStore } from '../../state/onboarding';
 
-export const Route = createFileRoute("/_onboarding/time-selector")({
+export const Route = createFileRoute('/_onboarding/time-selector')({
   component: RouteComponent,
 });
 
@@ -24,27 +24,27 @@ function RouteComponent() {
   } = useForm<timeSelectorInputs>({ resolver: zodResolver(workOutSchema) });
 
   const goToNextPage = () => {
-    navigate({ to: "/notifications" });
+    navigate({ to: '/notifications' });
   };
 
   const onSubmit: SubmitHandler<timeSelectorInputs> = (data) => {
     useStore.setState(data);
     dayjs.extend(utc);
-    const utcOffset = dayjs().format("Z");
-    const time = parseInt(utcOffset.split(":")[0]);
+    const utcOffset = dayjs().format('Z');
+    const time = parseInt(utcOffset.split(':')[0]);
     useStore.setState(() => ({ offset: time }));
     goToNextPage();
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <p className="mb-2">What time do you want to work out?</p>
         <input
           type="time"
           className="input mb-4"
-          {...register("time", {
-            required: "Please select a workout time",
+          {...register('time', {
+            required: 'Please select a workout time',
           })}
         />
         {errors.time && (
@@ -64,15 +64,15 @@ function RouteComponent() {
           min={15}
           max={120}
           title="Duration might not be reasonable."
-          {...register("duration", {
-            required: "Please enter the workout duration",
+          {...register('duration', {
+            required: 'Please enter the workout duration',
             min: {
               value: 15,
-              message: "Workout duration must be at least 15 minutes",
+              message: 'Workout duration must be at least 15 minutes',
             },
             max: {
               value: 120,
-              message: "Workout duration cannot exceed 120 minutes",
+              message: 'Workout duration cannot exceed 120 minutes',
             },
             valueAsNumber: true,
           })}

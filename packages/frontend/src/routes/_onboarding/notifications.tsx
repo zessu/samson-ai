@@ -84,7 +84,11 @@ function RouteComponent() {
         What's the best way to reach you with your daily workouts?
       </h3>
 
-      <form onSubmit={handleSubmit(finish)} className="mb-10 flex flex-col">
+      <form
+        onSubmit={handleSubmit(finish)}
+        noValidate
+        className="mb-10 flex flex-col"
+      >
         <span className="mb-4">
           <input
             type="checkbox"

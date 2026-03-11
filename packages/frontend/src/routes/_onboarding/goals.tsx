@@ -1,8 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { useStore } from "../../state/onboarding";
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useStore } from '../../state/onboarding';
 
-export const Route = createFileRoute("/_onboarding/goals")({
+export const Route = createFileRoute('/_onboarding/goals')({
   component: RouteComponent,
 });
 
@@ -34,19 +34,19 @@ function RouteComponent() {
   };
 
   const goToNextPage = () => {
-    navigate({ to: "/cardio-equipment" });
+    navigate({ to: '/cardio-equipment' });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex flex-col gap-4 p-4">
           <h3 className="font-bold text-lg mb-2">Select Your Fitness Goals</h3>
 
           {/* Weight & Body Composition */}
           <div className="flex items-center gap-2">
             <input
-              {...register("weight", { required: false })}
+              {...register('weight', { required: false })}
               type="checkbox"
               value="lose weight"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -56,7 +56,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("muscle", { required: false })}
+              {...register('muscle', { required: false })}
               type="checkbox"
               value="add muscle"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -66,7 +66,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("tone", { required: false })}
+              {...register('tone', { required: false })}
               type="checkbox"
               value="tone my body"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -77,7 +77,7 @@ function RouteComponent() {
           {/* Performance & Endurance */}
           <div className="flex items-center gap-2">
             <input
-              {...register("cardio", { required: false })}
+              {...register('cardio', { required: false })}
               type="checkbox"
               value="increase cardiovascular fitness"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -87,7 +87,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("endurance", { required: false })}
+              {...register('endurance', { required: false })}
               type="checkbox"
               value="increase endurance and stamina"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -98,7 +98,7 @@ function RouteComponent() {
           {/* Mobility & Functional Fitness */}
           <div className="flex items-center gap-2">
             <input
-              {...register("flexibility", { required: false })}
+              {...register('flexibility', { required: false })}
               type="checkbox"
               value="improve flexibility and mobility"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -108,7 +108,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("posture", { required: false })}
+              {...register('posture', { required: false })}
               type="checkbox"
               value="fix posture and reduce back pain"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -119,7 +119,7 @@ function RouteComponent() {
           {/* Lifestyle & Mental Health */}
           <div className="flex items-center gap-2">
             <input
-              {...register("stress", { required: false })}
+              {...register('stress', { required: false })}
               type="checkbox"
               value="stress relief and mental wellness"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -129,7 +129,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("maintain", { required: false })}
+              {...register('maintain', { required: false })}
               type="checkbox"
               value="maintain fitness as I age"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -140,7 +140,7 @@ function RouteComponent() {
           {/* Specialized Goals */}
           <div className="flex items-center gap-2">
             <input
-              {...register("sport", { required: false })}
+              {...register('sport', { required: false })}
               type="checkbox"
               value="train for a sport"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
@@ -150,7 +150,7 @@ function RouteComponent() {
 
           <div className="flex items-center gap-2">
             <input
-              {...register("rehabilitate", { required: false })}
+              {...register('rehabilitate', { required: false })}
               value="rehabilitate an injury"
               type="checkbox"
               className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"

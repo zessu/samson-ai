@@ -43,7 +43,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex flex-col gap-3 p-4 rounded-lg">
           <h3 className="font-bold text-lg mb-2">
             What equipment in this list do you have?
