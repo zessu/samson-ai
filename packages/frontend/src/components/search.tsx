@@ -39,7 +39,7 @@ export const AISearchBar = ({ onSearch, isLoading = false }: SearchProps) => {
 
         <button
           onClick={handleSend}
-          disabled={isLoading || !state.query.trim()}
+          disabled={isLoading}
           className="btn btn-primary btn-circle btn-sm md:btn-md"
         >
           {isLoading ? (
