@@ -13,7 +13,9 @@
     "email": "cd packages/transactional && bun run dev",
     "build:frontend": "cd packages/frontend && bun run build",
     "start:backend": "cd packages/backend && bun run start",
-    "test:backend": "cd packages/backend && bun run test"
+    "test:frontend": "cd packages/frontend && bun run test",
+    "test:backend": "cd packages/backend && bun run test",
+    "test": "bun run test:frontend && bun run test:backend"
   },
   "peerDependencies": {},
   "dependencies": {
