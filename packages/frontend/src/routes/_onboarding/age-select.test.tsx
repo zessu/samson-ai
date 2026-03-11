@@ -30,7 +30,6 @@ const setupRouter = () => {
     getParentRoute: () => rootRoute,
     path: '/age-select',
     component: AgeSelectRoute.options.component,
-    loader: AgeSelectRoute.options.loader,
   });
 
   const weightRoute = createRoute({
