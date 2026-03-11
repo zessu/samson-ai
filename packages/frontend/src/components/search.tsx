@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
 
 type SearchProps = {
   onSearch: (query: string) => void;
@@ -9,10 +9,7 @@ type SearchState = {
   query: string;
 };
 
-export const AISearchBar: React.FC<SearchProps> = ({
-  onSearch,
-  isLoading = false,
-}) => {
+export const AISearchBar = ({ onSearch, isLoading = false }: SearchProps) => {
   const [state, setState] = useState<SearchState>({ query: '' });
 
   const handleSend = () => {
@@ -21,7 +18,7 @@ export const AISearchBar: React.FC<SearchProps> = ({
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setState({ query: '' });
       handleSend();
