@@ -6,7 +6,10 @@
     "dev": "bunx --bun vite",
     "build": "bunx --build vite build --mode production",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "vitest --config=vitest.browser.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -30,12 +33,22 @@
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.144.0",
-    "@types/react": "^19.2.7",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/browser-playwright": "^4.0.18",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
+    "happy-dom": "^20.8.3",
+    "jsdom": "^28.1.0",
     "vite": "^6.4.1",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.0.18",
+    "vitest-browser-react": "^2.0.5"
   }
 }
