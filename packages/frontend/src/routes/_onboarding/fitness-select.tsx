@@ -35,7 +35,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <p className="mb-2">What's your fitness level ?</p>
         <select
           defaultValue="beginner"

@@ -30,7 +30,6 @@ const setupRouter = () => {
     getParentRoute: () => rootRoute,
     path: '/fitness-select',
     component: FitnessRoute.options.component,
-    loader: FitnessRoute.options.loader,
   });
 
   const weightRoute = createRoute({

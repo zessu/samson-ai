@@ -37,7 +37,7 @@ function RouteComponent() {
 
   return (
     <div className="w-64">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
           <input
             type="number"
@@ -48,9 +48,6 @@ function RouteComponent() {
             max="100"
             title="Select correct age"
             {...register('age', {
-              required: true,
-              min: 10,
-              max: 100,
               valueAsNumber: true,
             })}
           />
