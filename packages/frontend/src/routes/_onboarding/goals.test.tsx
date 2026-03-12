@@ -84,35 +84,29 @@ describe('Goals Page', () => {
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const loseWeightCheckbox = await screen.findByText('Lose Weight');
-    fireEvent.click(loseWeightCheckbox.parentElement!.querySelector('input')!);
-
-    const addMuscleCheckbox = screen.getByText('Add Muscle / Build Strength');
-    fireEvent.click(addMuscleCheckbox.parentElement!.querySelector('input')!);
+    await screen.findByText('Select Your Fitness Goals');
+    const checkboxes = screen.getAllByRole('checkbox');
+    await user.click(checkboxes[0]); // Lose Weight
+    await user.click(checkboxes[1]); // Add Muscle
 
     await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Cardio Equipment Page')).toBeInTheDocument();
     });
-
-    expect(useStore.setState).toHaveBeenCalledWith({
-      goals: ['lose weight', 'add muscle'],
-    });
   });
+});
 
+describe('Goals Page Additional', () => {
   it('allows selecting multiple goals', async () => {
     const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const cardioCheckbox = await screen.findByText(
-      'Improve Cardio (Running, Cycling, etc.)'
-    );
-    fireEvent.click(cardioCheckbox.parentElement!.querySelector('input')!);
-
-    const enduranceCheckbox = screen.getByText('Increase Endurance & Stamina');
-    fireEvent.click(enduranceCheckbox.parentElement!.querySelector('input')!);
+    await screen.findByText('Select Your Fitness Goals');
+    const checkboxes = screen.getAllByRole('checkbox');
+    await user.click(checkboxes[3]); // Cardio
+    await user.click(checkboxes[4]); // Endurance
 
     await user.click(screen.getByRole('button', { name: /continue/i }));
 

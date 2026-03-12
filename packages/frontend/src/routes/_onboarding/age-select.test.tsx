@@ -96,8 +96,7 @@ describe('AgeSelect Page', () => {
     await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
-      // Assuming your component shows an alert/error message
-      expect(screen.getByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText('That does not seem right!')).toBeInTheDocument();
     });
 
     expect(useStore.setState).not.toHaveBeenCalled();
@@ -113,7 +112,7 @@ describe('AgeSelect Page', () => {
     await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText('That does not seem right!')).toBeInTheDocument();
     });
 
     expect(useStore.setState).not.toHaveBeenCalled();

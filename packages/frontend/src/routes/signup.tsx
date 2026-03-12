@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { useAuth } from "../authContext";
+import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { useAuth } from '../authContext';
+import { Button } from '@/components/ui/button';
 
-export const Route = createFileRoute("/signup")({
+export const Route = createFileRoute('/signup')({
   component: Signup,
 });
 
@@ -13,9 +14,9 @@ function Signup() {
   const authenticateWithGoogle = async () => {
     try {
       setIsLoading(true);
-      await signIn("google");
+      await signIn('google');
     } catch (error) {
-      console.error("Error signing in with Google:", error);
+      console.error('Error signing in with Google:', error);
     }
   };
 
@@ -27,8 +28,9 @@ function Signup() {
           Samson: Your AI fitness trainer
         </p>
         <div>
-          <button
-            className="btn bg-white text-black border-[#e5e5e5]"
+          <Button
+            variant="outline"
+            className="bg-white text-black border-input"
             onClick={authenticateWithGoogle}
           >
             <svg
@@ -59,9 +61,9 @@ function Signup() {
               </g>
             </svg>
             {isloading
-              ? "Authenticating you, one moment ...."
-              : "Sign Up / Sign In"}
-          </button>
+              ? 'Authenticating you, one moment ....'
+              : 'Sign Up / Sign In'}
+          </Button>
         </div>
       </div>
     </>

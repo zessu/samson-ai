@@ -1,5 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useSession, signOut } from '@/src/lib/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export const Header = () => {
   const session = useSession();
@@ -14,18 +15,19 @@ export const Header = () => {
   return (
     <>
       <div className="flex flex-row justify-end p-2">
-        <div className="avatar">
-          <div className="w-8 rounded-full mr-5 cursor-pointer">
-            <img src={imgUrl} />
-          </div>
+        <div className="flex items-center gap-4">
+          <Avatar>
+            <AvatarImage src={imgUrl} />
+            <AvatarFallback>U</AvatarFallback>
+          </Avatar>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-log-out-icon lucide-log-out mr-4 w-8 h-8 cursor-pointer"
             onClick={logout}
           >

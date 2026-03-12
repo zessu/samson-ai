@@ -7,6 +7,9 @@ import { z } from 'zod';
 import { onBoardingSchema } from 'shared';
 
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export const Route = createFileRoute('/_onboarding/time-selector')({
   component: RouteComponent,
@@ -39,31 +42,31 @@ function RouteComponent() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <p className="mb-2">What time do you want to work out?</p>
-        <input
+        <Label htmlFor="time" className="mb-2 block">
+          What time do you want to work out?
+        </Label>
+        <Input
           type="time"
-          className="input mb-4"
+          id="time"
+          className="mb-4"
           {...register('time', {
             required: 'Please select a workout time',
           })}
         />
         {errors.time && (
-          <span className="text-red-500 text-sm block mb-2">
+          <span className="text-destructive text-sm block mb-2">
             {errors.time.message}
           </span>
         )}
 
-        <p className="mb-2">
+        <Label htmlFor="duration" className="mb-2 block">
           For how long? (in minutes, e.g., 120 mins = 2 hrs)
-        </p>
-        <input
+        </Label>
+        <Input
           type="number"
-          className={`input mb-2`}
-          required
+          id="duration"
+          className="mb-2"
           placeholder="How long do you want to work out for?"
-          min={15}
-          max={120}
-          title="Duration might not be reasonable."
           {...register('duration', {
             required: 'Please enter the workout duration',
             min: {
@@ -78,15 +81,15 @@ function RouteComponent() {
           })}
         />
         {errors.duration && (
-          <span className="text-red-500 text-sm block mb-2">
+          <span className="text-destructive text-sm block mb-2">
             {errors.duration.message}
           </span>
         )}
-        <p className="validator-hint mb-4">Between 15 and 120 mins</p>
+        <p className="text-sm text-muted-foreground mb-4">
+          Between 15 and 120 mins
+        </p>
 
-        <button className="btn btn-primary" type="submit">
-          Continue
-        </button>
+        <Button type="submit">Continue</Button>
       </form>
     </div>
   );

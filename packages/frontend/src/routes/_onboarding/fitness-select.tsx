@@ -5,6 +5,14 @@ import { z } from 'zod';
 
 import { onBoardingSchema } from 'shared';
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export const Route = createFileRoute('/_onboarding/fitness-select')({
   component: RouteComponent,
@@ -17,12 +25,18 @@ function RouteComponent() {
   const navigate = useNavigate();
 
   const {
-    register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<fitnessLevelInput>({
     resolver: zodResolver(levelSchema),
+    defaultValues: {
+      fitnessLevel: 'beginner',
+    },
   });
+
+  const selectedLevel = watch('fitnessLevel');
 
   const onSubmit: SubmitHandler<fitnessLevelInput> = (data) => {
     useStore.setState(data);
@@ -37,24 +51,30 @@ function RouteComponent() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <p className="mb-2">What's your fitness level ?</p>
-        <select
-          defaultValue="beginner"
-          className="select mb-4"
-          {...register('fitnessLevel', { required: true })}
+        <Select
+          value={selectedLevel}
+          onValueChange={(value) =>
+            setValue(
+              'fitnessLevel',
+              value as 'beginner' | 'intermediate' | 'advanced'
+            )
+          }
         >
-          <option disabled={true}>What's your experience level ?</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
-        </select>
+          <SelectTrigger className="mb-4">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="beginner">Beginner</SelectItem>
+            <SelectItem value="intermediate">Intermediate</SelectItem>
+            <SelectItem value="advanced">Advanced</SelectItem>
+          </SelectContent>
+        </Select>
         {errors.fitnessLevel && (
-          <p role="alert" className="mb-2">
+          <p className="text-sm text-destructive mb-2">
             {errors.fitnessLevel.message}
           </p>
         )}
-        <button className="btn btn-primary" type="submit">
-          Continue
-        </button>
+        <Button type="submit">Continue</Button>
       </form>
     </div>
   );

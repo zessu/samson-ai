@@ -1,34 +1,52 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler, Controller } from 'react-hook-form';
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 export const Route = createFileRoute('/_onboarding/cardio-equipment')({
   component: RouteComponent,
 });
 
 type cardioEquipmentInputs = {
-  treadmill: string | boolean;
-  runningTrack: string | boolean;
-  ellipticalTrainer: string | boolean;
-  stationaryBike: string | boolean;
-  rowingMachine: string | boolean;
-  resistanceBands: string | boolean;
-  exerciseMats: string | boolean;
-  stabilityBalls: string | boolean;
-  foamRollers: string | boolean;
-  skippingRopes: string | boolean;
-  boxingBagAndGloves: string | boolean;
-  medicineBalls: string | boolean;
+  treadmill: boolean;
+  runningTrack: boolean;
+  ellipticalTrainer: boolean;
+  stationaryBike: boolean;
+  rowingMachine: boolean;
+  resistanceBands: boolean;
+  exerciseMats: boolean;
+  stabilityBalls: boolean;
+  foamRollers: boolean;
+  skippingRopes: boolean;
+  boxingBagAndGloves: boolean;
+  medicineBalls: boolean;
+};
+
+const equipmentValues: Record<keyof cardioEquipmentInputs, string> = {
+  treadmill: 'Treadmill',
+  runningTrack: 'Access to a running track',
+  ellipticalTrainer: 'Elliptical Trainer',
+  stationaryBike: 'Stationary Bike',
+  rowingMachine: 'Rowing Machine',
+  resistanceBands: 'Resistance Bands',
+  exerciseMats: 'Exercise Mats',
+  stabilityBalls: 'Stability Balls',
+  foamRollers: 'Foam Rollers',
+  skippingRopes: 'Skipping Ropes / Jump Ropes',
+  boxingBagAndGloves: 'Boxing Bag & Gloves',
+  medicineBalls: 'Medicine Balls / Slam Balls',
 };
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { handleSubmit, register } = useForm<cardioEquipmentInputs>();
+  const { control, handleSubmit } = useForm<cardioEquipmentInputs>();
 
   const onSubmit: SubmitHandler<cardioEquipmentInputs> = (data) => {
-    const equipment = Object.values(data).filter(
-      (value): value is string => value !== false
-    );
+    const equipment = Object.entries(data)
+      .filter(([_, value]) => value === true)
+      .map(([key]) => equipmentValues[key as keyof cardioEquipmentInputs]);
     useStore.setState((state) => ({
       equipment: [...state.equipment, ...equipment],
     }));
@@ -49,136 +67,220 @@ function RouteComponent() {
 
           {/* Cardio Machines */}
           <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              {...register('treadmill', { required: false })}
-              value="Treadmill"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="treadmill"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="treadmill"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="treadmill">Treadmill</Label>
+                </>
+              )}
             />
-            <span>Treadmill</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('runningTrack', { required: false })}
-              value="Access to a running track"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="runningTrack"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="runningTrack"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="runningTrack">
+                    Access to a running track
+                  </Label>
+                </>
+              )}
             />
-            <span>Access to a running track</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('ellipticalTrainer', {
-                required: false,
-              })}
-              value="Elliptical Trainer"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="ellipticalTrainer"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="ellipticalTrainer"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="ellipticalTrainer">Elliptical Trainer</Label>
+                </>
+              )}
             />
-            <span>Elliptical Trainer</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('stationaryBike', { required: false })}
-              value="Stationary Bike"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="stationaryBike"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="stationaryBike"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="stationaryBike">Stationary Bike</Label>
+                </>
+              )}
             />
-            <span>Stationary Bike</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('rowingMachine', { required: false })}
-              value="Rowing Machine"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="rowingMachine"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="rowingMachine"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="rowingMachine">Rowing Machine</Label>
+                </>
+              )}
             />
-            <span>Rowing Machine</span>
           </div>
 
           {/* Small Equipment */}
           <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              {...register('resistanceBands', {
-                required: false,
-              })}
-              value="Resistance Bands"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="resistanceBands"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="resistanceBands"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="resistanceBands">Resistance Bands</Label>
+                </>
+              )}
             />
-            <span>Resistance Bands</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('exerciseMats', { required: false })}
-              value="Exercise Mats"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="exerciseMats"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="exerciseMats"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="exerciseMats">Exercise Mats</Label>
+                </>
+              )}
             />
-            <span>Exercise Mats</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('stabilityBalls', { required: false })}
-              value="Stability Balls"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="stabilityBalls"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="stabilityBalls"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="stabilityBalls">Stability Balls</Label>
+                </>
+              )}
             />
-            <span>Stability Balls</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('foamRollers', { required: false })}
-              value="Foam Rollers"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="foamRollers"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="foamRollers"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="foamRollers">Foam Rollers</Label>
+                </>
+              )}
             />
-            <span>Foam Rollers</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('skippingRopes', { required: false })}
-              value="Skipping Ropes / Jump Ropes"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="skippingRopes"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="skippingRopes"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="skippingRopes">
+                    Skipping Ropes / Jump Ropes
+                  </Label>
+                </>
+              )}
             />
-            <span>Skipping Ropes / Jump Ropes</span>
           </div>
 
           {/* Strength & Specialty */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('boxingBagAndGloves', {
-                required: false,
-              })}
-              value="Boxing Bag & Gloves"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="boxingBagAndGloves"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="boxingBagAndGloves"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="boxingBagAndGloves">
+                    Boxing Bag & Gloves
+                  </Label>
+                </>
+              )}
             />
-            <span>Boxing Bag & Gloves</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('medicineBalls', { required: false })}
-              value="Medicine Balls / Slam Balls"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="medicineBalls"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="medicineBalls"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="medicineBalls">
+                    Medicine Balls / Slam Balls
+                  </Label>
+                </>
+              )}
             />
-            <span>Medicine Balls / Slam Balls</span>
           </div>
         </div>
-        <button className="btn btn-primary" type="submit">
-          Next List
-        </button>
+        <Button type="submit">Next List</Button>
       </form>
     </div>
   );

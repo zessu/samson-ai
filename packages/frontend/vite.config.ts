@@ -34,6 +34,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '@': path.resolve(__dirname, '.'),
       backend: path.resolve(__dirname, '../backend/src'),
       frontend: path.resolve(__dirname, '../frontend/src'),
     },

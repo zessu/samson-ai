@@ -5,7 +5,8 @@ import {
   RouterProvider,
   createMemoryHistory,
 } from '@tanstack/react-router';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { Route as GenderRoute } from './gender-select';
@@ -62,13 +63,15 @@ describe('Gender Select Page', () => {
   });
 
   it('navigates to age-select when male is selected', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const maleRadio = await screen.findByDisplayValue('male');
-    fireEvent.click(maleRadio);
+    await screen.findByText('Lets begin by creating your profile');
+    const radios = screen.getAllByRole('radio');
+    await user.click(radios[0]); // Male
 
-    await fireEvent.submit(screen.getByRole('button', { name: /next/i }));
+    await user.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Age Select Page')).toBeInTheDocument();
@@ -76,13 +79,15 @@ describe('Gender Select Page', () => {
   });
 
   it('navigates to age-select when female is selected', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const femaleRadio = await screen.findByDisplayValue('female');
-    fireEvent.click(femaleRadio);
+    await screen.findByText('Lets begin by creating your profile');
+    const radios = screen.getAllByRole('radio');
+    await user.click(radios[1]); // Female
 
-    await fireEvent.submit(screen.getByRole('button', { name: /next/i }));
+    await user.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Age Select Page')).toBeInTheDocument();
@@ -90,13 +95,15 @@ describe('Gender Select Page', () => {
   });
 
   it('calls store with selected gender (male)', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const maleRadio = await screen.findByDisplayValue('male');
-    fireEvent.click(maleRadio);
+    await screen.findByText('Lets begin by creating your profile');
+    const radios = screen.getAllByRole('radio');
+    await user.click(radios[0]); // Male
 
-    await fireEvent.submit(screen.getByRole('button', { name: /next/i }));
+    await user.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Age Select Page')).toBeInTheDocument();
@@ -107,13 +114,15 @@ describe('Gender Select Page', () => {
   });
 
   it('calls store with selected gender (female)', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const femaleRadio = await screen.findByDisplayValue('female');
-    fireEvent.click(femaleRadio);
+    await screen.findByText('Lets begin by creating your profile');
+    const radios = screen.getAllByRole('radio');
+    await user.click(radios[1]); // Female
 
-    await fireEvent.submit(screen.getByRole('button', { name: /next/i }));
+    await user.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Age Select Page')).toBeInTheDocument();

@@ -88,14 +88,11 @@ describe('Day Time Page', () => {
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const mondayCheckbox = await screen.findByText('Monday');
-    fireEvent.click(mondayCheckbox.parentElement!.querySelector('input')!);
-
-    const wednesdayCheckbox = screen.getByText('Wednesday');
-    fireEvent.click(wednesdayCheckbox.parentElement!.querySelector('input')!);
-
-    const fridayCheckbox = screen.getByText('Friday');
-    fireEvent.click(fridayCheckbox.parentElement!.querySelector('input')!);
+    await screen.findByText('What Days of the week do you want to work out ?');
+    const checkboxes = screen.getAllByRole('checkbox');
+    await user.click(checkboxes[0]); // Monday
+    await user.click(checkboxes[2]); // Wednesday
+    await user.click(checkboxes[4]); // Friday
 
     await user.click(screen.getByRole('button', { name: /continue/i }));
 
@@ -113,11 +110,10 @@ describe('Day Time Page', () => {
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const saturdayCheckbox = await screen.findByText('Saturday');
-    fireEvent.click(saturdayCheckbox.parentElement!.querySelector('input')!);
-
-    const sundayCheckbox = screen.getByText('Sunday');
-    fireEvent.click(sundayCheckbox.parentElement!.querySelector('input')!);
+    await screen.findByText('What Days of the week do you want to work out ?');
+    const checkboxes = screen.getAllByRole('checkbox');
+    await user.click(checkboxes[5]); // Saturday
+    await user.click(checkboxes[6]); // Sunday
 
     await user.click(screen.getByRole('button', { name: /continue/i }));
 

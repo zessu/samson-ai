@@ -1,33 +1,64 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler, Controller } from 'react-hook-form';
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 export const Route = createFileRoute('/_onboarding/goals')({
   component: RouteComponent,
 });
 
 type goalInputs = {
-  weight: string | boolean;
-  muscle: string | boolean;
-  tone: string | boolean;
-  cardio: string | boolean;
-  endurance: string | boolean;
-  flexibility: string | boolean;
-  posture: string | boolean;
-  stress: string | boolean;
-  maintain: string | boolean;
-  sport: string | boolean;
-  rehabilitate: string | boolean;
+  weight: boolean;
+  muscle: boolean;
+  tone: boolean;
+  cardio: boolean;
+  endurance: boolean;
+  flexibility: boolean;
+  posture: boolean;
+  stress: boolean;
+  maintain: boolean;
+  sport: boolean;
+  rehabilitate: boolean;
+};
+
+const goalValues: Record<keyof goalInputs, string> = {
+  weight: 'lose weight',
+  muscle: 'add muscle',
+  tone: 'tone my body',
+  cardio: 'increase cardiovascular fitness',
+  endurance: 'increase endurance and stamina',
+  flexibility: 'improve flexibility and mobility',
+  posture: 'fix posture and reduce back pain',
+  stress: 'stress relief and mental wellness',
+  maintain: 'maintain fitness as I age',
+  sport: 'train for a sport',
+  rehabilitate: 'rehabilitate an injury',
 };
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<goalInputs>();
+  const { control, handleSubmit } = useForm<goalInputs>({
+    defaultValues: {
+      weight: false,
+      muscle: false,
+      tone: false,
+      cardio: false,
+      endurance: false,
+      flexibility: false,
+      posture: false,
+      stress: false,
+      maintain: false,
+      sport: false,
+      rehabilitate: false,
+    },
+  });
 
   const onSubmit: SubmitHandler<goalInputs> = (data) => {
-    const selectedGoals = Object.values(data).filter(
-      (value) => value !== false
-    ) as string[];
+    const selectedGoals = Object.entries(data)
+      .filter(([_, value]) => value === true)
+      .map(([key]) => goalValues[key as keyof goalInputs]);
 
     useStore.setState({ goals: selectedGoals });
     goToNextPage();
@@ -45,122 +76,209 @@ function RouteComponent() {
 
           {/* Weight & Body Composition */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('weight', { required: false })}
-              type="checkbox"
-              value="lose weight"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="weight"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="weight"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="weight">Lose Weight</Label>
+                </>
+              )}
             />
-            <span>Lose Weight</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('muscle', { required: false })}
-              type="checkbox"
-              value="add muscle"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="muscle"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="muscle"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="muscle">Add Muscle / Build Strength</Label>
+                </>
+              )}
             />
-            <span>Add Muscle / Build Strength</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('tone', { required: false })}
-              type="checkbox"
-              value="tone my body"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="tone"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="tone"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="tone">Tone Muscles (Lean & Defined)</Label>
+                </>
+              )}
             />
-            <span>Tone Muscles (Lean & Defined)</span>
           </div>
 
           {/* Performance & Endurance */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('cardio', { required: false })}
-              type="checkbox"
-              value="increase cardiovascular fitness"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="cardio"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="cardio"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="cardio">
+                    Improve Cardio (Running, Cycling, etc.)
+                  </Label>
+                </>
+              )}
             />
-            <span>Improve Cardio (Running, Cycling, etc.)</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('endurance', { required: false })}
-              type="checkbox"
-              value="increase endurance and stamina"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="endurance"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="endurance"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="endurance">
+                    Increase Endurance & Stamina
+                  </Label>
+                </>
+              )}
             />
-            <span>Increase Endurance & Stamina</span>
           </div>
 
           {/* Mobility & Functional Fitness */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('flexibility', { required: false })}
-              type="checkbox"
-              value="improve flexibility and mobility"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="flexibility"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="flexibility"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="flexibility">
+                    Improve Flexibility & Mobility
+                  </Label>
+                </>
+              )}
             />
-            <span>Improve Flexibility & Mobility</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('posture', { required: false })}
-              type="checkbox"
-              value="fix posture and reduce back pain"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="posture"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="posture"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="posture">
+                    Fix Posture / Reduce Back Pain
+                  </Label>
+                </>
+              )}
             />
-            <span>Fix Posture / Reduce Back Pain</span>
           </div>
 
           {/* Lifestyle & Mental Health */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('stress', { required: false })}
-              type="checkbox"
-              value="stress relief and mental wellness"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="stress"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="stress"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="stress">
+                    Stress Relief & Mental Wellness
+                  </Label>
+                </>
+              )}
             />
-            <span>Stress Relief & Mental Wellness</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('maintain', { required: false })}
-              type="checkbox"
-              value="maintain fitness as I age"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="maintain"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="maintain"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="maintain">Maintain Fitness as I Age</Label>
+                </>
+              )}
             />
-            <span>Maintain Fitness as I Age</span>
           </div>
 
           {/* Specialized Goals */}
           <div className="flex items-center gap-2">
-            <input
-              {...register('sport', { required: false })}
-              type="checkbox"
-              value="train for a sport"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="sport"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="sport"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="sport">
+                    Train for a Sport (Basketball, Soccer, etc.)
+                  </Label>
+                </>
+              )}
             />
-            <span>Train for a Sport (Basketball, Soccer, etc.)</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <input
-              {...register('rehabilitate', { required: false })}
-              value="rehabilitate an injury"
-              type="checkbox"
-              className="checkbox checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+            <Controller
+              name="rehabilitate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Checkbox
+                    id="rehabilitate"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="rehabilitate">Rehabilitate an Injury</Label>
+                </>
+              )}
             />
-            <span>Rehabilitate an Injury</span>
           </div>
         </div>
-        <button className="btn btn-primary" type="submit">
-          Continue
-        </button>
+        <Button type="submit">Continue</Button>
       </form>
     </div>
   );

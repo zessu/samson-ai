@@ -5,6 +5,9 @@ import { z } from 'zod';
 import { onBoardingSchema } from 'shared';
 
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export const Route = createFileRoute('/_onboarding/age-select')({
   component: RouteComponent,
@@ -39,28 +42,26 @@ function RouteComponent() {
     <div className="w-64">
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
-          <input
+          <Label htmlFor="age" className="sr-only">
+            How old are you ?
+          </Label>
+          <Input
             type="number"
-            className="input validator"
-            required
+            id="age"
             placeholder="How old are you ?"
-            min="10"
-            max="100"
-            title="Select correct age"
             {...register('age', {
               valueAsNumber: true,
             })}
           />
-          <p className="validator-hint mb-2">That does not seem right!</p>
+          {errors.age && (
+            <p className="text-sm text-destructive mt-1">
+              That does not seem right!
+            </p>
+          )}
         </div>
-        {errors.age && (
-          <p role="alert" className="mb-2">
-            {errors.age.message}
-          </p>
-        )}
-        <button className="btn btn-primary" type="submit">
+        <Button type="submit" className="mt-4">
           Continue
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -4,6 +4,9 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { onBoardingSchema, onBoardingState } from 'shared';
 
 import { useStore } from '../../state/onboarding';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 export const Route = createFileRoute('/_onboarding/notifications')({
   component: RouteComponent,
@@ -59,20 +62,10 @@ function RouteComponent() {
   return (
     <div className="text-xl flex flex-col">
       {onBoardingError && (
-        <div role="alert" className="alert alert-error mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+        <div
+          role="alert"
+          className="bg-destructive text-destructive-foreground p-4 rounded-md mb-4"
+        >
           <span>
             There was a problem processing your request. Give it a minute and
             try again
@@ -89,41 +82,28 @@ function RouteComponent() {
         noValidate
         className="mb-10 flex flex-col"
       >
-        <span className="mb-4">
-          <input
-            type="checkbox"
-            className="checkbox"
-            value="email"
-            {...register('email')}
-          />
-          <span className="ml-2">Email</span>
-        </span>
+        <div className="flex items-center gap-2 mb-4">
+          <Checkbox id="email" value="email" {...register('email')} />
+          <Label htmlFor="email">Email</Label>
+        </div>
 
-        <span className="mb-4">
-          <input
-            type="checkbox"
-            className="checkbox"
-            value="app"
-            disabled
-            {...register('app')}
-          />
-          <span className="ml-2">In App (Work In Progress)</span>
-        </span>
+        <div className="flex items-center gap-2 mb-4">
+          <Checkbox id="app" value="app" disabled {...register('app')} />
+          <Label htmlFor="app" className="opacity-50">
+            In App (Work In Progress)
+          </Label>
+        </div>
 
-        <span className="mb-4">
-          <input
-            type="checkbox"
-            className="checkbox"
-            value="sms"
-            disabled
-            {...register('sms')}
-          />
-          <span className="ml-2">Via SMS (Work In Progress)</span>
-        </span>
+        <div className="flex items-center gap-2 mb-4">
+          <Checkbox id="sms" value="sms" disabled {...register('sms')} />
+          <Label htmlFor="sms" className="opacity-50">
+            Via SMS (Work In Progress)
+          </Label>
+        </div>
 
-        <button className="btn btn-accent" type="submit">
+        <Button type="submit">
           {isLoading ? 'Submitting your details ...' : 'Start My Journey'}
-        </button>
+        </Button>
       </form>
     </div>
   );

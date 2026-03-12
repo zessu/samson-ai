@@ -5,7 +5,7 @@ import {
   RouterProvider,
   createMemoryHistory,
 } from '@tanstack/react-router';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
@@ -70,13 +70,13 @@ describe('Fitness Select Page', () => {
   });
 
   it('Navigates to the next page on right selection', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const begginerOption = await screen.findByText('Beginner');
-    fireEvent.select(begginerOption);
-    const submitButton = screen.getByRole('button', { name: /continue/i });
-    userEvent.click(submitButton);
+    await screen.findByText("What's your fitness level ?");
+
+    await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
       expect(screen.getByText(/Goals Page/i)).toBeInTheDocument();
@@ -84,13 +84,13 @@ describe('Fitness Select Page', () => {
   });
 
   it('Calls store with user selected choice', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
-    const begginerOption = await screen.findByText('Beginner');
-    fireEvent.select(begginerOption);
-    const submitButton = screen.getByRole('button', { name: /continue/i });
-    userEvent.click(submitButton);
+    await screen.findByText("What's your fitness level ?");
+
+    await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
       expect(screen.getByText(/Goals Page/i)).toBeInTheDocument();
@@ -103,21 +103,20 @@ describe('Fitness Select Page', () => {
     });
   });
 
-  it('Shows error on wrong selection', async () => {
+  it('Submits successfully with default value', async () => {
+    const user = userEvent.setup();
     const router = setupRouter();
     render(<RouterProvider router={router} />);
 
     await screen.findByText("What's your fitness level ?");
-
-    const selectElement = screen.getByRole('combobox');
-    fireEvent.change(selectElement, { target: { value: '' } });
-
-    await fireEvent.submit(screen.getByRole('button', { name: /continue/i }));
+    await user.click(screen.getByRole('button', { name: /continue/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText(/Goals Page/i)).toBeInTheDocument();
     });
 
-    expect(useStore.setState).not.toHaveBeenCalled();
+    expect(useStore.setState).toHaveBeenCalledWith({
+      fitnessLevel: 'beginner',
+    });
   });
 });

@@ -4,6 +4,10 @@ import { useStore } from '../../state/onboarding';
 import { onBoardingSchema } from 'shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
 export const Route = createFileRoute('/_onboarding/weight-select')({
   component: RouteComponent,
 });
@@ -33,31 +37,26 @@ function RouteComponent() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="w-64">
-          <input
+          <Label htmlFor="weight" className="sr-only">
+            How many KGs do you weigh?
+          </Label>
+          <Input
             type="number"
-            className="input validator"
-            required
+            id="weight"
             placeholder="How many KGs do you weigh?"
-            min="40"
-            max="150"
-            title="Select correct age"
             {...register('weight', {
-              required: true,
-              min: 40,
-              max: 150,
               valueAsNumber: true,
             })}
           />
-          <p className="validator-hint mb-2">That does not seem right!</p>
+          {errors.weight && (
+            <p className="text-sm text-destructive mt-1">
+              That does not seem right!
+            </p>
+          )}
         </div>
-        {errors.weight && (
-          <p role="alert" className="mb-2">
-            {errors.weight.message}
-          </p>
-        )}
-        <button className="btn btn-primary" type="submit">
+        <Button type="submit" className="mt-4">
           Continue
-        </button>
+        </Button>
       </form>
     </div>
   );

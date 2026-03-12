@@ -1,6 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
-export const Route = createFileRoute("/_onboarding/workout")({
+export const Route = createFileRoute('/_onboarding/workout')({
   component: DailyWorkout,
 });
 
@@ -9,75 +17,79 @@ function DailyWorkout() {
     <>
       <div className="flex flex-col items-center justify-center gap-10">
         <h2 className="bold">Your Workouts for today</h2>
-        <div>
-          <div className="card bg-base-100 image-full w-96 mb-5 shadow-sm rounded-xl">
-            <figure>
+        <div className="flex flex-col gap-5">
+          <Card className="w-96 overflow-hidden">
+            <div className="relative h-48">
               <img
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                 alt="Shoes"
+                className="w-full h-full object-cover"
               />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Upper Body</h2>
+            </div>
+            <CardHeader>
+              <CardTitle>Upper Body</CardTitle>
+            </CardHeader>
+            <CardContent>
               <p>Working out these upper body exercises</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-outline btn-primary rounded-xl">
-                  Start
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card bg-base-100 image-full w-96 mb-5 shadow-sm rounded-xl">
-            <figure>
+            </CardContent>
+            <CardFooter className="justify-end">
+              <Button variant="outline">Start</Button>
+            </CardFooter>
+          </Card>
+          <Card className="w-96 overflow-hidden">
+            <div className="relative h-48">
               <img
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                 alt="Shoes"
+                className="w-full h-full object-cover"
               />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Full body stretches</h2>
+            </div>
+            <CardHeader>
+              <CardTitle>Full body stretches</CardTitle>
+            </CardHeader>
+            <CardContent>
               <p>You need to stretch and relax your muscles</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-outline btn-primary rounded-xl">
-                  Start
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card bg-base-100 image-full w-96 mb-5 shadow-sm rounded-xl">
-            <figure>
+            </CardContent>
+            <CardFooter className="justify-end">
+              <Button variant="outline">Start</Button>
+            </CardFooter>
+          </Card>
+          <Card className="w-96 overflow-hidden">
+            <div className="relative h-48">
               <img
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                 alt="Shoes"
+                className="w-full h-full object-cover"
               />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Strength Traning</h2>
+            </div>
+            <CardHeader>
+              <CardTitle>Strength Traning</CardTitle>
+            </CardHeader>
+            <CardContent>
               <p>Need to lift some weights so you can become strong</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-outline btn-primary rounded-xl">
-                  Start
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card bg-base-100 image-full w-96 mb-5 shadow-sm rounded-xl">
-            <figure>
+            </CardContent>
+            <CardFooter className="justify-end">
+              <Button variant="outline">Start</Button>
+            </CardFooter>
+          </Card>
+          <Card className="w-96 overflow-hidden">
+            <div className="relative h-48">
               <img
                 src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                 alt="Shoes"
+                className="w-full h-full object-cover"
               />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Back</h2>
-              <p>Your core strength is important to your overall health</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-outline btn-primary rounded-xl">
-                  Start
-                </button>
-              </div>
             </div>
-          </div>
+            <CardHeader>
+              <CardTitle>Back</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Your core strength is important to your overall health</p>
+            </CardContent>
+            <CardFooter className="justify-end">
+              <Button variant="outline">Start</Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </>
