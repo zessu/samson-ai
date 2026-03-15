@@ -33,7 +33,7 @@ Find the `env.example` files in each of the monorepos.
 
 cd into the ai folder and create a .env file and add a variable `GOOGLE_GENERATIVE_AI_API_KEY`=
 Set it to your gemini api key. Feel free to change the model just change the default model in `src/mastra/agents/samson.ts` to another provider.
-Check out [https://mastra.ai/docs](Mastra's documentation) for more details.
+Check out [Mastra's Documentation](https://mastra.ai/docs) for more details.
 
 ##### Setting up the backend
 
