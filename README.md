@@ -1,3 +1,5 @@
+
+
 # SAMSONAI
 
 **Get workout recommendations directly in your inbox**
@@ -32,7 +34,7 @@ Find the `env.example` files in each of the monorepos.
 ##### Setting up the agent
 
 cd into the ai folder and create a .env file and add a variable `GOOGLE_GENERATIVE_AI_API_KEY`=
-Set it to your gemini api key. Feel free to change the model just change the default model in `src/mastra/agents/samson.ts` to another provider.
+Set it to your gemini api key. Feel free to change the model just change the default model in `packages/ai/src/mastra/agents/samson.ts` to another provider.
 Check out [Mastra's Documentation](https://mastra.ai/docs) for more details.
 
 ##### Setting up the backend
@@ -44,7 +46,7 @@ e.g. below:
 - `BETTER_AUTH_SECRET` — a secret used to encode tokens. This should be random and can be anything.
 - `BETTER_AUTH_URL` — where your server is running + api/auth e.g `http://localhost:3000/api/auth`.
 - `GOOGLE_CLIENT_ID` — for authentication, your google client id. See <https://better-auth.com/docs/authentication/google>.
-- `GOOGLE_CLIENT_SECRET` — your google client secret.
+- `GOOGLE_CLIENT_SECRET` — your google google client secret.
 - `LOCALDOMAIN` — where your FE is running e.g `http://localhost:5173`, used for CORS.
 - `REDIS_SECRET` — set this up however you choose to. I am using upstash, and I have this in the code `rediss://default:${Bun.env.REDIS_SECRET}@bursting-hagfish-32927.upstash.io:6379`.
 - `SAMSON_URL` — url where your agent is running e.g `http://localhost:6666`.
